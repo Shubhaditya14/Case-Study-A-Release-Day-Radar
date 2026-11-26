@@ -193,11 +193,13 @@ def chart_buzz_loo(loo, f):
     ax.set_xticks(range(1, 11)); ax.set_yticks(range(1, 11))
     ax.set_xlabel("Buzz Index rank (1 = most buzz), each film scored by an index fitted WITHOUT it")
     ax.set_ylabel("Actual first-weekend rank (1 = biggest)")
-    ax.set_title(f"A Buzz Index fitted on the other 9 films called {hits} of 10 openings\nabove/below median — it missed {' and '.join(misses)}")
+    verdict = "barely better than a coin toss" if hits <= 6 else "better than a coin toss, on a tiny sample"
+    ax.set_title(f"A Buzz Index fitted on the other 9 films called {hits} of 10 openings\nabove/below median — {verdict}")
     ax.scatter([], [], color=INK_2, marker="o", label="call right"); ax.scatter([], [], color=INK_2, marker="X", label="call wrong")
     ax.scatter([], [], color=BLUE, label="Hindi"); ax.scatter([], [], color=ORANGE, label="Regional")
     ax.legend(loc="upper right", frameon=False, fontsize=8.5)
-    footnote(fig, f"Leave-one-out test, mean rank error {loo.rank_error.mean():.1f} places. A coin toss would get ~5 of 10 right. n = 10 is very small.")
+    footnote(fig, f"Leave-one-out test, mean rank error {loo.rank_error.mean():.1f} places. Missed: {', '.join(misses)}. "
+                  "A coin toss would get ~5 of 10 right. n = 10 is very small.")
     save(fig, "06_buzz_index_leave_one_out.png")
 
 

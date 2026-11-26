@@ -48,16 +48,20 @@ ORDER BY total_trailer_views DESC
 | l2_empuraan            | Malayalam  |                  1 |           1.76834e+07 |                      43.75 |
 | lokah_chapter_1        | Malayalam  |                  1 |           1.63116e+07 |                      16.38 |
 
-## Q3. (JOIN + GROUP BY) Velocity: how many comments arrived in the first 72 hours after the main trailer went live, and the average comments per hour in that window.
+## Q3. (JOIN + GROUP BY) Velocity: how many comments arrived in the first 72 hours after the main trailer went live, and the average comments per hour in that window. "Went live" = the earlier of the API publish time and the first comment (Raid 2's trailer was commented on 20.7 h before its official publish time).
 
 ```sql
 SELECT c.film_id,
        COUNT(*)                                   AS comments_first_72h,
        ROUND(COUNT(*) / 72, 1)                    AS comments_per_hour_72h
 FROM comments c
-JOIN trailers t ON t.film_id = c.film_id AND t.is_main_trailer = 1
-WHERE c.published_ts >= t.publish_ts
-  AND c.published_ts <  t.publish_ts + INTERVAL 72 HOUR
+JOIN (SELECT t.film_id, LEAST(t.publish_ts, MIN(c2.published_ts)) AS start_ts
+      FROM trailers t
+      JOIN comments c2 ON c2.film_id = t.film_id
+      WHERE t.is_main_trailer = 1
+      GROUP BY t.film_id, t.publish_ts) s ON s.film_id = c.film_id
+WHERE c.published_ts >= s.start_ts
+  AND c.published_ts <  s.start_ts + INTERVAL 72 HOUR
 GROUP BY c.film_id
 ORDER BY comments_first_72h DESC
 ```
@@ -65,14 +69,14 @@ ORDER BY comments_first_72h DESC
 | film_id                |   comments_first_72h |   comments_per_hour_72h |
 |:-----------------------|---------------------:|------------------------:|
 | chhaava                |                65719 |                   912.8 |
-| dhurandhar_the_revenge |                41566 |                   577.3 |
+| dhurandhar_the_revenge |                41548 |                   577.1 |
 | sitaare_zameen_par     |                38047 |                   528.4 |
 | l2_empuraan            |                31536 |                   438   |
 | housefull_5            |                23897 |                   331.9 |
-| kantara_chapter_1      |                18381 |                   255.3 |
+| raid_2                 |                21632 |                   300.4 |
+| kantara_chapter_1      |                18778 |                   260.8 |
 | peddi                  |                16292 |                   226.3 |
 | saiyaara               |                 8302 |                   115.3 |
-| raid_2                 |                 5575 |                    77.4 |
 | lokah_chapter_1        |                 3052 |                    42.4 |
 
 ## Q4. (JOIN + GROUP BY) Do Hindi and regional films get different trailer sentiment? Mean VADER score, ignoring comments VADER could not read (score exactly 0).
