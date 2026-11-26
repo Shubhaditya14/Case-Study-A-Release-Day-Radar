@@ -18,7 +18,7 @@ Reply `done` in the Claude session after each one; Claude runs the check and tic
   - HOW I'LL CHECK: `.venv/bin/python src/00_smoke_test.py` must print `PASS  YouTube Data API v3` (costs 1 quota unit).
   - TIME: ~5 min
 
-- [ ] **M2 — Get a TMDb API key**
+- [x] **M2 — Get a TMDb API key** (verified 2026-11-26: smoke test PASS, Chhaava tmdb_id 1196943)
   - WHY: rubric "Data sourcing and variety" — second JSON API (genre, runtime, language, cast).
   - DO THIS:
     1. Create a free account at https://www.themoviedb.org/signup and verify your email.
