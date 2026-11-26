@@ -143,6 +143,14 @@ def main():
     key = get_env("YT_API_KEY")
     films = pd.read_csv(DATA_MANUAL / "film_list.csv")
 
+    # Optional: `python src/03_collect_youtube.py chhaava` collects one film only. This lets
+    # several films download at the same time in separate processes; the quota guard's
+    # file lock keeps their combined spending under the daily limit.
+    if len(sys.argv) > 1:
+        films = films[films.film_id == sys.argv[1]]
+        if films.empty:
+            raise SystemExit(f"Unknown film_id {sys.argv[1]}")
+
     try:
         print("Part A — trailer versions")
         for film in films.itertuples():

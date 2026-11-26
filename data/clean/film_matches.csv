@@ -1,0 +1,57 @@
+source,source_title,collected_for,method,normalised,best_film_id,score,decision
+wikipedia_page,Chhaava,chhaava,token_sort_ratio,chhaava,chhaava,100.0,accept
+google_trends_term,Chhaava,chhaava,partial_ratio,chhaava,chhaava,100.0,accept
+wikipedia_page,Saiyaara (film),saiyaara,token_sort_ratio,saiyaara,saiyaara,100.0,accept
+google_trends_term,Saiyaara,saiyaara,partial_ratio,saiyaara,saiyaara,100.0,accept
+wikipedia_page,Sitaare Zameen Par,sitaare_zameen_par,token_sort_ratio,sitaare zameen par,sitaare_zameen_par,100.0,accept
+google_trends_term,Sitaare Zameen Par,sitaare_zameen_par,partial_ratio,sitaare zameen par,sitaare_zameen_par,100.0,accept
+wikipedia_page,Housefull 5,housefull_5,token_sort_ratio,housefull 5,housefull_5,100.0,accept
+google_trends_term,Housefull 5,housefull_5,partial_ratio,housefull 5,housefull_5,100.0,accept
+wikipedia_page,Raid 2 (film),raid_2,token_sort_ratio,raid 2,raid_2,100.0,accept
+google_trends_term,Raid 2,raid_2,partial_ratio,raid 2,raid_2,100.0,accept
+wikipedia_page,Dhurandhar: The Revenge,dhurandhar_the_revenge,token_sort_ratio,dhurandhar the revenge,dhurandhar_the_revenge,100.0,accept
+google_trends_term,Dhurandhar 2,dhurandhar_the_revenge,partial_ratio,dhurandhar 2,dhurandhar_the_revenge,95.7,accept
+wikipedia_page,Kantara: Chapter 1,kantara_chapter_1,token_sort_ratio,kantara chapter 1,kantara_chapter_1,100.0,accept
+google_trends_term,Kantara Chapter 1,kantara_chapter_1,partial_ratio,kantara chapter 1,kantara_chapter_1,100.0,accept
+wikipedia_page,Lokah Chapter 1: Chandra,lokah_chapter_1,token_sort_ratio,lokah chapter 1 chandra,lokah_chapter_1,100.0,accept
+google_trends_term,Lokah,lokah_chapter_1,partial_ratio,lokah,lokah_chapter_1,100.0,accept
+wikipedia_page,L2: Empuraan,l2_empuraan,token_sort_ratio,l2 empuraan,l2_empuraan,100.0,accept
+google_trends_term,Empuraan,l2_empuraan,partial_ratio,empuraan,l2_empuraan,100.0,accept
+wikipedia_page,Peddi,peddi,token_sort_ratio,peddi,peddi,100.0,accept
+google_trends_term,Peddi,peddi,partial_ratio,peddi,peddi,100.0,accept
+tmdb,Chhaava,chhaava,token_sort_ratio,chhaava,chhaava,100.0,accept
+tmdb,Dhurandhar: The Revenge,dhurandhar_the_revenge,token_sort_ratio,dhurandhar the revenge,dhurandhar_the_revenge,100.0,accept
+tmdb,Housefull 5,housefull_5,token_sort_ratio,housefull 5,housefull_5,100.0,accept
+tmdb,Kantara - A Legend: Chapter 1,kantara_chapter_1,token_sort_ratio,kantara a legend chapter 1,kantara_chapter_1,79.1,needs_review
+tmdb,L2: Empuraan,l2_empuraan,token_sort_ratio,l2 empuraan,l2_empuraan,100.0,accept
+tmdb,Lokah Chapter 1: Chandra,lokah_chapter_1,token_sort_ratio,lokah chapter 1 chandra,lokah_chapter_1,100.0,accept
+tmdb,Peddi,peddi,token_sort_ratio,peddi,peddi,100.0,accept
+tmdb,Raid 2,raid_2,token_sort_ratio,raid 2,raid_2,100.0,accept
+tmdb,Saiyaara,saiyaara,token_sort_ratio,saiyaara,saiyaara,100.0,accept
+tmdb,Sitaare Zameen Par,sitaare_zameen_par,token_sort_ratio,sitaare zameen par,sitaare_zameen_par,100.0,accept
+youtube_trailer,Chhaava | Official Trailer | Vicky K | Rashmika M | Akshaye K | Dinesh Vijan | Laxman U | 14th Feb,chhaava,partial_ratio,chhaava,chhaava,100.0,accept
+youtube_trailer,Dhurandhar The Revenge Official Hindi Trailer | Ranveer S | Aditya D | Roaring In Cinemas Now,dhurandhar_the_revenge,partial_ratio,dhurandhar the revenge,dhurandhar_the_revenge,100.0,accept
+youtube_trailer,Dhurandhar The Revenge Official Malayalam Trailer | Ranveer S | Aditya D | Roaring In Cinemas Now,dhurandhar_the_revenge,partial_ratio,dhurandhar the revenge,dhurandhar_the_revenge,100.0,accept
+youtube_trailer,Dhurandhar The Revenge Official Tamil Trailer | Ranveer S | Aditya D | Roaring In Cinemas Now,dhurandhar_the_revenge,partial_ratio,dhurandhar the revenge,dhurandhar_the_revenge,100.0,accept
+youtube_trailer,Dhurandhar The Revenge Official Telugu Trailer | Ranveer S | Aditya D | Roaring In Cinemas Now,dhurandhar_the_revenge,partial_ratio,dhurandhar the revenge,dhurandhar_the_revenge,100.0,accept
+youtube_trailer,Dhurandhar The Revenge Official Kannada Trailer | Ranveer S | Aditya D | Roaring In Cinemas Now,dhurandhar_the_revenge,partial_ratio,dhurandhar the revenge,dhurandhar_the_revenge,100.0,accept
+youtube_trailer,Housefull 5 | Official Trailer | Sajid Nadiadwala | Tarun Mansukhani | In Cinemas on 6th June 2025,housefull_5,partial_ratio,housefull 5,housefull_5,100.0,accept
+youtube_trailer,Kantara Chapter 1 Trailer - Hindi | Rishab Shetty | Rukmini | Vijay Kiragandur | Hombale Films,kantara_chapter_1,partial_ratio,kantara chapter 1,kantara_chapter_1,100.0,accept
+youtube_trailer,Kantara Chapter 1 Trailer - Kannada | Rishab Shetty | Rukmini | Vijay Kiragandur | Hombale Films,kantara_chapter_1,partial_ratio,kantara chapter 1,kantara_chapter_1,100.0,accept
+youtube_trailer,Kantara Chapter 1 Trailer - Malayalam | Rishab Shetty | Rukmini | Vijay Kiragandur | Hombale Films,kantara_chapter_1,partial_ratio,kantara chapter 1,kantara_chapter_1,100.0,accept
+youtube_trailer,Kantara Chapter 1 Trailer - Telugu | Rishab Shetty | Rukmini | Vijay Kiragandur | Hombale Films,kantara_chapter_1,partial_ratio,kantara chapter 1,kantara_chapter_1,100.0,accept
+youtube_trailer,Kantara Chapter 1 Trailer - Tamil | Rishab Shetty | Rukmini | Vijay Kiragandur | Hombale Films,kantara_chapter_1,partial_ratio,kantara chapter 1,kantara_chapter_1,100.0,accept
+youtube_trailer,L2E Empuraan Trailer (Malayalam) | Mohanlal | Prithviraj Sukumaran | Murali Gopy | March 27 Release,l2_empuraan,partial_ratio,l2e empuraan,l2_empuraan,90.9,needs_review
+youtube_trailer,Lokah Chapter 1: Chandra | Official Trailer | Kalyani | Naslen | Dominic Arun | Nimish Ravi,lokah_chapter_1,partial_ratio,lokah chapter 1 chandra,lokah_chapter_1,100.0,accept
+youtube_trailer,Peddi Official Trailer (Telugu) | Ram Charan | Janhvi Kapoor | A R Rahman | Buchi Babu Sana,peddi,partial_ratio,peddi,peddi,100.0,accept
+youtube_trailer,"RAID 2 (TRAILER): Ajay D | Riteish D | Vaani K | Raj K | Abhishek P | Kumar M | Bhushan K, Krishan K",raid_2,partial_ratio,raid 2 ajay d,raid_2,100.0,accept
+youtube_trailer,Saiyaara | Official Trailer | Ahaan Panday | Aneet Padda | Mohit Suri,saiyaara,partial_ratio,saiyaara,saiyaara,100.0,accept
+youtube_trailer,Sitaare Zameen Par | Official Trailer | Aamir Khan | Genelia Deshmukh | 20th June 2025,sitaare_zameen_par,partial_ratio,sitaare zameen par,sitaare_zameen_par,100.0,accept
+wiki_yearly_table,Dhurandhar,,token_sort_ratio,dhurandhar,dhurandhar_the_revenge,62.5,reject
+wiki_yearly_table,Kantara: Chapter 1,,token_sort_ratio,kantara chapter 1,kantara_chapter_1,100.0,accept
+wiki_yearly_table,Chhaava,,token_sort_ratio,chhaava,chhaava,100.0,accept
+wiki_yearly_table,Saiyaara,,token_sort_ratio,saiyaara,saiyaara,100.0,accept
+wiki_yearly_table,Lokah Chapter 1: Chandra,,token_sort_ratio,lokah chapter 1 chandra,lokah_chapter_1,100.0,accept
+wiki_yearly_table,L2: Empuraan,,token_sort_ratio,l2 empuraan,l2_empuraan,100.0,accept
+wiki_yearly_table,Dhurandhar: The Revenge,,token_sort_ratio,dhurandhar the revenge,dhurandhar_the_revenge,100.0,accept
+wiki_yearly_table,Peddi,,token_sort_ratio,peddi,peddi,100.0,accept

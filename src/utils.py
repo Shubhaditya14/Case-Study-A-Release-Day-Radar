@@ -215,6 +215,14 @@ def _read_usage():
     return {}
 
 
+def _write_usage(usage):
+    """Write to a temp file, then swap it in with one atomic rename, so another script reading
+    the file at the same moment never sees a half-written (broken) JSON file."""
+    tmp = QUOTA_FILE.with_suffix(".tmp")
+    tmp.write_text(json.dumps(usage, indent=2))
+    os.replace(tmp, QUOTA_FILE)
+
+
 def _reserve_units(units):
     """Add units to today's total, or raise if that would pass the budget. Runs under a file lock."""
     QUOTA_FILE.parent.mkdir(parents=True, exist_ok=True)
@@ -235,7 +243,7 @@ def _reserve_units(units):
             )
 
         usage[today] = used + units
-        QUOTA_FILE.write_text(json.dumps(usage, indent=2))
+        _write_usage(usage)
         return usage[today]
 
 
@@ -246,10 +254,10 @@ def _mark_quota_full():
             fcntl.flock(lock, fcntl.LOCK_EX)
         usage = _read_usage()
         usage[_pacific_today()] = youtube_daily_budget()
-        QUOTA_FILE.write_text(json.dumps(usage, indent=2))
+        _write_usage(usage)
 
 
-def youtube_get(endpoint, params, max_tries=3, pause_s=1.0):
+def youtube_get(endpoint, params, max_tries=5, pause_s=1.0):
     """Call one YouTube Data API endpoint (e.g. "videos") with the quota guard. Returns parsed JSON."""
     if endpoint not in YT_COSTS:
         raise ValueError(f"Unknown YouTube endpoint '{endpoint}' — add its cost to YT_COSTS first")
@@ -271,7 +279,11 @@ def youtube_get(endpoint, params, max_tries=3, pause_s=1.0):
             _mark_quota_full()
             raise YouTubeQuotaExceeded("Google reports the YouTube quota is used up for today.")
 
-        retryable = response.status_code == 429 or response.status_code >= 500
+        # 400 "processingFailure" is YouTube's own temporary error on deep comment pages
+        # (its message says "this can be a transient error"), so we treat it like a 5xx.
+        transient_400 = response.status_code == 400 and (
+            "processingFailure" in response.text or "can be a transient error" in response.text)
+        retryable = response.status_code == 429 or response.status_code >= 500 or transient_400
         if not retryable or attempt == max_tries:
             raise RuntimeError(f"YouTube {endpoint} failed {response.status_code}: {response.text[:300]}")
 
