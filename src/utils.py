@@ -13,6 +13,7 @@ import os
 import time
 from datetime import datetime, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import requests
 from dotenv import load_dotenv
@@ -107,6 +108,10 @@ def now_utc_iso():
 # We wait and try again a few times, doubling the wait each time,
 # instead of hammering the server or crashing on the first hiccup.
 def http_get_json(url, params=None, headers=None, max_tries=4, pause_s=1.0):
+    # YouTube must go through youtube_get(), which enforces the daily quota limit.
+    if "googleapis.com/youtube" in url:
+        raise RuntimeError("Use youtube_get() for YouTube calls — it enforces the 10,000-unit limit")
+
     wait = pause_s
     for attempt in range(1, max_tries + 1):
         response = requests.get(url, params=params, headers=headers, timeout=30)
@@ -125,30 +130,138 @@ def http_get_json(url, params=None, headers=None, max_tries=4, pause_s=1.0):
         wait = wait * 2
 
 
-# --- YouTube quota tracker ------------------------------------------------
-# YouTube gives 10,000 units per day (resets midnight Pacific time).
-# videos.list / commentThreads.list = 1 unit, search.list = 100 units.
-# We keep a running total per day in data/raw/youtube_quota.json.
-YT_DAILY_LIMIT = 10_000
+# --- YouTube quota guard --------------------------------------------------
+# YouTube gives 10,000 units per day per Google Cloud project, and the day
+# resets at midnight PACIFIC time (not IST, not UTC).
+#
+# Hard rule: no code in this repo may spend more than 10,000 units in one
+# Pacific day. We enforce it like this:
+#   1. youtube_get() is the ONLY way to call YouTube. http_get_json() refuses
+#      YouTube URLs, so nobody can bypass the guard by accident.
+#   2. Each call's cost is looked up BEFORE it is sent. Unknown endpoints are
+#      refused, so a cost can never be guessed wrong.
+#   3. The units are reserved (written to the quota file) BEFORE the request
+#      goes out. If the reservation would pass the limit, the call is never
+#      made. Failed requests stay counted, because Google charges them too.
+#   4. Every retry is a new request, so it reserves its own units.
+#   5. A file lock stops two scripts running at once from both squeezing
+#      under the limit at the same moment.
+#   6. If Google itself says the quota is used up, we mark today as full
+#      so no later script in the same day even tries.
+YT_HARD_LIMIT = 10_000
+
+# Cost in units per call, from https://developers.google.com/youtube/v3/determine_quota_cost
+YT_COSTS = {
+    "videos": 1,
+    "commentThreads": 1,
+    "channels": 1,
+    "playlistItems": 1,
+    "search": 100,
+}
+
+YT_BASE = "https://www.googleapis.com/youtube/v3/"
+QUOTA_LOCK = DATA_RAW / "youtube_quota.lock"
+
+try:
+    import fcntl  # file locking on macOS / Linux
+except ImportError:  # Windows has no fcntl; there we rely on running one script at a time
+    fcntl = None
 
 
-def add_youtube_quota(units):
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    usage = {}
+class YouTubeQuotaExceeded(RuntimeError):
+    """Raised instead of making a call that would go past the daily limit."""
+
+
+def youtube_daily_budget():
+    """The limit we enforce. .env may LOWER it (YT_DAILY_BUDGET=5000) but can never raise it above 10,000."""
+    requested = os.getenv("YT_DAILY_BUDGET", "").strip()
+    if requested.isdigit():
+        return min(int(requested), YT_HARD_LIMIT)
+    return YT_HARD_LIMIT
+
+
+def _pacific_today():
+    # The quota day follows Pacific time, so "today" must too.
+    return datetime.now(ZoneInfo("America/Los_Angeles")).strftime("%Y-%m-%d")
+
+
+def _read_usage():
     if QUOTA_FILE.exists():
-        usage = json.loads(QUOTA_FILE.read_text())
-    usage[today] = usage.get(today, 0) + units
+        return json.loads(QUOTA_FILE.read_text())
+    return {}
 
+
+def _reserve_units(units):
+    """Add units to today's total, or raise if that would pass the budget. Runs under a file lock."""
     QUOTA_FILE.parent.mkdir(parents=True, exist_ok=True)
-    QUOTA_FILE.write_text(json.dumps(usage, indent=2))
+    budget = youtube_daily_budget()
 
-    if usage[today] > YT_DAILY_LIMIT * 0.9:
-        print(f"  WARNING: YouTube quota at {usage[today]}/{YT_DAILY_LIMIT} today")
-    return usage[today]
+    with open(QUOTA_LOCK, "w") as lock:
+        if fcntl:
+            fcntl.flock(lock, fcntl.LOCK_EX)  # wait here if another script holds the lock
+
+        usage = _read_usage()
+        today = _pacific_today()
+        used = usage.get(today, 0)
+
+        if used + units > budget:
+            raise YouTubeQuotaExceeded(
+                f"Refusing YouTube call: {used} + {units} units would pass today's limit of {budget} "
+                f"(resets midnight Pacific time)."
+            )
+
+        usage[today] = used + units
+        QUOTA_FILE.write_text(json.dumps(usage, indent=2))
+        return usage[today]
+
+
+def _mark_quota_full():
+    """Google said we are out of quota: record today as full so nothing else tries."""
+    with open(QUOTA_LOCK, "w") as lock:
+        if fcntl:
+            fcntl.flock(lock, fcntl.LOCK_EX)
+        usage = _read_usage()
+        usage[_pacific_today()] = youtube_daily_budget()
+        QUOTA_FILE.write_text(json.dumps(usage, indent=2))
+
+
+def youtube_get(endpoint, params, max_tries=3, pause_s=1.0):
+    """Call one YouTube Data API endpoint (e.g. "videos") with the quota guard. Returns parsed JSON."""
+    if endpoint not in YT_COSTS:
+        raise ValueError(f"Unknown YouTube endpoint '{endpoint}' — add its cost to YT_COSTS first")
+    cost = YT_COSTS[endpoint]
+    url = YT_BASE + endpoint
+
+    wait = pause_s
+    for attempt in range(1, max_tries + 1):
+        used = _reserve_units(cost)  # raises BEFORE sending if we would go over
+        response = requests.get(url, params=params, timeout=30)
+
+        if response.status_code == 200:
+            time.sleep(pause_s)
+            return response.json()
+
+        # 403 with reason quotaExceeded = Google's own counter is full (it may include
+        # usage from other apps in the same Cloud project that our file can't see).
+        if response.status_code == 403 and "quotaExceeded" in response.text:
+            _mark_quota_full()
+            raise YouTubeQuotaExceeded("Google reports the YouTube quota is used up for today.")
+
+        retryable = response.status_code == 429 or response.status_code >= 500
+        if not retryable or attempt == max_tries:
+            raise RuntimeError(f"YouTube {endpoint} failed {response.status_code}: {response.text[:300]}")
+
+        print(f"  HTTP {response.status_code}, retry {attempt}/{max_tries} in {wait:.0f}s (quota used today: {used})")
+        time.sleep(wait)
+        wait = wait * 2
 
 
 def youtube_quota_today():
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    if not QUOTA_FILE.exists():
-        return 0
-    return json.loads(QUOTA_FILE.read_text()).get(today, 0)
+    """Units spent so far in the current Pacific day."""
+    return _read_usage().get(_pacific_today(), 0)
+
+
+def print_youtube_quota():
+    used = youtube_quota_today()
+    budget = youtube_daily_budget()
+    print(f"YouTube quota today: {used:,} / {budget:,} units ({budget - used:,} left)")

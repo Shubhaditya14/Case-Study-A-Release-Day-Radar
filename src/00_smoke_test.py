@@ -10,7 +10,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
-from utils import http_get_json, add_youtube_quota  # noqa: E402
+from utils import http_get_json, youtube_get, youtube_quota_today  # noqa: E402
 
 TEST_FILM = "Chhaava"
 WIKI_API = "https://en.wikipedia.org/w/api.php"
@@ -47,8 +47,8 @@ def test_youtube():
     # videos.list costs 1 unit. We use a well-known public video ID just to prove the key works;
     # finding each film's real trailer ID happens in Phase 2.
     params = {"key": key, "part": "snippet,statistics", "id": "dQw4w9WgXcQ"}
-    data = http_get_json("https://www.googleapis.com/youtube/v3/videos", params=params)
-    used = add_youtube_quota(1)
+    data = youtube_get("videos", params)
+    used = youtube_quota_today()
     item = data["items"][0]
     return f"key works; test video has {int(item['statistics']['viewCount']):,} views (quota used today: {used})"
 
