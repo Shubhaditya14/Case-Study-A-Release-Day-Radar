@@ -1,100 +1,77 @@
-# Release Day Radar — Case Study A
+# Release Day Radar
 
-*Data and Storytelling · Module 1: Understanding Data — Types, Sources and Preparation*
+Case Study A for Data and Storytelling, Module 1. Team: Sata and Dory Letting.
 
-**Repo:** https://github.com/Shubhaditya14/Case-Study-A-Release-Day-Radar
+This project checks whether trailer buzz on YouTube predicted first-weekend box office for 10 Hindi and regional films released in 2025–26.
 
-**Question:** Did trailer-week YouTube engagement predict first-weekend collections for 10 Hindi and regional films released in 2025–26, and does audience sentiment add anything beyond raw views?
+The report is in `report/report.pdf` (and `report/report.docx`).
 
-**Answer, in brief:**
-- Trailer reach is a **loose** hint: Spearman ρ = 0.65, n = 10.
-- Comment sentiment adds **nothing**.
-- Comment counts can be **gamed**: Raid 2's pre-publish comments are 89% copy-paste.
-- Make the screens call on Friday's collections. The full write-up is in `report/report.pdf` (also `report/report.docx`).
+## Requirements
 
----
+- macOS or Linux
+- uv (for Python 3.12)
+- Java 17 or newer (for PySpark)
+- Docker (for MySQL 8)
+- Graphviz
 
-## 1. What you need
-
-| Tool | Version we used | Why |
-|---|---|---|
-| macOS or Linux | macOS 27 | `make`, shell |
-| [uv](https://docs.astral.sh/uv/) | any | creates the Python 3.12 virtual environment |
-| Java | 17+ (we used 21) | PySpark runs on the JVM |
-| Docker Desktop **or** MySQL 8 | MySQL 8.0.46 in Docker | relational model + SQL queries |
-| Graphviz (`dot`) | any | ER and pipeline diagrams |
-
-## 2. Set up (once)
+## Setup
 
 ```bash
 git clone https://github.com/Shubhaditya14/Case-Study-A-Release-Day-Radar.git
 cd Case-Study-A-Release-Day-Radar
-make setup                    # .venv with Python 3.12 + requirements.txt
-cp .env.example .env          # then fill in the values below
+make setup
+cp .env.example .env
 ```
 
-| `.env` variable | How to get it |
-|---|---|
-| `YT_API_KEY` | Google Cloud Console → new project → enable **YouTube Data API v3** → Credentials → API key (MANUAL_STEPS.md M1) |
-| `TMDB_API_KEY` | themoviedb.org → Settings → API → request a developer key; use the short "API Key" (M2) |
-| `MYSQL_*` | `docker run -d --name radar-mysql -p 3307:3306 -e MYSQL_ROOT_PASSWORD=<pw> -e MYSQL_DATABASE=release_day_radar -e MYSQL_USER=radar -e MYSQL_PASSWORD=<pw> mysql:8.0`, then `MYSQL_PORT=3307` (M3) |
-| `YT_DAILY_BUDGET` | optional; can only **lower** the 10,000-unit daily cap |
+Fill in `.env`:
 
-**Files you add by hand** (they can't be downloaded by script):
+- `YT_API_KEY`: a YouTube Data API v3 key from Google Cloud Console
+- `TMDB_API_KEY`: an API key from themoviedb.org
+- `MYSQL_*`: your MySQL details
 
-- `data/manual/imdb_50k.csv`: the IMDb 50K labelled reviews from Homework 1.2 ([Kaggle copy](https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews)), renamed to this name.
-- `data/manual/trends_<film_id>.csv`: one Google Trends export per film. Ready-made links with the exact region, dates and term are in MANUAL_STEPS.md M7. These 10 files are already committed.
-
-Check that every source answers: `make smoke`
-
-## 3. Run everything
+Start MySQL in Docker:
 
 ```bash
-docker start radar-mysql      # if it isn't running
-make all                      # collect → clean → spark → sql → charts
+docker run -d --name radar-mysql -p 3307:3306 \
+  -e MYSQL_ROOT_PASSWORD=yourpassword -e MYSQL_DATABASE=release_day_radar \
+  -e MYSQL_USER=radar -e MYSQL_PASSWORD=yourpassword mysql:8.0
 ```
 
-| Target | Scripts | Notes |
-|---|---|---|
-| `make collect` | `01`–`04` | Wikipedia, TMDb, YouTube, then flatten with `json_normalize`. **Needs about 4,500 YouTube quota units** (all comments on 10 trailers). The comment download resumes where it stopped if the daily cap is hit. Raw files are cached, so reruns cost 0 units. |
-| `make clean` | `05`–`07` | Match titles, type-cast, VADER (about 3 min) |
-| `make spark` | `08` | PySpark local mode, 400k texts (about 2 min) |
-| `make sql` | `09` | Rebuilds the schema, loads 5 tables, runs `sql/queries.sql` |
-| `make charts` | `10`–`12` | Analysis, 6 charts, source register / inventory / V profile |
-| `make zip` | — | `Sata_and_Dory_Letting_FinalSubmission.zip` |
+Copy the IMDb 50K reviews CSV to `data/manual/imdb_50k.csv`.
 
-Raw data in `data/raw/` is **gitignored**: it holds commenter usernames, and it is 370 MB. `make collect` rebuilds it from the APIs. The full cleaned comment table (45 MB) is also gitignored. A hashed 2,000-row sample is committed as `data/clean/comments_sample.csv`.
+The Google Trends CSVs are already in `data/manual/`.
 
-## 4. Outputs
+## Run
 
-| Path | What |
-|---|---|
-| `report/report.pdf`, `report/report.docx` | The final report (7-page body + appendices) |
-| `outputs/charts/` | 6 charts, each titled with its finding |
-| `outputs/cleaning_log.csv` | Every cleaning decision, with real row counts (each script appends its own) |
-| `outputs/tables/` | Source register, data inventory, V profile, SQL results, Spark counts, correlations, Buzz Index test, bot checks |
-| `data/clean/` | Final tables: films, trailers, box_office, trends_daily, comments sample, film_matches |
-| `notebooks/` | `spark_text_job.ipynb` (executed, outputs saved), `exploration.ipynb` |
-
-## 5. Repository map
-
-```
-src/00_smoke_test.py         every source returns data for one film
-src/00_verify_films.py       Phase 1: which of 18 candidate films are usable
-src/01–04                    collect + flatten          src/05  fuzzy title matching
-src/06                       cleaning & type casting    src/07  VADER (validated on IMDb first)
-src/08                       PySpark text job           src/09  MySQL load + queries
-src/10                       analysis + Buzz Index      src/11  charts
-src/12                       register / inventory / V profile
-src/13                       Sheets-vs-pandas check
-src/utils.py                 paths, cleaning log, polite HTTP, YouTube quota guard
-sql/schema.sql, sql/queries.sql
-MANUAL_STEPS.md              the human steps (keys, approvals, Google Sheets)
+```bash
+make smoke   # check every data source works
+make all     # run the whole pipeline
 ```
 
-## 6. Ground rules we followed
+Or run one stage at a time:
 
-- **Official APIs only.** No IMDb or Sacnilk scraping, nothing behind a login. The MediaWiki API is called with a descriptive User-Agent and a 1-second pause between calls.
-- **YouTube quota hard-capped** at 10,000 units per Pacific day, in `src/utils.py`.
-- **Privacy.** Author names, channel IDs and profile URLs are dropped in step 04 and never leave `data/raw/`.
-- **No invented numbers.** Every first-weekend figure is checked word for word against the downloaded Wikipedia page, and every number in the report is filled from pipeline outputs.
+```bash
+make collect   # download data (uses about 4,500 YouTube quota units)
+make clean     # match film names, clean data, sentiment
+make spark     # PySpark text job
+make sql       # load MySQL and run the queries
+make charts    # analysis and charts
+make zip       # build the submission zip
+```
+
+## Folders
+
+- `src/`: the Python scripts, numbered in the order they run
+- `sql/`: database schema and queries
+- `notebooks/`: the Spark and exploration notebooks
+- `data/manual/`: hand-made inputs (film list, Trends CSVs)
+- `data/clean/`: the final cleaned tables
+- `outputs/charts/`: the charts
+- `outputs/tables/`: result tables
+- `outputs/cleaning_log.csv`: every cleaning decision
+- `report/`: the final report
+
+## Notes
+
+- `data/raw/` is not in the repo. It holds commenter usernames and is about 370 MB. `make collect` downloads it again.
+- API keys stay in `.env`, which is not committed.
