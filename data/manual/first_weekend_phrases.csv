@@ -1,0 +1,11 @@
+film_id,phrase,note
+chhaava,₹ 157 crore (US$17 million)– ₹ 164 crore (US$18 million) worldwide in its opening weekend,range → midpoint; the US$ in brackets is Wikipedia's own conversion and is ignored
+saiyaara,over ₹119 crore (US$14 million) globally,same sentence also gives ₹83 crore India net — we use the global figure for consistency
+sitaare_zameen_par,"During its opening weekend, it grossed between ₹95–96 crore",worldwide/India not stated — flagged check_scope
+housefull_5,₹91.83 crore over its opening weekend,domestic figure only (the sentence says domestic box office) — flagged domestic_only
+raid_2,The film grossed over ₹100 crore including ₹14 crore from international markets in its opening weekend,first figure is the total; the ₹14 crore is an overseas sub-total and is ignored
+dhurandhar_the_revenge,The global opening weekend gross was over $80 million,USD only — converted to ₹ crore at the release-date rate in 06_clean_typecast.py
+kantara_chapter_1,grossed ₹325–335 crore in its extended 4-day first weekend,range → midpoint
+lokah_chapter_1,collect ₹65.50 crore in its first four-day weekend run worldwide,
+l2_empuraan,to a worldwide gross of ₹175 crore (4 days),same sentence gives Saturday/Sunday figures — we use the stated 4-day worldwide total
+peddi,the global gross milestone of ₹233 crore across its initial extended opening weekend,same sentence gives ₹187 crore domestic — we use the global figure

@@ -1,0 +1,3 @@
+id,stage,problem_found,rows_affected,action_taken,why
+1,01_collect_wikipedia,"Wikipedia gives opening figures as free text in inconsistent forms (day vs weekend, worldwide vs India, ranges, USD)",38,Saved all 38 candidate sentences; one verified phrase per film chosen in data/manual/first_weekend_phrases.csv,No single regex picks the right figure on every page; a human choice that the script verifies word-for-word against the source is transparent and cannot invent numbers
+2,01_collect_wikipedia,Infobox has no Budget field for some films,1,Kept films; budget left missing (NULL) for them,"Budget is a confounder we describe, not our outcome — dropping films for it would shrink an already small n"
