@@ -193,7 +193,7 @@ def build_box_office(films_clean, infobox, weekend_raw, year_grossers, matches, 
     log_cleaning(STAGE, "First weekends are 3 days (Friday release) for some films and 4 days (Thursday release) for others",
                  int(days4), "Added first_weekend_per_day = first-weekend gross ÷ number of days",
                  "Comparing a 4-day total with a 3-day total would favour Thursday releases by about a third")
-    domestic = (weekend_raw.scope_flag != "ok").sum()
+    domestic = weekend_raw.scope_flag.isin(["domestic_only", "check_scope"]).sum()
     log_cleaning(STAGE, "Two weekend figures are not clearly worldwide (Housefull 5 domestic only; Sitaare Zameen Par scope not stated)",
                  int(domestic), "Kept, flagged in the note column, and tested with/without them in the analysis",
                  "Dropping them leaves n = 8; keeping them flagged lets us show whether they change the result")

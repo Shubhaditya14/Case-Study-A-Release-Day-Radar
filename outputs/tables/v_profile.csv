@@ -13,8 +13,8 @@ Volume,Spark job word rows after explode,14324736.0,rows (4a in spark_stage_coun
 Variety,Formats,4.0,"HTML-in-JSON (Wikipedia), JSON (YouTube, TMDb, Frankfurter), CSV (Trends, IMDb), free text (comments, reviews)"
 Variety,Sources,6.0,"Wikipedia, TMDb, YouTube, Google Trends, Frankfurter, IMDb 50K"
 Variety,Title strings from 5 sources tied to the 10 film_ids,56.0,strings (data/clean/film_matches.csv)
-Velocity,Median share of a trailer's comments posted in its first 72 h,0.762,share
-Velocity,Highest comments/hour in any single hour (first 72 h),13707.0,comments/hour
-Velocity,Mean comments/hour over first 72 h (median film),293.6,comments/hour
+Velocity,Median share of a trailer's comments posted in its first 72 h,0.781,share
+Velocity,Highest comments/hour in any single hour (first 72 h),8780.0,comments/hour
+Velocity,Mean comments/hour over first 72 h (median film),316.2,comments/hour
 Velocity,"Google Trends peak, days after release (median)",0.0,days
 Velocity,Google Trends: days from peak until interest halves (median),5.0,days

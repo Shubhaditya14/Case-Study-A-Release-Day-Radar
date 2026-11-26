@@ -27,7 +27,7 @@ import pandas as pd
 from scipy.stats import spearmanr
 
 sys.path.insert(0, os.path.dirname(__file__))
-from utils import DATA_CLEAN, OUT_TABLES, log_cleaning, reset_cleaning_log_for_stage  # noqa: E402
+from utils import DATA_CLEAN, OUT_TABLES, log_cleaning, reset_cleaning_log_for_stage, trailer_start_times  # noqa: E402
 
 STAGE = "10_analysis"
 FEATURES = ["total_views", "like_ratio", "comments_7d", "comments_per_hour", "sentiment_7d"]
@@ -53,8 +53,8 @@ def build_features():
     f["total_views"] = trailers.groupby("film_id")["views"].sum()
     f["like_ratio"] = main["likes"] / main["views"]
 
-    comments = comments.join(main["publish_ts"], on="film_id")
-    comments["hours_after"] = (comments.published_ts - comments.publish_ts).dt.total_seconds() / 3600
+    start = trailer_start_times()   # earlier of API publish time and first comment (see utils)
+    comments["hours_after"] = (comments.published_ts - comments.film_id.map(start)).dt.total_seconds() / 3600
     week = comments[(comments.hours_after >= 0) & (comments.hours_after < 24 * 7)]
     f["comments_7d"] = week.groupby("film_id").size()
     f["comments_per_hour"] = comments[(comments.hours_after >= 0) & (comments.hours_after < 72)].groupby("film_id").size() / 72
@@ -74,9 +74,11 @@ def build_features():
         f[f"z_{col}"] = zscore(np.log10(f[col]) if col in ["total_views", "comments_7d", "comments_per_hour"] else f[col])
     f["minmax_outcome"] = (f[OUTCOME] - f[OUTCOME].min()) / (f[OUTCOME].max() - f[OUTCOME].min())
 
-    pre = comments[comments.hours_after < 0]
-    log_cleaning(STAGE, "Comments time-stamped BEFORE their trailer's publish time", len(pre),
-                 "Excluded from trailer-week features", "Impossible timestamps (clock/timezone edge cases) cannot be trailer-week reactions")
+    api_start = main["publish_ts"]
+    early = comments[comments.published_ts < comments.film_id.map(api_start)]
+    log_cleaning(STAGE, "Comments posted BEFORE the trailer's official API publish time (Raid 2: up to 20.7 h early; Kantara, Dhurandhar 2: minutes)",
+                 len(early), "Trailer window now starts at the earlier of the API publish time and the first comment",
+                 "The video was viewable before its 'published' stamp (e.g. a scheduled premiere); starting late would cut off Raid 2's real first day")
     log_cleaning(STAGE, "Views (millions), crores and sentiment (−1..+1) are on very different scales", len(f),
                  "z-scored every feature and the outcome; views and comment counts log10-scaled first",
                  "Lets one chart and one index combine them; log stops the 130M-view film dominating")

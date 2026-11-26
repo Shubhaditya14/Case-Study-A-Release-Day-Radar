@@ -15,7 +15,7 @@ import sys
 import pandas as pd
 
 sys.path.insert(0, os.path.dirname(__file__))
-from utils import DATA_CLEAN, DATA_MANUAL, DATA_RAW, OUT_TABLES, SOURCE_LOG  # noqa: E402
+from utils import DATA_CLEAN, DATA_MANUAL, DATA_RAW, OUT_TABLES, SOURCE_LOG, trailer_start_times  # noqa: E402
 
 TERMS = {
     "Wikipedia": "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use (API etiquette: https://www.mediawiki.org/wiki/API:Etiquette)",
@@ -108,8 +108,7 @@ def data_inventory():
 
 def velocity():
     comments = pd.read_csv(DATA_CLEAN / "comments.csv", usecols=["film_id", "published_ts"], parse_dates=["published_ts"])
-    trailers = pd.read_csv(DATA_CLEAN / "trailers.csv", parse_dates=["publish_ts"])
-    main = trailers[trailers.is_main_trailer].set_index("film_id")["publish_ts"]
+    main = trailer_start_times()   # earlier of API publish time and first comment
     films = pd.read_csv(DATA_CLEAN / "films.csv", parse_dates=["release_date"]).set_index("film_id")
     trends = pd.read_csv(DATA_CLEAN / "trends_daily.csv", parse_dates=["date"])
 

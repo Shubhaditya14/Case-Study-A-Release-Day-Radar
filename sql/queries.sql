@@ -25,13 +25,19 @@ ORDER BY total_trailer_views DESC;
 
 -- Q3. (JOIN + GROUP BY) Velocity: how many comments arrived in the first 72 hours after the
 --     main trailer went live, and the average comments per hour in that window.
+--     "Went live" = the earlier of the API publish time and the first comment (Raid 2's trailer
+--     was commented on 20.7 h before its official publish time).
 SELECT c.film_id,
        COUNT(*)                                   AS comments_first_72h,
        ROUND(COUNT(*) / 72, 1)                    AS comments_per_hour_72h
 FROM comments c
-JOIN trailers t ON t.film_id = c.film_id AND t.is_main_trailer = 1
-WHERE c.published_ts >= t.publish_ts
-  AND c.published_ts <  t.publish_ts + INTERVAL 72 HOUR
+JOIN (SELECT t.film_id, LEAST(t.publish_ts, MIN(c2.published_ts)) AS start_ts
+      FROM trailers t
+      JOIN comments c2 ON c2.film_id = t.film_id
+      WHERE t.is_main_trailer = 1
+      GROUP BY t.film_id, t.publish_ts) s ON s.film_id = c.film_id
+WHERE c.published_ts >= s.start_ts
+  AND c.published_ts <  s.start_ts + INTERVAL 72 HOUR
 GROUP BY c.film_id
 ORDER BY comments_first_72h DESC;
 

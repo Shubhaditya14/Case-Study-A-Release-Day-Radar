@@ -301,3 +301,22 @@ def print_youtube_quota():
     used = youtube_quota_today()
     budget = youtube_daily_budget()
     print(f"YouTube quota today: {used:,} / {budget:,} units ({budget - used:,} left)")
+
+
+# --- When did each trailer's buzz really start? ---------------------------
+def trailer_start_times():
+    """
+    Start of each film's trailer window = the EARLIER of
+      (a) the main trailer's publish time from the YouTube API, and
+      (b) the first comment on it.
+    Why: Raid 2 has 16,245 comments up to 20.7 h before its API publish time (the video was
+    viewable earlier, e.g. as a scheduled premiere). Using (a) alone would cut off its first day.
+    Returns a Series: film_id → start timestamp (IST, timezone-naive).
+    """
+    import pandas as pd  # local import keeps utils light for scripts that don't need pandas
+
+    trailers = pd.read_csv(DATA_CLEAN / "trailers.csv", parse_dates=["publish_ts"])
+    main = trailers[trailers.is_main_trailer].set_index("film_id")["publish_ts"]
+    comments = pd.read_csv(DATA_CLEAN / "comments.csv", usecols=["film_id", "published_ts"], parse_dates=["published_ts"])
+    first_comment = comments.groupby("film_id")["published_ts"].min()
+    return pd.concat([main, first_comment], axis=1).min(axis=1)

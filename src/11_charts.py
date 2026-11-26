@@ -18,7 +18,7 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, os.path.dirname(__file__))
-from utils import DATA_CLEAN, OUT_CHARTS, OUT_TABLES  # noqa: E402
+from utils import DATA_CLEAN, OUT_CHARTS, OUT_TABLES, trailer_start_times  # noqa: E402
 
 BLUE, ORANGE = "#2a78d6", "#eb6834"          # categorical slots 1 and 2
 GREY, GREY_LIGHT = "#8a8985", "#d8d7d2"
@@ -130,8 +130,7 @@ def chart_sentiment(f, corr):
 def chart_velocity(vel):
     """Comment velocity: share of each film's first-72h comments per hour, small multiples."""
     comments = pd.read_csv(DATA_CLEAN / "comments.csv", usecols=["film_id", "published_ts"], parse_dates=["published_ts"])
-    trailers = pd.read_csv(DATA_CLEAN / "trailers.csv", parse_dates=["publish_ts"])
-    main = trailers[trailers.is_main_trailer].set_index("film_id")["publish_ts"]
+    main = trailer_start_times()
     films = pd.read_csv(DATA_CLEAN / "films.csv").set_index("film_id")
     comments["h"] = ((comments.published_ts - comments.film_id.map(main)).dt.total_seconds() // 3600)
     first = comments[(comments.h >= 0) & (comments.h < 72)]
