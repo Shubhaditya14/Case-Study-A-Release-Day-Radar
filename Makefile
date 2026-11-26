@@ -56,7 +56,7 @@ zip:
 	rm -f TeamName_FinalSubmission.zip
 	zip -r TeamName_FinalSubmission.zip README.md MANUAL_STEPS.md QA_PREP.md requirements.txt Makefile .env.example \
 	    docs src sql notebooks outputs report data/clean data/manual \
-	    -x "data/clean/comments.csv" "data/manual/imdb_50k.csv" "*.DS_Store" "report/report.html"
+	    -x "data/clean/comments.csv" "data/manual/imdb_50k.csv" "*.DS_Store" "report/report.html" "report/report.md" "report/slides.md" "*/.claude/*"
 
 # Start the cleaning log fresh (scripts re-append their own rows on the next run)
 reset:
