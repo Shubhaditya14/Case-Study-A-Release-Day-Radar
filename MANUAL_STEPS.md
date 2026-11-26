@@ -110,7 +110,15 @@ Reply `done` in the Claude session after each one; Claude runs the check and tic
 
 ## Phase 3 — Clean and analyse
 
-- [ ] **M9 — Confirm uncertain film-name matches (score < 95)**
+- [ ] **M9 — Confirm uncertain film-name matches (score 70–94)**
+  - WHY: rubric "Cleaning and preprocessing" — film-name matching must be justified; a wrong join corrupts every number after it.
+  - DO THIS:
+    1. Open `data/manual/match_review.csv` (2 rows). For each row, read `source_title` and `best_film_id`.
+    2. If it is the same film, type `yes` in the `confirmed` column; if not, type `no`.
+    3. Save the file as `data/manual/match_confirmations.csv` (same columns).
+  - PUT RESULT HERE: `data/manual/match_confirmations.csv`
+  - HOW I'LL CHECK: re-run `src/05_match_films.py`; it must report "human confirmations applied: 2" and 0 rows left as needs_review.
+  - TIME: ~2 min
 - [ ] **M10 — Do the ₹-crore cleaning step in Google Sheets + screenshots into `report/img/`**
 
 ## Phase 4 — Story and submit
