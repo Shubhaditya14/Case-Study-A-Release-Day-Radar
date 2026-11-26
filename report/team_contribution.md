@@ -4,13 +4,14 @@
 
 **Team name:** [[TODO-HUMAN]]
 
-| Member | GitHub username | Role | Main contributions (files / steps) | Contribution % |
-|---|---|---|---|---|
-| Shubhaditya | @Shubhaditya14 | [[TODO-HUMAN: e.g. Pipeline lead]] | [[TODO-HUMAN: e.g. API keys (M1–M3), film approval (M6), Trends exports (M7), match checks (M9)]] | [[TODO-HUMAN]] |
-| [[TODO-HUMAN: name]] | [[TODO-HUMAN]] | [[TODO-HUMAN: e.g. SQL & data model]] | [[TODO-HUMAN: e.g. extra query in sql/queries.sql, ER diagram walkthrough]] | [[TODO-HUMAN]] |
-| [[TODO-HUMAN: name]] | [[TODO-HUMAN]] | [[TODO-HUMAN: e.g. Cleaning & spreadsheet]] | [[TODO-HUMAN: e.g. Google Sheets step (M10), cleaning-log narrative]] | [[TODO-HUMAN]] |
-| [[TODO-HUMAN: name]] | [[TODO-HUMAN]] | [[TODO-HUMAN: e.g. Story & presentation]] | [[TODO-HUMAN: e.g. slides, speaker script, Q&A rehearsal]] | [[TODO-HUMAN]] |
-| **Total** | | | | **100%** |
+| Member | USN | GitHub username | Role | Main contributions (files / steps) | Contribution % |
+|---|---|---|---|---|---|
+| Shubhaditya Bechan | 1RV23AI099 | @Shubhaditya14 | [[TODO-HUMAN: role]] | [[TODO-HUMAN: main contributions]] | [[TODO-HUMAN]] |
+| Punyashloka Mahapatra | 1RV23EC110 | [[TODO-HUMAN]] | [[TODO-HUMAN: role]] | [[TODO-HUMAN: main contributions]] | [[TODO-HUMAN]] |
+| Tanikonda Sai Karan | 1RV23IS129 | [[TODO-HUMAN]] | [[TODO-HUMAN: role]] | [[TODO-HUMAN: main contributions]] | [[TODO-HUMAN]] |
+| Manan Joshi | 1RV23CD029 | [[TODO-HUMAN]] | [[TODO-HUMAN: role]] | [[TODO-HUMAN: main contributions]] | [[TODO-HUMAN]] |
+| Wangchen T | 1RV23CY060 | [[TODO-HUMAN]] | [[TODO-HUMAN: role]] | [[TODO-HUMAN: main contributions]] | [[TODO-HUMAN]] |
+| **Total** | | | | | **100%** |
 
 **Suggested small commits for each teammate (M8: the rubric needs commits from every member):**
 

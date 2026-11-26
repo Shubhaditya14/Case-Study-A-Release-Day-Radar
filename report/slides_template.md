@@ -6,7 +6,7 @@
 - Whether comments sounded **positive added nothing** (ρ = {{num:rho_sent}})
 - Our best buzz score called **{{num:loo_hits}} of 10** openings, not enough to move screens on its own
 
-*Release Day Radar · Case Study A · [[TODO-HUMAN: team name]]*
+*Release Day Radar · Case Study A · [[TODO-HUMAN: team name]] · Shubhaditya Bechan, Punyashloka Mahapatra, Tanikonda Sai Karan, Manan Joshi, Wangchen T*
 
 ::: notes
 [0:00–0:40] Open with the answer. "If you remember one thing: trailer reach is a loose hint, trailer mood is noise, and the screens decision should still be made on Friday's collections." Say the three numbers slowly.
