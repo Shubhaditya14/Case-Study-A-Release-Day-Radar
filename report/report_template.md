@@ -2,7 +2,7 @@
 title: "Release Day Radar — Does trailer buzz predict the first weekend?"
 subtitle: "Case Study A · Data and Storytelling · Module 1"
 author: "Shubhaditya Bechan (1RV23AI099) · Punyashloka Mahapatra (1RV23EC110) · Tanikonda Sai Karan (1RV23IS129) · Manan Joshi (1RV23CD029) · Wangchen T (1RV23CY060)"
-date: "[[TODO-HUMAN: team name]] · November 2026"
+date: "Sata and Dory Telling · November 2026"
 ---
 
 <!-- GENERATED FILE: edit report/report_template.md, then run `make report`. Every number below is filled in by src/14_build_report.py from files in outputs/. -->

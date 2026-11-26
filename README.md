@@ -64,7 +64,7 @@ make all                      # collect → clean → spark → sql → charts �
 | `make sql` | `09` | Rebuilds the schema, loads 5 tables, runs `sql/queries.sql` |
 | `make charts` | `10`–`12` | Analysis, 6 charts, source register / inventory / V profile |
 | `make report` | `13`–`14` + pandoc | Fills the report/slides templates with pipeline numbers → `.docx`, `.pdf`, `.pptx` |
-| `make zip` | — | `TeamName_FinalSubmission.zip` |
+| `make zip` | — | `Sata_and_Dory_Telling_FinalSubmission.zip` |
 
 Raw data in `data/raw/` is **gitignored**: it holds commenter usernames, and it is 370 MB. `make collect` rebuilds it from the APIs. The full cleaned comment table (45 MB) is also gitignored. A hashed 2,000-row sample is committed as `data/clean/comments_sample.csv`.
 

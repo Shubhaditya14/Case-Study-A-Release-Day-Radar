@@ -51,10 +51,10 @@ report:
 	"$(CHROME)" --headless --disable-gpu --no-pdf-header-footer --print-to-pdf=report/report.pdf report/report.html
 	cd report && pandoc slides.md -o slides.pptx --resource-path=.:..
 
-# Build the submission zip (rename TeamName to your team name — manual step M13)
+# Build the submission zip for team "Sata and Dory Telling"
 zip:
-	rm -f TeamName_FinalSubmission.zip
-	zip -r TeamName_FinalSubmission.zip README.md MANUAL_STEPS.md QA_PREP.md requirements.txt Makefile .env.example \
+	rm -f Sata_and_Dory_Telling_FinalSubmission.zip
+	zip -r Sata_and_Dory_Telling_FinalSubmission.zip README.md MANUAL_STEPS.md QA_PREP.md requirements.txt Makefile .env.example \
 	    docs src sql notebooks outputs report data/clean data/manual \
 	    -x "data/clean/comments.csv" "data/manual/imdb_50k.csv" "*.DS_Store" "report/report.html" "report/report.md" "report/slides.md" "*/.claude/*"
 

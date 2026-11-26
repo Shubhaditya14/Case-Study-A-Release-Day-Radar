@@ -144,4 +144,4 @@ Reply `done` in the Claude session after each one; Claude runs the check and tic
 
 - [ ] **M11 — Fill in the team contribution split** → edit `report/team_contribution.md` (names, roles, %, totals 100). Also fill the team name in `report/report_template.md` and `report/slides_template.md`, then `make report`.
 - [ ] **M12 — Everyone reads `QA_PREP.md`; rehearse the 7-minute talk** with `report/speaker_script.md` (replace Speaker A–D with names). Slides: `report/slides.pptx` (10 slides, notes included).
-- [ ] **M13 — Rename and submit** → run `make report zip`, rename `TeamName_FinalSubmission.zip` to `<YourTeam>_FinalSubmission.zip`, submit it.
+- [ ] **M13 — Submit** → run `make report zip` and submit `Sata_and_Dory_Telling_FinalSubmission.zip` (team: Sata and Dory Telling).
