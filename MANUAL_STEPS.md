@@ -119,7 +119,26 @@ Reply `done` in the Claude session after each one; Claude runs the check and tic
   - PUT RESULT HERE: `data/manual/match_confirmations.csv`
   - HOW I'LL CHECK: re-run `src/05_match_films.py`; it must report "human confirmations applied: 2" and 0 rows left as needs_review.
   - TIME: ~2 min
-- [ ] **M10 — Do the ₹-crore cleaning step in Google Sheets + screenshots into `report/img/`**
+- [ ] **M10 — Do the ₹-crore cleaning step in Google Sheets + screenshots**
+  - WHY: rubric "Cleaning and preprocessing" + brief §4 "Spreadsheets and dataframes": one cleaning step in a spreadsheet, the same in pandas, compared.
+  - DO THIS (start a timer — we report how long it took):
+    1. Go to https://sheets.new → **File → Import → Upload** → `data/manual/spreadsheet_step_input.csv` → *Replace current sheet* → **Import data**. You get columns A `id`, B `label`, C `raw_text` (36 rows).
+    2. Type these headers in row 1: D1 `clean`, E1 `first_num`, F1 `second_num`, G1 `sheet_crore`.
+    3. Paste into **D2**:  `=REGEXREPLACE(REGEXREPLACE(REGEXREPLACE(C2,"\[[^\]]*\]",""),"\(US\$[^)]*\)",""),"est\. ","")`
+       (removes footnotes like [b], Wikipedia's "(US$17 million)" and "est.")
+    4. Paste into **E2**:  `=VALUE(SUBSTITUTE(REGEXEXTRACT(D2,"\d[\d,]*(?:\.\d+)?"),",",""))`
+       (first number, commas removed — works for both 1,852.44 and Indian 1,25,000 grouping)
+    5. Paste into **F2**:  `=IFERROR(VALUE(SUBSTITUTE(REGEXEXTRACT(D2,"\d\s*(?:crore)?\s*[–—−-]\s*₹?\s*(\d[\d,]*(?:\.\d+)?)"),",","")),"")`
+       (second number if the text is a range like ₹325–335 or ₹30−40; blank otherwise)
+    6. Paste into **G2**:  `=IF(F2="",E2,(E2+F2)/2)`  (range → midpoint, in ₹ crore)
+    7. Select D2:G2 → copy → select D3:G37 → paste (fills all 36 rows).
+    8. **Screenshot 1**: the sheet showing columns C–G with several rows → save as `report/img/sheets_result.png`.
+       **Screenshot 2**: click cell F2 so the formula bar shows the formula → save as `report/img/sheets_formula.png`.
+    9. **File → Download → Comma-separated values (.csv)** → save as `data/manual/spreadsheet_step_output.csv`.
+    10. Stop the timer. Reply with: minutes taken, and anything that went wrong (e.g. a formula error you had to fix).
+  - PUT RESULT HERE: `data/manual/spreadsheet_step_output.csv`, `report/img/sheets_result.png`, `report/img/sheets_formula.png`, + your time in the reply
+  - HOW I'LL CHECK: `src/13_compare_spreadsheet.py` must report "Agree on 36/36 strings" (a pre-check simulating these exact formulas already agrees 36/36).
+  - TIME: ~15 min
 
 ## Phase 4 — Story and submit
 
