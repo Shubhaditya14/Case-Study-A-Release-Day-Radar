@@ -39,12 +39,24 @@ charts:
 	$(PY) src/11_charts.py
 	$(PY) src/12_documentation_tables.py
 
-# Phase 4 — markdown → Word / PDF / PowerPoint with pandoc
+# Phase 4 — fill the templates with pipeline numbers, then markdown → Word / PDF / PowerPoint
+CHROME := /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
 report:
+	$(PY) src/13_compare_spreadsheet.py
+	$(PY) src/14_build_report.py
 	dot -Tpng -Gdpi=150 report/er_diagram.dot -o report/er_diagram.png
-	cd report && pandoc report.md -o report.docx --resource-path=.:..
-	cd report && pandoc report.md -o report.pdf --resource-path=.:.. || echo "PDF needs a LaTeX engine; the .docx is the main output"
+	dot -Tpng -Gdpi=150 report/pipeline.dot -o report/pipeline.png
+	cd report && pandoc report.md -o report.docx --resource-path=.:.. --toc
+	cd report && pandoc report.md -o report.html --standalone --embed-resources --css=report.css --resource-path=.:..
+	"$(CHROME)" --headless --disable-gpu --no-pdf-header-footer --print-to-pdf=report/report.pdf report/report.html
 	cd report && pandoc slides.md -o slides.pptx --resource-path=.:..
+
+# Build the submission zip (rename TeamName to your team name — manual step M13)
+zip:
+	rm -f TeamName_FinalSubmission.zip
+	zip -r TeamName_FinalSubmission.zip README.md MANUAL_STEPS.md QA_PREP.md requirements.txt Makefile .env.example \
+	    docs src sql notebooks outputs report data/clean data/manual \
+	    -x "data/clean/comments.csv" "data/manual/imdb_50k.csv" "*.DS_Store" "report/report.html"
 
 # Start the cleaning log fresh (scripts re-append their own rows on the next run)
 reset:

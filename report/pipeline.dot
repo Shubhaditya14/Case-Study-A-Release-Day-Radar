@@ -1,0 +1,35 @@
+// Pipeline: source → chart.  Render: dot -Tpng -Gdpi=150 report/pipeline.dot -o report/pipeline.png
+digraph pipeline {
+    graph [rankdir=LR, fontname="Helvetica", bgcolor="white", nodesep=0.25, ranksep=0.45, pad=0.2];
+    node  [fontname="Helvetica", fontsize=10, shape=box, style="rounded,filled", color="#c9c8c2", fillcolor="#f4f3ef"];
+    edge  [color="#8a8985", arrowsize=0.6];
+
+    subgraph cluster_src { label="Sources (3 shapes)"; fontsize=10; color="#e3e2dd";
+        wiki   [label="Wikipedia\nMediaWiki API\n(HTML in JSON)"];
+        tmdb   [label="TMDb API\n(JSON)"];
+        yt     [label="YouTube Data API\n(JSON + comment text)"];
+        trends [label="Google Trends\n(manual CSV)"];
+        fx     [label="Frankfurter / ECB\n(JSON)"];
+        imdb   [label="IMDb 50K\n(CSV, labelled)"];
+    }
+    raw     [label="data/raw/\nuntouched pulls\n(01–03)", fillcolor="#e8f0fb"];
+    flat    [label="04 flatten\npd.json_normalize\n+ drop usernames", fillcolor="#e8f0fb"];
+    match   [label="05 match titles\nrapidfuzz → film_id\n(+ human check M9)", fillcolor="#e8f0fb"];
+    clean   [label="06 clean & type-cast\n₹ text → crore, IST,\ncounts, '<1'", fillcolor="#e8f0fb"];
+    sent    [label="07 VADER\nvalidate on IMDb,\nscore comments", fillcolor="#e8f0fb"];
+    spark   [label="08 PySpark\n400k texts →\nterms by film", fillcolor="#e8f0fb"];
+    mysql   [label="09 MySQL\n5 tables + 7 queries", fillcolor="#e8f0fb"];
+    ana     [label="10 analysis\nz-scores, Spearman,\nBuzz Index (LOO)", fillcolor="#e8f0fb"];
+    charts  [label="11 charts\n+ 12 register,\ninventory, V profile", fillcolor="#fdeee6"];
+    log     [label="outputs/cleaning_log.csv\n(every step appends)", shape=note, fillcolor="#fff8e5"];
+
+    {wiki tmdb yt fx} -> raw;
+    raw -> flat -> match -> clean;
+    trends -> clean;
+    clean -> sent -> mysql;
+    sent -> spark;
+    imdb -> sent; imdb -> spark;
+    clean -> mysql;
+    sent -> ana -> charts;
+    {flat clean sent match ana} -> log [style=dashed, color="#c9a227"];
+}

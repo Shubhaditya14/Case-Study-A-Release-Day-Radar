@@ -1,0 +1,18 @@
+/* Print stylesheet for report.pdf (pandoc → HTML → Chrome headless → PDF) */
+@page { size: A4; margin: 16mm 15mm; }
+body { font-family: -apple-system, "Helvetica Neue", Arial, "Devanagari Sangam MN", "Malayalam Sangam MN", "Kannada Sangam MN", "Telugu Sangam MN", "Tamil Sangam MN", sans-serif;
+       font-size: 10.5pt; line-height: 1.45; color: #0b0b0b; max-width: none; margin: 0; }
+header#title-block-header { margin-bottom: 1.2em; border-bottom: 1px solid #d8d7d2; }
+h1.title { font-size: 20pt; margin-bottom: 0.1em; }
+p.subtitle, p.author, p.date { color: #52514e; margin: 0.15em 0; }
+h1 { font-size: 15pt; margin-top: 1.4em; border-bottom: 1px solid #ecebe7; padding-bottom: 0.15em; page-break-after: avoid; }
+h2 { font-size: 12pt; margin-top: 1.1em; page-break-after: avoid; }
+img { max-width: 100%; page-break-inside: avoid; }
+figure { margin: 0.8em 0; page-break-inside: avoid; }
+figcaption { font-size: 9pt; color: #52514e; }
+table { border-collapse: collapse; width: 100%; font-size: 8pt; margin: 0.6em 0 1em; page-break-inside: auto; }
+th, td { border-bottom: 1px solid #ecebe7; padding: 3px 5px; text-align: left; vertical-align: top; word-break: break-word; }
+th { background: #f4f3ef; }
+tr { page-break-inside: avoid; }
+pre, code { font-size: 8pt; white-space: pre-wrap; word-break: break-word; }
+pre { background: #f7f6f3; padding: 6px 8px; border-radius: 3px; }

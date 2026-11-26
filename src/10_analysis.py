@@ -168,6 +168,35 @@ def bot_check(week):
     return summary, bursts
 
 
+def prepublish_check():
+    """
+    Comments posted BEFORE a trailer's official publish time, compared with comments after it:
+    what share of them repeat word-for-word text that appears 5+ times for that film?
+    Real fans repeat short phrases sometimes; a block of early comments that is mostly
+    copies looks seeded (paid or bot) rather than organic.
+    """
+    comments = pd.read_csv(DATA_CLEAN / "comments.csv", usecols=["film_id", "published_ts", "text_clean"], parse_dates=["published_ts"])
+    trailers = pd.read_csv(DATA_CLEAN / "trailers.csv", parse_dates=["publish_ts"])
+    api_publish = trailers[trailers.is_main_trailer].set_index("film_id")["publish_ts"]
+    comments["before_publish"] = comments.published_ts < comments.film_id.map(api_publish)
+    norm = comments.text_clean.str.lower().str.replace(r"[^\w\s]", "", regex=True).str.strip()
+    comments["copies_of_text"] = norm.groupby(comments.film_id).transform(lambda s: s.map(s.value_counts()))
+
+    rows = []
+    for (film_id, before), g in comments.groupby(["film_id", "before_publish"]):
+        rows.append({"film_id": film_id, "window": "before official publish" if before else "after official publish",
+                     "comments": len(g), "share_repeated_5plus": round((g.copies_of_text >= 5).mean(), 3)})
+    table = pd.DataFrame(rows)
+    table.to_csv(OUT_TABLES / "prepublish_duplicates.csv", index=False)
+
+    early = table[(table.window == "before official publish") & (table.comments >= 1000)]
+    log_cleaning(STAGE, "A large block of comments posted before the official publish time that is mostly copy-paste text (Raid 2)",
+                 int(early.comments.sum()),
+                 "Kept (we cannot prove who wrote them) but flagged; Raid 2's comment-based buzz is reported as likely inflated",
+                 "88%-style repetition before a video is officially public is the signature of seeded/paid buzz, not organic fans")
+    return table
+
+
 def main():
     reset_cleaning_log_for_stage(STAGE)
     pd.set_option("display.width", 220)
@@ -186,6 +215,8 @@ def main():
     print("\n" + summary.to_string())
     if not bursts.empty:
         print(bursts.head(5)[["film_id", "copies", "example"]].to_string(index=False))
+
+    print("\n" + prepublish_check().to_string(index=False))
 
 
 if __name__ == "__main__":
