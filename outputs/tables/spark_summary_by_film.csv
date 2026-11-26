@@ -1,0 +1,12 @@
+source,film_id,texts,mean_chars,mean_words
+imdb_50k,imdb_50k,49582,1249.5,234.3
+youtube_comments,chhaava,82173,51.5,9.3
+youtube_comments,dhurandhar_the_revenge,50154,48.5,9.1
+youtube_comments,housefull_5,29898,39.4,7.5
+youtube_comments,kantara_chapter_1,17221,33.6,5.7
+youtube_comments,l2_empuraan,27334,37.7,6.1
+youtube_comments,lokah_chapter_1,4377,34.8,5.8
+youtube_comments,peddi,15749,38.9,6.6
+youtube_comments,raid_2,26854,31.7,6.1
+youtube_comments,saiyaara,24658,46.3,9.0
+youtube_comments,sitaare_zameen_par,43616,58.2,10.9

@@ -1,0 +1,11 @@
+stage,rows,note
+1a load comments,350426,
+1b load imdb (deduplicated),49582,
+1c union,400008,"must be ≥ 50,000"
+2 clean (non-empty),371616,emoji-only / number-only texts drop out here
+3 length measured,371616,
+4a words (exploded),14324736,"one row per word, before stopwords"
+4b terms (no stopwords),7752016,
+5a summary by film+source,11,
+5b term counts,304749,"distinct (film, term) pairs"
+5c top terms per film,110,top 10 × films

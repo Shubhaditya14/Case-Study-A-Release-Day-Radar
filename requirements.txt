@@ -17,7 +17,8 @@ vaderSentiment==3.3.2
 scikit-learn==1.5.2      # accuracy / F1 when validating VADER on IMDb 50K
 
 # Big-data text job (local mode; needs Java 17+)
-pyspark==3.5.3
+pyspark==3.5.3           # local mode; needs Java 17+
+setuptools==75.6.0       # pyspark.ml still imports distutils, removed in Python 3.12; setuptools provides it
 
 # MySQL
 SQLAlchemy==2.0.36

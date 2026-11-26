@@ -1,0 +1,9 @@
+metric,value
+rows_scored,49582.0
+accuracy,0.6998
+f1_positive,0.7421
+f1_macro,0.6915
+"true_pos (actual pos, predicted pos)",21410.0
+"false_neg (actual pos, predicted neg)",3474.0
+"false_pos (actual neg, predicted pos)",11411.0
+"true_neg (actual neg, predicted neg)",13287.0
