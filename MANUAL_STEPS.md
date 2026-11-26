@@ -79,7 +79,7 @@ Reply `done` in the Claude session after each one; Claude runs the check and tic
 
 ## Phase 2 — Collect and model
 
-- [ ] **M7 — Export Google Trends CSVs (one per film)**
+- [x] **M7 — Export Google Trends CSVs (one per film)** (verified 2026-11-26: 10 files, full daily coverage, 0 missing days; 4 "<1" values in Chhaava to type-cast)
   - WHY: rubric "Data sourcing and variety" — Trends is our CSV source and our Velocity evidence (rise and decay of interest).
   - DO THIS (repeat for each of the 10 rows below):
     1. Click the film's **open** link. It already sets Region = **India**, the date range, and the search term.
