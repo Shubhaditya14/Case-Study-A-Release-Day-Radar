@@ -55,7 +55,7 @@ Reply `done` in the Claude session after each one; Claude runs the check and tic
   - HOW I'LL CHECK: a Python/SQLAlchemy connection that runs `SELECT VERSION()` and prints 8.x.
   - TIME: ~10 min
 
-- [ ] **M4 — Copy the IMDb 50K labelled reviews from Homework 1.2**
+- [x] **M4 — Copy the IMDb 50K labelled reviews from Homework 1.2** (verified 2026-11-26: 50,000 rows, 25,000 pos / 25,000 neg, 0 nulls, 418 duplicate texts → handled in Phase 3)
   - WHY: rubric "Analysis, PySpark" — validates VADER (accuracy/F1) and lifts the Spark job past 50,000 rows.
   - DO THIS:
     1. Find the CSV from Homework 1.2 (usually `IMDB Dataset.csv`, 50,000 rows, columns `review`, `sentiment`).
