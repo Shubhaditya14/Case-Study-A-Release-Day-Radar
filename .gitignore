@@ -23,3 +23,7 @@ data/manual/imdb_50k.csv
 
 # Final zip is built locally, not committed
 *_FinalSubmission.zip
+
+# Full comment tables are ~45 MB each — rebuilt by `make collect clean`; a sample is committed instead
+data/interim/yt_comments.csv
+data/clean/comments.csv
