@@ -1,0 +1,25 @@
+# Secrets — never commit real keys
+.env
+
+# Python / tooling
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+spark-warehouse/
+metastore_db/
+derby.log
+
+# Raw pulls contain usernames / channel IDs (privacy rule) and can be large.
+# Keep the folder, ignore its contents. Re-download with `make collect`.
+data/raw/*
+!data/raw/.gitkeep
+
+# IMDb 50K corpus is ~65 MB — too big for the repo; each member copies it locally (M4)
+data/manual/imdb_50k.csv
+
+# OS junk
+.DS_Store
+
+# Final zip is built locally, not committed
+*_FinalSubmission.zip
