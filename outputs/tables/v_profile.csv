@@ -1,0 +1,20 @@
+v,measure,value,unit_or_detail
+Volume,YouTube raw JSON (stats + comment pages),373.7,MB
+Volume,YouTube comment pages downloaded,3552.0,files
+Volume,Trailer comments after cleaning,350426.0,rows
+Volume,Wikipedia raw JSON,2.6,MB
+Volume,TMDb raw JSON,0.4,MB
+Volume,Google Trends CSVs,0.006,MB
+Volume,Google Trends daily rows,375.0,rows
+Volume,IMDb 50K corpus,50000.0,rows
+Volume,IMDb 50K corpus size,66.2,MB
+Volume,"Spark job input (comments + IMDb, tagged by source)",400008.0,rows (1c union in spark_stage_counts.csv)
+Volume,Spark job word rows after explode,14324736.0,rows (4a in spark_stage_counts.csv)
+Variety,Formats,4.0,"HTML-in-JSON (Wikipedia), JSON (YouTube, TMDb, Frankfurter), CSV (Trends, IMDb), free text (comments, reviews)"
+Variety,Sources,6.0,"Wikipedia, TMDb, YouTube, Google Trends, Frankfurter, IMDb 50K"
+Variety,Title strings from 5 sources tied to the 10 film_ids,56.0,strings (data/clean/film_matches.csv)
+Velocity,Median share of a trailer's comments posted in its first 72 h,0.762,share
+Velocity,Highest comments/hour in any single hour (first 72 h),13707.0,comments/hour
+Velocity,Mean comments/hour over first 72 h (median film),293.6,comments/hour
+Velocity,"Google Trends peak, days after release (median)",0.0,days
+Velocity,Google Trends: days from peak until interest halves (median),5.0,days

@@ -37,9 +37,11 @@ sql:
 charts:
 	$(PY) src/10_analysis.py
 	$(PY) src/11_charts.py
+	$(PY) src/12_documentation_tables.py
 
 # Phase 4 — markdown → Word / PDF / PowerPoint with pandoc
 report:
+	dot -Tpng -Gdpi=150 report/er_diagram.dot -o report/er_diagram.png
 	cd report && pandoc report.md -o report.docx --resource-path=.:..
 	cd report && pandoc report.md -o report.pdf --resource-path=.:.. || echo "PDF needs a LaTeX engine; the .docx is the main output"
 	cd report && pandoc slides.md -o slides.pptx --resource-path=.:..

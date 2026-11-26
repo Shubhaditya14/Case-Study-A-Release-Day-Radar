@@ -1,0 +1,31 @@
+field,table,example,measurement_type,shape,source
+film_id,all tables,kantara_chapter_1,nominal,structured,created in step 05
+title_clean,films,Kantara: Chapter 1,nominal,structured,film list / Wikipedia
+language,films,Kannada,nominal,structured,Wikipedia infobox
+genre,films,"Action, Drama, Fantasy",nominal,semi-structured,TMDb JSON
+runtime_min,films,169,discrete,structured,Wikipedia infobox
+release_date,films,2025-10-02,interval (date),structured,Wikipedia infobox
+budget_cr,films,110.0,continuous,structured,Wikipedia infobox
+tmdb_id,films,1083637,"nominal (an id, not a quantity)",semi-structured,TMDb JSON
+first_weekend_ww,box_office,330.0,continuous,unstructured → structured,Wikipedia article text
+first_weekend_per_day,box_office,82.5,continuous,derived,step 06
+lifetime_gross_ww,box_office,851.0,continuous,structured,Wikipedia infobox + yearly table
+weekend_days,film list,4,discrete,structured,release weekday
+scope_flag,box_office.note,domestic_only,nominal,structured,step 06
+youtube_video_id,trailers,TMQUFhWm8C0,nominal,semi-structured,YouTube JSON
+is_main_trailer,trailers,1,nominal (binary),semi-structured,step 03
+publish_ts,trailers,2025-09-22 12:44:00 IST,interval (timestamp),semi-structured,YouTube JSON
+views,trailers,23925371,discrete (count),semi-structured,YouTube JSON
+likes,trailers,512345,discrete (count),semi-structured,YouTube JSON
+comment_count,trailers,20869,discrete (count),semi-structured,YouTube JSON
+comment text (text_clean),comments,Goosebumps!! 🔥,unstructured,unstructured,YouTube JSON → text
+published_ts,comments,2025-01-22 17:20:11 IST,interval (timestamp),semi-structured,YouTube JSON
+length,comments,15,discrete,derived,step 06
+vader_compound,comments,0.6369,continuous (−1 to +1),derived,step 07
+vader label (pos/neg),validation,positive,nominal,derived,step 07
+interest,trends_daily,100,"ordinal-like relative index (0–100, scaled per export)",structured,Google Trends CSV
+date,trends_daily,2025-10-03,interval (date),structured,Google Trends CSV
+IMDb review text,imdb_50k,One of the best films...,unstructured,unstructured,IMDb 50K CSV
+IMDb sentiment label,imdb_50k,positive,nominal (binary),structured,IMDb 50K CSV
+match score,film_matches,79.1,continuous (0–100),derived,step 05
+box-office trade rank,wiki yearly table,2,ordinal,structured,Wikipedia yearly list
