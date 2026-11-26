@@ -75,3 +75,7 @@ make zip       # build the submission zip
 
 - `data/raw/` is not in the repo. It holds commenter usernames and is about 370 MB. `make collect` downloads it again.
 - API keys stay in `.env`, which is not committed.
+
+## AI disclosure
+
+In line with the course policy, we used Claude Opus (Anthropic) as an assistant for research, coding and drafting the report. The team chose the question, approved the films, confirmed the uncertain matches, agreed the cleaning rules and reviewed every result. All numbers come from our code and the data we collected. See Appendix I of the report for details.
