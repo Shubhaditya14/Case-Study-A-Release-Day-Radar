@@ -2,7 +2,7 @@
 
 [[TODO-HUMAN: use the exact format shown in class if it differs; percentages must add to 100]]
 
-**Team name:** Sata and Dory Telling
+**Team name:** Sata and Dory Letting
 
 | Member | USN | GitHub username | Role | Main contributions (files / steps) | Contribution % |
 |---|---|---|---|---|---|
