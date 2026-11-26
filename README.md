@@ -10,7 +10,7 @@
 - Trailer reach is a **loose** hint: Spearman ρ = 0.65, n = 10.
 - Comment sentiment adds **nothing**.
 - Comment counts can be **gamed**: Raid 2's pre-publish comments are 89% copy-paste.
-- Make the screens call on Friday's collections. The full write-up is in `report/report.pdf`.
+- Make the screens call on Friday's collections. The full write-up is in `report/report.pdf` (also `report/report.docx`).
 
 ---
 
@@ -23,8 +23,6 @@
 | Java | 17+ (we used 21) | PySpark runs on the JVM |
 | Docker Desktop **or** MySQL 8 | MySQL 8.0.46 in Docker | relational model + SQL queries |
 | Graphviz (`dot`) | any | ER and pipeline diagrams |
-| pandoc | 3.x | report → .docx/.html, slides → .pptx |
-| Google Chrome | any | prints report.html → report.pdf |
 
 ## 2. Set up (once)
 
@@ -53,7 +51,7 @@ Check that every source answers: `make smoke`
 
 ```bash
 docker start radar-mysql      # if it isn't running
-make all                      # collect → clean → spark → sql → charts → report
+make all                      # collect → clean → spark → sql → charts
 ```
 
 | Target | Scripts | Notes |
@@ -63,7 +61,6 @@ make all                      # collect → clean → spark → sql → charts �
 | `make spark` | `08` | PySpark local mode, 400k texts (about 2 min) |
 | `make sql` | `09` | Rebuilds the schema, loads 5 tables, runs `sql/queries.sql` |
 | `make charts` | `10`–`12` | Analysis, 6 charts, source register / inventory / V profile |
-| `make report` | `13`–`14` + pandoc | Fills the report/slides templates with pipeline numbers → `.docx`, `.pdf`, `.pptx` |
 | `make zip` | — | `Sata_and_Dory_Letting_FinalSubmission.zip` |
 
 Raw data in `data/raw/` is **gitignored**: it holds commenter usernames, and it is 370 MB. `make collect` rebuilds it from the APIs. The full cleaned comment table (45 MB) is also gitignored. A hashed 2,000-row sample is committed as `data/clean/comments_sample.csv`.
@@ -72,14 +69,12 @@ Raw data in `data/raw/` is **gitignored**: it holds commenter usernames, and it 
 
 | Path | What |
 |---|---|
-| `report/report.pdf`, `report.docx` | The report (10-page body + appendices), generated from `report/report_template.md` |
-| `report/slides.pptx` | 10 slides with speaker notes |
+| `report/report.pdf`, `report/report.docx` | The final report (7-page body + appendices) |
 | `outputs/charts/` | 6 charts, each titled with its finding |
 | `outputs/cleaning_log.csv` | Every cleaning decision, with real row counts (each script appends its own) |
 | `outputs/tables/` | Source register, data inventory, V profile, SQL results, Spark counts, correlations, Buzz Index test, bot checks |
 | `data/clean/` | Final tables: films, trailers, box_office, trends_daily, comments sample, film_matches |
 | `notebooks/` | `spark_text_job.ipynb` (executed, outputs saved), `exploration.ipynb` |
-| `report/er_diagram.png`, `report/pipeline.png` | Generated from `.dot` sources |
 
 ## 5. Repository map
 
@@ -91,11 +86,10 @@ src/06                       cleaning & type casting    src/07  VADER (validated
 src/08                       PySpark text job           src/09  MySQL load + queries
 src/10                       analysis + Buzz Index      src/11  charts
 src/12                       register / inventory / V profile
-src/13                       Sheets-vs-pandas check     src/14  build report from templates
+src/13                       Sheets-vs-pandas check
 src/utils.py                 paths, cleaning log, polite HTTP, YouTube quota guard
 sql/schema.sql, sql/queries.sql
 MANUAL_STEPS.md              the human steps (keys, approvals, Google Sheets)
-report/contributions.md      who did what (equal 20% split) and who presents which slides
 ```
 
 ## 6. Ground rules we followed

@@ -142,6 +142,6 @@ Reply `done` in the Claude session after each one; Claude runs the check and tic
 
 ## Phase 4 — Story and submit
 
-- [x] **M11 — Team contribution split** → `report/contributions.md` (equal 20% split, roles and slides agreed by the team).
-- [ ] **M12 — Rehearse the 7-minute talk** with `report/speaker_script.md` (speakers follow `report/contributions.md`). Slides: `report/slides.pptx` (10 slides, notes included).
-- [ ] **M13 — Submit** → run `make report zip` and submit `Sata_and_Dory_Letting_FinalSubmission.zip` (team: Sata and Dory Letting).
+- [x] **M11 — Team contribution split** (agreed equal 20% split; file removed from the repo on request)
+- [ ] **M12 — Rehearse the 7-minute talk**
+- [ ] **M13 — Submit** → run `make zip` and submit `Sata_and_Dory_Letting_FinalSubmission.zip` (team: Sata and Dory Letting).

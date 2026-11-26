@@ -6,7 +6,7 @@ PY := .venv/bin/python
 
 .PHONY: all setup smoke collect clean spark sql charts report zip reset
 
-all: collect clean spark sql charts report
+all: collect clean spark sql charts
 
 setup:
 	uv venv --python 3.12 .venv
@@ -39,18 +39,9 @@ charts:
 	$(PY) src/11_charts.py
 	$(PY) src/12_documentation_tables.py
 
-# Phase 4 — fill the templates with pipeline numbers, then markdown → Word / PDF / PowerPoint
-CHROME := /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+# Phase 4 — report/ now holds only the final report.pdf and report.docx (sources removed)
 report:
-	$(PY) src/13_compare_spreadsheet.py
-	$(PY) src/14_build_report.py
-	dot -Tpng -Gdpi=150 report/er_diagram.dot -o report/er_diagram.png
-	dot -Tpng -Gdpi=150 report/pipeline.dot -o report/pipeline.png
-	cd report && pandoc report.md -o report.docx --resource-path=.:.. --toc
-	cd report && pandoc report.md -o report.html --standalone --embed-resources --css=report.css --resource-path=.:..
-	"$(CHROME)" --headless --disable-gpu --no-pdf-header-footer --print-to-pdf=report/report.pdf report/report.html
-	cd report && pandoc slides.md -o slides.pptx --resource-path=.:..
-	rm -f report/report.html report/report.md report/slides.md   # build leftovers; templates are the source
+	@echo "report/ contains the final report.pdf and report.docx; the report sources were removed."
 
 # Build the submission zip for team "Sata and Dory Letting"
 zip:
