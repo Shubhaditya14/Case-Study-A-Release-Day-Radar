@@ -1,0 +1,38 @@
+film_id,metric,value_cr,source,note
+chhaava,first_weekend_ww,160.5,Wikipedia film page text,range 157–164 → midpoint
+chhaava,first_weekend_per_day,53.5,derived,first_weekend_ww ÷ 3 days
+saiyaara,first_weekend_ww,119.0,Wikipedia film page text,'over' = lower bound
+saiyaara,first_weekend_per_day,39.67,derived,first_weekend_ww ÷ 3 days
+sitaare_zameen_par,first_weekend_ww,95.5,Wikipedia film page text,range 95–96 → midpoint; flag: check_scope
+sitaare_zameen_par,first_weekend_per_day,31.83,derived,first_weekend_ww ÷ 3 days; flag: check_scope
+housefull_5,first_weekend_ww,91.83,Wikipedia film page text,flag: domestic_only
+housefull_5,first_weekend_per_day,30.61,derived,first_weekend_ww ÷ 3 days; flag: domestic_only
+raid_2,first_weekend_ww,100.0,Wikipedia film page text,'over' = lower bound
+raid_2,first_weekend_per_day,25.0,derived,first_weekend_ww ÷ 4 days
+dhurandhar_the_revenge,first_weekend_ww,746.0,Wikipedia film page text,converted from US$80 million at ₹93.25/USD; flag: usd_figure
+dhurandhar_the_revenge,first_weekend_per_day,186.5,derived,first_weekend_ww ÷ 4 days; flag: usd_figure
+kantara_chapter_1,first_weekend_ww,330.0,Wikipedia film page text,range 325–335 → midpoint
+kantara_chapter_1,first_weekend_per_day,82.5,derived,first_weekend_ww ÷ 4 days
+lokah_chapter_1,first_weekend_ww,65.5,Wikipedia film page text,
+lokah_chapter_1,first_weekend_per_day,16.38,derived,first_weekend_ww ÷ 4 days
+l2_empuraan,first_weekend_ww,175.0,Wikipedia film page text,
+l2_empuraan,first_weekend_per_day,43.75,derived,first_weekend_ww ÷ 4 days
+peddi,first_weekend_ww,233.0,Wikipedia film page text,
+peddi,first_weekend_per_day,58.25,derived,first_weekend_ww ÷ 4 days
+chhaava,lifetime_gross_ww,803.17,Wikipedia infobox,range 797.34–809 → midpoint
+saiyaara,lifetime_gross_ww,579.23,Wikipedia infobox,
+sitaare_zameen_par,lifetime_gross_ww,266.49,Wikipedia infobox,estimate
+housefull_5,lifetime_gross_ww,242.8,Wikipedia infobox,estimate
+raid_2,lifetime_gross_ww,243.06,Wikipedia infobox,
+dhurandhar_the_revenge,lifetime_gross_ww,1852.44,Wikipedia infobox,
+kantara_chapter_1,lifetime_gross_ww,851.0,Wikipedia infobox,range 850–852 → midpoint
+lokah_chapter_1,lifetime_gross_ww,303.0,Wikipedia infobox,estimate; range 302–304 → midpoint
+l2_empuraan,lifetime_gross_ww,266.54,Wikipedia infobox,range 265–268.08 → midpoint
+peddi,lifetime_gross_ww,333.43,Wikipedia infobox,range 330–336.85 → midpoint
+kantara_chapter_1,lifetime_gross_ww,851.0,Wikipedia yearly list,range 850–852 → midpoint
+chhaava,lifetime_gross_ww,803.17,Wikipedia yearly list,range 797.34–809 → midpoint
+saiyaara,lifetime_gross_ww,579.0,Wikipedia yearly list,
+lokah_chapter_1,lifetime_gross_ww,303.0,Wikipedia yearly list,range 302–304 → midpoint
+l2_empuraan,lifetime_gross_ww,268.05,Wikipedia yearly list,
+dhurandhar_the_revenge,lifetime_gross_ww,1852.44,Wikipedia yearly list,
+peddi,lifetime_gross_ww,333.43,Wikipedia yearly list,range 330–336.85 → midpoint
