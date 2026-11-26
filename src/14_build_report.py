@@ -17,6 +17,7 @@ import pandas as pd
 
 sys.path.insert(0, os.path.dirname(__file__))
 from utils import DATA_CLEAN, OUT_TABLES, ROOT, CLEANING_LOG  # noqa: E402
+from table_style import film_names, md  # noqa: E402
 
 REPORT_DIR = ROOT / "report"
 
@@ -105,35 +106,123 @@ def numbers():
     return n
 
 
-def md_table(df):
-    return df.to_markdown(index=False)
+FEATURE_NAMES = {
+    "total_views": "Trailer views (all versions)",
+    "like_ratio": "Like ratio (likes ÷ views)",
+    "comments_7d": "Comments, first 7 days",
+    "comments_per_hour": "Comments per hour, first 72 h",
+    "sentiment_7d": "Mean sentiment, first 7 days",
+    "sentiment_7d | controlling for views (partial)": "Sentiment, after controlling for views (partial)",
+}
+STAGE_NAMES = {
+    "01_collect_wikipedia": "01 Wikipedia", "04_flatten_json": "04 Flatten", "05_match_films": "05 Match",
+    "06_clean_typecast": "06 Clean", "07_sentiment": "07 Sentiment", "10_analysis": "10 Analysis",
+}
 
 
 def tables():
+    names = film_names()
     t = {}
-    t["data_inventory"] = md_table(pd.read_csv(OUT_TABLES / "data_inventory.csv"))
+
+    inv = pd.read_csv(OUT_TABLES / "data_inventory.csv")
+    inv["field"] = "`" + inv["field"] + "`"
+    inv = inv.rename(columns={"field": "Field", "table": "Table", "example": "Example", "measurement_type": "Type",
+                              "shape": "Shape", "source": "Source"})
+    t["data_inventory"] = md(inv, kinds={c: "text" for c in inv.columns})
+
     vp = pd.read_csv(OUT_TABLES / "v_profile.csv")
-    vp["value"] = vp["value"].map(lambda v: "" if pd.isna(v) else (f"{v:,.0f}" if v >= 100 else f"{v:g}"))
-    t["v_profile"] = md_table(vp)
+    def vp_value(row):
+        if pd.isna(row.value):
+            return "—"
+        if row.unit_or_detail == "share":
+            return f"{row.value:.0%}"
+        if row.unit_or_detail == "MB":
+            return f"{row.value:,.1f}" if row.value >= 0.1 else f"{row.value:.3f}"
+        return f"{row.value:,.0f}" if float(row.value).is_integer() else f"{row.value:g}"
+    vp["Value"] = vp.apply(vp_value, axis=1)
+    vp["Unit / detail"] = vp.unit_or_detail.replace({"share": "of comments"})
+    vp["V"] = vp.v.where(vp.v != vp.v.shift(), "")          # show the V only on the first row of its group
+    vp["V"] = vp["V"].map(lambda v: f"**{v}**" if v else v)
+    # Value is pre-formatted text, but we still want it right-aligned:
+    t["v_profile"] = md_right_aligned_text(vp[["V", "measure", "Value", "Unit / detail"]]
+                                           .rename(columns={"measure": "Measure"}), right=["Value"])
+
     log = pd.read_csv(CLEANING_LOG)
-    t["cleaning_log_short"] = md_table(log[["id", "stage", "problem_found", "rows_affected"]])
-    t["cleaning_log"] = md_table(log)
-    t["source_register"] = md_table(pd.read_csv(OUT_TABLES / "source_register.csv"))
-    t["spark_counts"] = md_table(pd.read_csv(OUT_TABLES / "spark_stage_counts.csv"))
-    t["vader"] = md_table(pd.read_csv(OUT_TABLES / "vader_validation.csv"))
-    t["blind"] = md_table(pd.read_csv(OUT_TABLES / "vader_blind_spots_by_film.csv"))
+    log["stage"] = log.stage.map(STAGE_NAMES).fillna(log.stage)
+    log = log.rename(columns={"id": "#", "stage": "Stage", "problem_found": "Problem found", "rows_affected": "Rows",
+                              "action_taken": "Action taken", "why": "Why"})
+    t["cleaning_log"] = md(log, kinds={"#": "int", "Rows": "int", "Stage": "text", "Problem found": "text",
+                                       "Action taken": "text", "Why": "text"})
+
+    reg = pd.read_csv(OUT_TABLES / "source_register.csv")
+    reg = reg.rename(columns={"source": "Source", "url": "URL", "access_date": "Accessed", "method": "Method",
+                              "terms_of_use": "Terms of use", "note": "Note"})
+    t["source_register"] = md(reg[["Source", "Accessed", "Method", "URL", "Terms of use", "Note"]],
+                              kinds={c: "text" for c in reg.columns})
+
+    sc = pd.read_csv(OUT_TABLES / "spark_stage_counts.csv").fillna("")
+    t["spark_counts"] = md(sc.rename(columns={"stage": "Stage", "rows": "Rows", "note": "Note"}),
+                           kinds={"Rows": "int", "Stage": "text", "Note": "text"})
+
+    v = pd.read_csv(OUT_TABLES / "vader_validation.csv")
+    labels = {"rows_scored": "Reviews scored", "accuracy": "Accuracy", "f1_positive": "F1 (positive class)",
+              "f1_macro": "F1 (macro average)", "true_pos (actual pos, predicted pos)": "Positive → called positive",
+              "false_neg (actual pos, predicted neg)": "Positive → called negative",
+              "false_pos (actual neg, predicted pos)": "Negative → called positive",
+              "true_neg (actual neg, predicted neg)": "Negative → called negative"}
+    v["Metric"] = v.metric.map(labels)
+    v["Value"] = [f"{x:.3f}" if x < 1 else f"{int(x):,}" for x in v.value]
+    t["vader"] = md_right_aligned_text(v[["Metric", "Value"]], right=["Value"])
+
+    b = pd.read_csv(OUT_TABLES / "vader_blind_spots_by_film.csv")
+    b["film_id"] = b.film_id.map(names)
+    b = b.rename(columns={"film_id": "Film", "comments": "Comments", "share_indic_script": "In Indian script",
+                          "share_vader_zero": "VADER score = 0", "mean_compound": "Mean sentiment"})
+    t["blind"] = md(b, kinds={"Comments": "int", "In Indian script": "pct", "VADER score = 0": "pct", "Mean sentiment": "float"}, digits=3)
+
     corr = pd.read_csv(OUT_TABLES / "correlations.csv")
-    t["correlations"] = md_table(corr)
+    corr["feature"] = corr.feature.map(FEATURE_NAMES).fillna(corr.feature)
+    corr["subset"] = corr.subset.str.capitalize()
+    corr = corr.rename(columns={"subset": "Films included", "feature": "Buzz signal", "spearman_rho": "Spearman ρ", "p_value": "p"})
+    t["correlations"] = md(corr, kinds={"n": "int", "Spearman ρ": "float", "p": "float"})
+
     loo = pd.read_csv(OUT_TABLES / "buzz_index_loo.csv")
-    t["loo"] = md_table(loo[["held_out_film", "buzz_index", "predicted_rank_of_10", "actual_rank_of_10", "call_correct"]])
-    t["prepublish"] = md_table(pd.read_csv(OUT_TABLES / "prepublish_duplicates.csv"))
-    t["mysql_counts"] = md_table(pd.read_csv(OUT_TABLES / "mysql_row_counts.csv"))
+    loo["held_out_film"] = loo.held_out_film.map(names)
+    loo = loo.rename(columns={"held_out_film": "Held-out film", "buzz_index": "Buzz Index", "predicted_rank_of_10": "Predicted rank",
+                              "actual_rank_of_10": "Actual rank", "call_correct": "Above/below median right?"})
+    t["loo"] = md(loo[["Held-out film", "Buzz Index", "Predicted rank", "Actual rank", "Above/below median right?"]],
+                  kinds={"Buzz Index": "float", "Predicted rank": "int", "Actual rank": "int"})
+
+    pre = pd.read_csv(OUT_TABLES / "prepublish_duplicates.csv")
+    pre["film_id"] = pre.film_id.map(names)
+    pre["window"] = pre.window.str.capitalize()
+    pre = pre.rename(columns={"film_id": "Film", "window": "Window", "comments": "Comments",
+                              "share_repeated_5plus": "Share that is copy-paste (text seen 5+ times)"})
+    t["prepublish"] = md(pre, kinds={"Comments": "int", "Share that is copy-paste (text seen 5+ times)": "pct"})
+
+    mc = pd.read_csv(OUT_TABLES / "mysql_row_counts.csv")
+    mc["table"] = "`" + mc.table + "`"
+    t["mysql_counts"] = md(mc.rename(columns={"table": "Table", "rows_loaded": "Rows loaded"}), kinds={"Rows loaded": "int", "Table": "text"})
+
     top = pd.read_csv(OUT_TABLES / "spark_top_terms.csv")
-    t["top_terms"] = md_table(top.groupby("film_id").term.apply(lambda s: ", ".join(s)).reset_index(name="top 10 terms (stopwords removed)"))
+    top = top.groupby("film_id").term.apply(lambda s: ", ".join(s)).reset_index(name="Top 10 terms (stopwords removed)")
+    top["film_id"] = top.film_id.map(names)
+    t["top_terms"] = md(top.rename(columns={"film_id": "Film"}), kinds={c: "text" for c in top.columns})
+
     sheet = OUT_TABLES / "spreadsheet_vs_pandas.csv"
-    t["sheet_compare"] = md_table(pd.read_csv(sheet)[["id", "raw_text", "pandas_crore", "sheet_crore", "agree"]]) if sheet.exists() \
-        else "[[TODO-HUMAN: complete manual step M10; `make report` then inserts the 36-row comparison here]]"
+    if sheet.exists():
+        sc2 = pd.read_csv(sheet)[["id", "raw_text", "pandas_crore", "sheet_crore", "agree"]]
+        t["sheet_compare"] = md(sc2.rename(columns={"id": "#", "raw_text": "Raw text", "pandas_crore": "pandas (₹ cr)",
+                                                    "sheet_crore": "Sheets (₹ cr)", "agree": "Agree"}),
+                                kinds={"#": "int", "Raw text": "text", "pandas (₹ cr)": "float", "Sheets (₹ cr)": "float"})
+    else:
+        t["sheet_compare"] = "[[TODO-HUMAN: complete manual step M10; `make report` then inserts the 36-row comparison here]]"
     return t
+
+
+def md_right_aligned_text(df, right):
+    """For columns that are already formatted as text but should still line up on the right."""
+    return df.to_markdown(index=False, colalign=["right" if c in right else "left" for c in df.columns])
 
 
 def render(template_name, out_name, n, t):

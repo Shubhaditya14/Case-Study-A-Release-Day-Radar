@@ -11,6 +11,12 @@ date: "November 2026"
 
 Across 10 Hindi and regional films released in 2025–26, films whose trailers were watched more had bigger first weekends, but the link is loose and does not prove that one causes the other. How *positive* the trailer comments sounded told us nothing extra: the biggest opener had some of the least positive comments, and a buzz score built from all our online signals called only 6 of 10 films correctly. For next Friday, use trailer reach as an early hint when planning shows, but make the add-or-cut screens decision on Friday's actual collections, not on online buzz.
 
+::: glance
+| Films studied | Trailer comments | Views vs weekend (ρ) | Sentiment vs weekend (ρ) | Buzz Index calls right |
+|:---:|:---:|:---:|:---:|:---:|
+| 10 | 350,426 | 0.65 | -0.19 | 6 / 10 |
+:::
+
 # b. The question and why it matters
 
 **Question.** *Did trailer-week YouTube engagement predict first-weekend collections for 10 Hindi and regional films released in 2025–26, and does audience sentiment add anything beyond raw views?*
@@ -31,62 +37,62 @@ We used **6 sources in 3 shapes**:
 
 Every field is classified below.
 
-| field                     | table             | example                  | measurement_type                                       | shape                     | source                           |
-|:--------------------------|:------------------|:-------------------------|:-------------------------------------------------------|:--------------------------|:---------------------------------|
-| film_id                   | all tables        | kantara_chapter_1        | nominal                                                | structured                | created in step 05               |
-| title_clean               | films             | Kantara: Chapter 1       | nominal                                                | structured                | film list / Wikipedia            |
-| language                  | films             | Kannada                  | nominal                                                | structured                | Wikipedia infobox                |
-| genre                     | films             | Action, Drama, Fantasy   | nominal                                                | semi-structured           | TMDb JSON                        |
-| runtime_min               | films             | 169                      | discrete                                               | structured                | Wikipedia infobox                |
-| release_date              | films             | 2025-10-02               | interval (date)                                        | structured                | Wikipedia infobox                |
-| budget_cr                 | films             | 110.0                    | continuous                                             | structured                | Wikipedia infobox                |
-| tmdb_id                   | films             | 1083637                  | nominal (an id, not a quantity)                        | semi-structured           | TMDb JSON                        |
-| first_weekend_ww          | box_office        | 330.0                    | continuous                                             | unstructured → structured | Wikipedia article text           |
-| first_weekend_per_day     | box_office        | 82.5                     | continuous                                             | derived                   | step 06                          |
-| lifetime_gross_ww         | box_office        | 851.0                    | continuous                                             | structured                | Wikipedia infobox + yearly table |
-| weekend_days              | film list         | 4                        | discrete                                               | structured                | release weekday                  |
-| scope_flag                | box_office.note   | domestic_only            | nominal                                                | structured                | step 06                          |
-| youtube_video_id          | trailers          | TMQUFhWm8C0              | nominal                                                | semi-structured           | YouTube JSON                     |
-| is_main_trailer           | trailers          | 1                        | nominal (binary)                                       | semi-structured           | step 03                          |
-| publish_ts                | trailers          | 2025-09-22 12:44:00 IST  | interval (timestamp)                                   | semi-structured           | YouTube JSON                     |
-| views                     | trailers          | 23925371                 | discrete (count)                                       | semi-structured           | YouTube JSON                     |
-| likes                     | trailers          | 512345                   | discrete (count)                                       | semi-structured           | YouTube JSON                     |
-| comment_count             | trailers          | 20869                    | discrete (count)                                       | semi-structured           | YouTube JSON                     |
-| comment text (text_clean) | comments          | Goosebumps!! 🔥          | unstructured                                           | unstructured              | YouTube JSON → text              |
-| published_ts              | comments          | 2025-01-22 17:20:11 IST  | interval (timestamp)                                   | semi-structured           | YouTube JSON                     |
-| length                    | comments          | 15                       | discrete                                               | derived                   | step 06                          |
-| vader_compound            | comments          | 0.6369                   | continuous (−1 to +1)                                  | derived                   | step 07                          |
-| vader label (pos/neg)     | validation        | positive                 | nominal                                                | derived                   | step 07                          |
-| interest                  | trends_daily      | 100                      | ordinal-like relative index (0–100, scaled per export) | structured                | Google Trends CSV                |
-| date                      | trends_daily      | 2025-10-03               | interval (date)                                        | structured                | Google Trends CSV                |
-| IMDb review text          | imdb_50k          | One of the best films... | unstructured                                           | unstructured              | IMDb 50K CSV                     |
-| IMDb sentiment label      | imdb_50k          | positive                 | nominal (binary)                                       | structured                | IMDb 50K CSV                     |
-| match score               | film_matches      | 79.1                     | continuous (0–100)                                     | derived                   | step 05                          |
-| box-office trade rank     | wiki yearly table | 2                        | ordinal                                                | structured                | Wikipedia yearly list            |
+| Field                       | Table             | Example                  | Type                                                   | Shape                     | Source                           |
+|:----------------------------|:------------------|:-------------------------|:-------------------------------------------------------|:--------------------------|:---------------------------------|
+| `film_id`                   | all tables        | kantara_chapter_1        | nominal                                                | structured                | created in step 05               |
+| `title_clean`               | films             | Kantara: Chapter 1       | nominal                                                | structured                | film list / Wikipedia            |
+| `language`                  | films             | Kannada                  | nominal                                                | structured                | Wikipedia infobox                |
+| `genre`                     | films             | Action, Drama, Fantasy   | nominal                                                | semi-structured           | TMDb JSON                        |
+| `runtime_min`               | films             | 169                      | discrete                                               | structured                | Wikipedia infobox                |
+| `release_date`              | films             | 2025-10-02               | interval (date)                                        | structured                | Wikipedia infobox                |
+| `budget_cr`                 | films             | 110.0                    | continuous                                             | structured                | Wikipedia infobox                |
+| `tmdb_id`                   | films             | 1083637                  | nominal (an id, not a quantity)                        | semi-structured           | TMDb JSON                        |
+| `first_weekend_ww`          | box_office        | 330.0                    | continuous                                             | unstructured → structured | Wikipedia article text           |
+| `first_weekend_per_day`     | box_office        | 82.5                     | continuous                                             | derived                   | step 06                          |
+| `lifetime_gross_ww`         | box_office        | 851.0                    | continuous                                             | structured                | Wikipedia infobox + yearly table |
+| `weekend_days`              | film list         | 4                        | discrete                                               | structured                | release weekday                  |
+| `scope_flag`                | box_office.note   | domestic_only            | nominal                                                | structured                | step 06                          |
+| `youtube_video_id`          | trailers          | TMQUFhWm8C0              | nominal                                                | semi-structured           | YouTube JSON                     |
+| `is_main_trailer`           | trailers          | 1                        | nominal (binary)                                       | semi-structured           | step 03                          |
+| `publish_ts`                | trailers          | 2025-09-22 12:44:00 IST  | interval (timestamp)                                   | semi-structured           | YouTube JSON                     |
+| `views`                     | trailers          | 23925371                 | discrete (count)                                       | semi-structured           | YouTube JSON                     |
+| `likes`                     | trailers          | 512345                   | discrete (count)                                       | semi-structured           | YouTube JSON                     |
+| `comment_count`             | trailers          | 20869                    | discrete (count)                                       | semi-structured           | YouTube JSON                     |
+| `comment text (text_clean)` | comments          | Goosebumps!! 🔥          | unstructured                                           | unstructured              | YouTube JSON → text              |
+| `published_ts`              | comments          | 2025-01-22 17:20:11 IST  | interval (timestamp)                                   | semi-structured           | YouTube JSON                     |
+| `length`                    | comments          | 15                       | discrete                                               | derived                   | step 06                          |
+| `vader_compound`            | comments          | 0.6369                   | continuous (−1 to +1)                                  | derived                   | step 07                          |
+| `vader label (pos/neg)`     | validation        | positive                 | nominal                                                | derived                   | step 07                          |
+| `interest`                  | trends_daily      | 100                      | ordinal-like relative index (0–100, scaled per export) | structured                | Google Trends CSV                |
+| `date`                      | trends_daily      | 2025-10-03               | interval (date)                                        | structured                | Google Trends CSV                |
+| `IMDb review text`          | imdb_50k          | One of the best films... | unstructured                                           | unstructured              | IMDb 50K CSV                     |
+| `IMDb sentiment label`      | imdb_50k          | positive                 | nominal (binary)                                       | structured                | IMDb 50K CSV                     |
+| `match score`               | film_matches      | 79.1                     | continuous (0–100)                                     | derived                   | step 05                          |
+| `box-office trade rank`     | wiki yearly table | 2                        | ordinal                                                | structured                | Wikipedia yearly list            |
 
 ## V profile (one page)
 
-| v        | measure                                                       | value      | unit_or_detail                                                                                                 |
-|:---------|:--------------------------------------------------------------|:-----------|:---------------------------------------------------------------------------------------------------------------|
-| Volume   | YouTube raw JSON (stats + comment pages)                      | 374        | MB                                                                                                             |
-| Volume   | YouTube comment pages downloaded                              | 3,552      | files                                                                                                          |
-| Volume   | Trailer comments after cleaning                               | 350,426    | rows                                                                                                           |
-| Volume   | Wikipedia raw JSON                                            | 2.6        | MB                                                                                                             |
-| Volume   | TMDb raw JSON                                                 | 0.4        | MB                                                                                                             |
-| Volume   | Google Trends CSVs                                            | 0.006      | MB                                                                                                             |
-| Volume   | Google Trends daily rows                                      | 375        | rows                                                                                                           |
-| Volume   | IMDb 50K corpus                                               | 50,000     | rows                                                                                                           |
-| Volume   | IMDb 50K corpus size                                          | 66.2       | MB                                                                                                             |
-| Volume   | Spark job input (comments + IMDb, tagged by source)           | 400,008    | rows (1c union in spark_stage_counts.csv)                                                                      |
-| Volume   | Spark job word rows after explode                             | 14,324,736 | rows (4a in spark_stage_counts.csv)                                                                            |
-| Variety  | Formats                                                       | 4          | HTML-in-JSON (Wikipedia), JSON (YouTube, TMDb, Frankfurter), CSV (Trends, IMDb), free text (comments, reviews) |
-| Variety  | Sources                                                       | 6          | Wikipedia, TMDb, YouTube, Google Trends, Frankfurter, IMDb 50K                                                 |
-| Variety  | Title strings from 5 sources tied to the 10 film_ids          | 56         | strings (data/clean/film_matches.csv)                                                                          |
-| Velocity | Median share of a trailer's comments posted in its first 72 h | 0.781      | share                                                                                                          |
-| Velocity | Highest comments/hour in any single hour (first 72 h)         | 8,780      | comments/hour                                                                                                  |
-| Velocity | Mean comments/hour over first 72 h (median film)              | 316        | comments/hour                                                                                                  |
-| Velocity | Google Trends peak, days after release (median)               | 0          | days                                                                                                           |
-| Velocity | Google Trends: days from peak until interest halves (median)  | 5          | days                                                                                                           |
+| V            | Measure                                                       |      Value | Unit / detail                                                                                                  |
+|:-------------|:--------------------------------------------------------------|-----------:|:---------------------------------------------------------------------------------------------------------------|
+| **Volume**   | YouTube raw JSON (stats + comment pages)                      |      373.7 | MB                                                                                                             |
+|              | YouTube comment pages downloaded                              |      3,552 | files                                                                                                          |
+|              | Trailer comments after cleaning                               |    350,426 | rows                                                                                                           |
+|              | Wikipedia raw JSON                                            |        2.6 | MB                                                                                                             |
+|              | TMDb raw JSON                                                 |        0.4 | MB                                                                                                             |
+|              | Google Trends CSVs                                            |      0.006 | MB                                                                                                             |
+|              | Google Trends daily rows                                      |        375 | rows                                                                                                           |
+|              | IMDb 50K corpus                                               |     50,000 | rows                                                                                                           |
+|              | IMDb 50K corpus size                                          |       66.2 | MB                                                                                                             |
+|              | Spark job input (comments + IMDb, tagged by source)           |    400,008 | rows (1c union in spark_stage_counts.csv)                                                                      |
+|              | Spark job word rows after explode                             | 14,324,736 | rows (4a in spark_stage_counts.csv)                                                                            |
+| **Variety**  | Formats                                                       |          4 | HTML-in-JSON (Wikipedia), JSON (YouTube, TMDb, Frankfurter), CSV (Trends, IMDb), free text (comments, reviews) |
+|              | Sources                                                       |          6 | Wikipedia, TMDb, YouTube, Google Trends, Frankfurter, IMDb 50K                                                 |
+|              | Title strings from 5 sources tied to the 10 film_ids          |         56 | strings (data/clean/film_matches.csv)                                                                          |
+| **Velocity** | Median share of a trailer's comments posted in its first 72 h |        78% | of comments                                                                                                    |
+|              | Highest comments/hour in any single hour (first 72 h)         |      8,780 | comments/hour                                                                                                  |
+|              | Mean comments/hour over first 72 h (median film)              |      316.2 | comments/hour                                                                                                  |
+|              | Google Trends peak, days after release (median)               |          0 | days                                                                                                           |
+|              | Google Trends: days from peak until interest halves (median)  |          5 | days                                                                                                           |
 
 **Which V dominated: Variety.** The same film arrived as "Saiyaara (film)", "Kantara - A Legend: Chapter 1" and "RAID 2 (TRAILER): Ajay D | Riteish D | …". Money arrived as "₹797.34–809 crore[b]", "est. ₹30−40 crore" and "over $80 million". Tying 56 title strings to 10 film keys, and turning six kinds of money text into one number, took most of the build.
 
@@ -218,13 +224,13 @@ The pipeline logged **32 decisions**, each with the problem found, rows affected
 
 Rows loaded into MySQL:
 
-| table        |   rows_loaded |
-|:-------------|--------------:|
-| films        |            10 |
-| trailers     |            18 |
-| box_office   |            37 |
-| comments     |        350426 |
-| trends_daily |           375 |
+| Table          |   Rows loaded |
+|:---------------|--------------:|
+| `films`        |            10 |
+| `trailers`     |            18 |
+| `box_office`   |            37 |
+| `comments`     |       350,426 |
+| `trends_daily` |           375 |
 
 Schema (`sql/schema.sql`):
 
@@ -318,7 +324,7 @@ UNION ALL SELECT 'trends_daily', COUNT(*) FROM trends_daily
 | films        |          10 |
 | trailers     |          18 |
 | box_office   |          37 |
-| comments     |      350426 |
+| comments     |     350,426 |
 | trends_daily |         375 |
 
 ## Q2. (JOIN + GROUP BY) For each film: total trailer views across all language versions, next to its first-weekend collection per day. This is the core comparison of our question.
@@ -338,16 +344,16 @@ ORDER BY total_trailer_views DESC
 
 | film_id                | language   |   trailer_versions |   total_trailer_views |   first_weekend_per_day_cr |
 |:-----------------------|:-----------|-------------------:|----------------------:|---------------------------:|
-| dhurandhar_the_revenge | Hindi      |                  5 |           1.30745e+08 |                     186.5  |
-| kantara_chapter_1      | Kannada    |                  5 |           1.03992e+08 |                      82.5  |
-| sitaare_zameen_par     | Hindi      |                  1 |           8.88989e+07 |                      31.83 |
-| chhaava                | Hindi      |                  1 |           8.17284e+07 |                      53.5  |
-| saiyaara               | Hindi      |                  1 |           8.13946e+07 |                      39.67 |
-| raid_2                 | Hindi      |                  1 |           6.59729e+07 |                      25    |
-| peddi                  | Telugu     |                  1 |           5.93947e+07 |                      58.25 |
-| housefull_5            | Hindi      |                  1 |           3.39566e+07 |                      30.61 |
-| l2_empuraan            | Malayalam  |                  1 |           1.76834e+07 |                      43.75 |
-| lokah_chapter_1        | Malayalam  |                  1 |           1.63116e+07 |                      16.38 |
+| dhurandhar_the_revenge | Hindi      |                  5 |           130,744,717 |                      186.5 |
+| kantara_chapter_1      | Kannada    |                  5 |           103,992,420 |                       82.5 |
+| sitaare_zameen_par     | Hindi      |                  1 |            88,898,889 |                      31.83 |
+| chhaava                | Hindi      |                  1 |            81,728,371 |                       53.5 |
+| saiyaara               | Hindi      |                  1 |            81,394,643 |                      39.67 |
+| raid_2                 | Hindi      |                  1 |            65,972,897 |                         25 |
+| peddi                  | Telugu     |                  1 |            59,394,688 |                      58.25 |
+| housefull_5            | Hindi      |                  1 |            33,956,581 |                      30.61 |
+| l2_empuraan            | Malayalam  |                  1 |            17,683,415 |                      43.75 |
+| lokah_chapter_1        | Malayalam  |                  1 |            16,311,601 |                      16.38 |
 
 ## Q3. (JOIN + GROUP BY) Velocity: how many comments arrived in the first 72 hours after the main trailer went live, and the average comments per hour in that window. "Went live" = the earlier of the API publish time and the first comment (Raid 2's trailer was commented on 20.7 h before its official publish time).
 
@@ -369,16 +375,16 @@ ORDER BY comments_first_72h DESC
 
 | film_id                |   comments_first_72h |   comments_per_hour_72h |
 |:-----------------------|---------------------:|------------------------:|
-| chhaava                |                65719 |                   912.8 |
-| dhurandhar_the_revenge |                41548 |                   577.1 |
-| sitaare_zameen_par     |                38047 |                   528.4 |
-| l2_empuraan            |                31536 |                   438   |
-| housefull_5            |                23897 |                   331.9 |
-| raid_2                 |                21632 |                   300.4 |
-| kantara_chapter_1      |                18778 |                   260.8 |
-| peddi                  |                16292 |                   226.3 |
-| saiyaara               |                 8302 |                   115.3 |
-| lokah_chapter_1        |                 3052 |                    42.4 |
+| chhaava                |               65,719 |                   912.8 |
+| dhurandhar_the_revenge |               41,548 |                   577.1 |
+| sitaare_zameen_par     |               38,047 |                   528.4 |
+| l2_empuraan            |               31,536 |                     438 |
+| housefull_5            |               23,897 |                   331.9 |
+| raid_2                 |               21,632 |                   300.4 |
+| kantara_chapter_1      |               18,778 |                   260.8 |
+| peddi                  |               16,292 |                   226.3 |
+| saiyaara               |                8,302 |                   115.3 |
+| lokah_chapter_1        |                3,052 |                    42.4 |
 
 ## Q4. (JOIN + GROUP BY) Do Hindi and regional films get different trailer sentiment? Mean VADER score, ignoring comments VADER could not read (score exactly 0).
 
@@ -396,8 +402,8 @@ GROUP BY film_group
 
 | film_group   |   films |   scored_comments |   mean_vader_nonzero |   share_positive |
 |:-------------|--------:|------------------:|---------------------:|-----------------:|
-| Hindi        |       6 |            191783 |                0.308 |            0.696 |
-| Regional     |       4 |             55897 |                0.158 |            0.58  |
+| Hindi        |       6 |           191,783 |                0.308 |            0.696 |
+| Regional     |       4 |            55,897 |                0.158 |             0.58 |
 
 ## Q5. (JOIN + window function) When did Google search interest peak, relative to release day? A peak on release day means search follows the release, not the trailer.
 
@@ -475,34 +481,34 @@ GROUP BY film_group
 
 Local-mode job over trailer comments plus IMDb 50K, tagged by `source` (`src/08_spark_text_job.py`, `notebooks/spark_text_job.ipynb`):
 
-| stage                       |     rows | note                                         |
-|:----------------------------|---------:|:---------------------------------------------|
-| 1a load comments            |   350426 | nan                                          |
-| 1b load imdb (deduplicated) |    49582 | nan                                          |
-| 1c union                    |   400008 | must be ≥ 50,000                             |
-| 2 clean (non-empty)         |   371616 | emoji-only / number-only texts drop out here |
-| 3 length measured           |   371616 | nan                                          |
-| 4a words (exploded)         | 14324736 | one row per word, before stopwords           |
-| 4b terms (no stopwords)     |  7752016 | nan                                          |
-| 5a summary by film+source   |       11 | nan                                          |
-| 5b term counts              |   304749 | distinct (film, term) pairs                  |
-| 5c top terms per film       |      110 | top 10 × films                               |
+| Stage                       |       Rows | Note                                         |
+|:----------------------------|-----------:|:---------------------------------------------|
+| 1a load comments            |    350,426 |                                              |
+| 1b load imdb (deduplicated) |     49,582 |                                              |
+| 1c union                    |    400,008 | must be ≥ 50,000                             |
+| 2 clean (non-empty)         |    371,616 | emoji-only / number-only texts drop out here |
+| 3 length measured           |    371,616 |                                              |
+| 4a words (exploded)         | 14,324,736 | one row per word, before stopwords           |
+| 4b terms (no stopwords)     |  7,752,016 |                                              |
+| 5a summary by film+source   |         11 |                                              |
+| 5b term counts              |    304,749 | distinct (film, term) pairs                  |
+| 5c top terms per film       |        110 | top 10 × films                               |
 
 Top terms per film:
 
-| film_id                | top 10 terms (stopwords removed)                                                |
-|:-----------------------|:--------------------------------------------------------------------------------|
-| chhaava                | vicky, trailer, har, movie, goosebumps, jai, maharaj, जय, sambhaji, हर          |
-| dhurandhar_the_revenge | trailer, movie, dhurandhar, toxic, dhar, aditya, pakistan, ranveer, part, singh |
-| housefull_5            | movie, bro, trailer, comedy, akshay, flop, housefull, kumar, bollywood, dekh    |
-| imdb_50k               | movie, film, one, like, good, time, even, story, really, see                    |
-| kantara_chapter_1      | trailer, movie, kantara, wow, best, great, super, goosebumps, nice, ಬಹಳ         |
-| l2_empuraan            | trailer, movie, ഇത്, ഒരു, mohanlal, goosebumps, tovino, പടം, തീ, waiting          |
-| lokah_chapter_1        | movie, hindi, trailer, dq, malayalam, lokah, hollywood, cinema, kalyani, like   |
-| peddi                  | peddi, charan, trailer, movie, jai, ram, super, fans, anna, rc                  |
-| raid_2                 | trailer, ajay, riteish, teaser, patnaik, yo, movie, series, going, raid         |
-| saiyaara               | movie, aashiqui, trailer, rockstar, like, love, nice, ashiqui, good, saiyaara   |
-| sitaare_zameen_par     | movie, khan, boycott, copy, champions, amir, remake, aamir, trailer, film       |
+| Film                     | Top 10 terms (stopwords removed)                                                |
+|:-------------------------|:--------------------------------------------------------------------------------|
+| Chhaava                  | vicky, trailer, har, movie, goosebumps, jai, maharaj, जय, sambhaji, हर          |
+| Dhurandhar: The Revenge  | trailer, movie, dhurandhar, toxic, dhar, aditya, pakistan, ranveer, part, singh |
+| Housefull 5              | movie, bro, trailer, comedy, akshay, flop, housefull, kumar, bollywood, dekh    |
+| IMDb 50K corpus          | movie, film, one, like, good, time, even, story, really, see                    |
+| Kantara: Chapter 1       | trailer, movie, kantara, wow, best, great, super, goosebumps, nice, ಬಹಳ         |
+| L2: Empuraan             | trailer, movie, ഇത്, ഒരു, mohanlal, goosebumps, tovino, പടം, തീ, waiting          |
+| Lokah Chapter 1: Chandra | movie, hindi, trailer, dq, malayalam, lokah, hollywood, cinema, kalyani, like   |
+| Peddi                    | peddi, charan, trailer, movie, jai, ram, super, fans, anna, rc                  |
+| Raid 2                   | trailer, ajay, riteish, teaser, patnaik, yo, movie, series, going, raid         |
+| Saiyaara                 | movie, aashiqui, trailer, rockstar, like, love, nice, ashiqui, good, saiyaara   |
+| Sitaare Zameen Par       | movie, khan, boycott, copy, champions, amir, remake, aamir, trailer, film       |
 
 # Appendix C — json_normalize before and after
 
@@ -571,124 +577,124 @@ The same cleaning step was done twice, on the same 36 real money strings taken f
 
 # Appendix E — Full cleaning log
 
-|   id | stage                | problem_found                                                                                                                        |   rows_affected | action_taken                                                                                                                                                 | why                                                                                                                                                                     |
-|-----:|:---------------------|:-------------------------------------------------------------------------------------------------------------------------------------|----------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|    1 | 01_collect_wikipedia | Wikipedia gives opening figures as free text in inconsistent forms (day vs weekend, worldwide vs India, ranges, USD)                 |              38 | Saved all 38 candidate sentences; one verified phrase per film chosen in data/manual/first_weekend_phrases.csv                                               | No single regex picks the right figure on every page; a human choice that the script verifies word-for-word against the source is transparent and cannot invent numbers |
-|    2 | 01_collect_wikipedia | Infobox has no Budget field for some films                                                                                           |               1 | Kept films; budget left missing (NULL) for them                                                                                                              | Budget is a confounder we describe, not our outcome — dropping films for it would shrink an already small n                                                             |
-|    3 | 04_flatten_json      | YouTube comment JSON contains author names, channel ids and profile URLs                                                             |          354592 | Dropped 5 identifying columns during flattening: authorDisplayName, authorProfileImageUrl, authorChannelUrl, authorChannelId, channelId                      | Brief's ground rule: protect people. Usernames never leave data/raw/, which is gitignored                                                                               |
-|    4 | 04_flatten_json      | Channel search returned promo videos (launch events, speeches, Shorts, 30 s cut-downs) whose titles contain 'trailer'                |              30 | Kept only the main trailer plus videos with 'trailer' in the title, no promo words, and length within 10% of the main trailer                                | Dubbed language versions are the same edit, so same length; counting promos would inflate views for films with busy channels (Peddi had 16 'trailer' videos, 1 real)    |
-|    5 | 04_flatten_json      | TMDb genres and cast are lists inside JSON, which do not fit in one table cell                                                       |              10 | Joined genre names into one comma-separated text column; kept only top-3 billed cast                                                                         | One row per film keeps the films table simple; we describe genre/cast, we don't model them                                                                              |
-|    6 | 05_match_films       | Same film spelled differently across 5 sources (e.g. TMDb 'Kantara - A Legend: Chapter 1', YouTube 'RAID 2 (TRAILER): Ajay D | ...') |              56 | Normalised titles (lowercase, removed brackets, 'trailer', language tags, text after '|', punctuation) then rapidfuzz-scored against the 10 canonical titles | A shared film_id is what lets us JOIN trailers, box office, comments and trends                                                                                         |
-|    7 | 05_match_films       | Fuzzy scores below 95                                                                                                                |               3 | 70–94: sent to a human (M9, data/manual/match_review.csv); below 70: rejected                                                                                | A wrong join silently corrupts every later number, so uncertain matches are checked by a person                                                                         |
-|    8 | 05_match_films       | Yearly grossing table row 'Dhurandhar' (the 2025 prequel) looks like 'Dhurandhar: The Revenge'                                       |               1 | Rejected by token_sort_ratio (extra words lower the score), not joined to any film                                                                           | partial_ratio would have scored it 100 and joined the wrong film's ₹1,350 crore gross                                                                                   |
-|    9 | 06_clean_typecast    | Budget given as text ranges (e.g. '₹90–130 crore[a]', 'est. ₹30−40 crore[3][4]') with footnotes and a Unicode minus sign             |               9 | Stripped footnotes/'est.', treated '–' and '−' as range dashes, took the midpoint in ₹ crore                                                                 | A single number per film is needed for SQL and charts; the midpoint is the least biased point in a published range                                                      |
-|   10 | 06_clean_typecast    | Budget missing (Kantara: Chapter 1) or shared with another film (Dhurandhar: The Revenge 'combined with part 1')                     |               2 | Set budget_cr to NULL; films kept                                                                                                                            | Halving a combined budget would invent a number (1 combined); budget is a described confounder, not our outcome                                                         |
-|   11 | 06_clean_typecast    | Running time differs between Wikipedia and TMDb                                                                                      |               7 | Used Wikipedia's runtime (biggest gap 6 min); TMDb kept for comparison only                                                                                  | Wikipedia cites the censor-board certificate for most films; TMDb is user-edited. One rule for all films                                                                |
-|   12 | 06_clean_typecast    | TMDb release date is 1 day earlier than Wikipedia for some films                                                                     |               3 | Used Wikipedia's theatrical release date                                                                                                                     | TMDb often records paid-preview / overseas dates; the screen decision is about the Indian theatrical opening                                                            |
-|   13 | 06_clean_typecast    | Box-office figures published as ranges (e.g. '₹325–335 crore')                                                                       |              12 | Converted to the midpoint; low/high kept in the note column                                                                                                  | Trade sources disagree; the midpoint avoids picking a side                                                                                                              |
-|   14 | 06_clean_typecast    | Dhurandhar: The Revenge first weekend only published in USD ('over $80 million')                                                     |               1 | Converted at the ECB reference rate on its release date (₹93.25/USD, Frankfurter API) and noted it is a lower bound                                          | Excluding it would lose the biggest film in the sample; converting at the release-date rate is reproducible and logged                                                  |
-|   15 | 06_clean_typecast    | First weekends are 3 days (Friday release) for some films and 4 days (Thursday release) for others                                   |               6 | Added first_weekend_per_day = first-weekend gross ÷ number of days                                                                                           | Comparing a 4-day total with a 3-day total would favour Thursday releases by about a third                                                                              |
-|   16 | 06_clean_typecast    | Two weekend figures are not clearly worldwide (Housefull 5 domestic only; Sitaare Zameen Par scope not stated)                       |               2 | Kept, flagged in the note column, and tested with/without them in the analysis                                                                               | Dropping them leaves n = 8; keeping them flagged lets us show whether they change the result                                                                            |
-|   17 | 06_clean_typecast    | Lifetime gross appears in two Wikipedia places (film infobox and the yearly list)                                                    |               7 | Kept both with their source; largest disagreement 0.6%                                                                                                       | Two independent-looking tables that agree within a few % raises confidence in the figures                                                                               |
-|   18 | 06_clean_typecast    | YouTube counts arrive as text and timestamps as ISO-8601 UTC strings                                                                 |              18 | Counts → integers (hidden likes stay NULL, not 0); timestamps → IST datetimes                                                                                | Text sorts '9' after '81728371'; UTC would put late-evening IST trailers on the wrong day                                                                               |
-|   19 | 06_clean_typecast    | Same comment id downloaded twice (pages shift while new comments arrive during paging)                                               |               5 | Dropped repeats, kept first                                                                                                                                  | A comment counted twice would inflate velocity and that film's sentiment weight                                                                                         |
-|   20 | 06_clean_typecast    | Comments contain URLs (links, timestamps to other videos)                                                                            |            5112 | Removed URLs from text, kept the rest of the comment                                                                                                         | URLs carry no sentiment and distort length and term counts                                                                                                              |
-|   21 | 06_clean_typecast    | Empty comments after cleaning (only a link, or blank)                                                                                |            4161 | Dropped                                                                                                                                                      | Nothing to score; keeping them would add fake neutral sentiment                                                                                                         |
-|   22 | 06_clean_typecast    | Google Trends writes very low interest as the text '<1'                                                                              |               4 | Replaced with 0.5 (the middle of 0–1) and cast the column to numbers                                                                                         | 0 would claim no searches at all; 1 overstates; 0.5 is the honest midpoint and too small to move any result                                                             |
-|   23 | 06_clean_typecast    | Checked Trends files for missing days                                                                                                |               0 | None missing across all 10 films — no fill needed                                                                                                            | Each export covered every day of its window                                                                                                                             |
-|   24 | 07_sentiment         | IMDb 50K contains exact duplicate review texts                                                                                       |             418 | Dropped repeats, kept first                                                                                                                                  | A duplicated review would be counted twice in accuracy/F1 and in the Spark job                                                                                          |
-|   25 | 07_sentiment         | IMDb reviews contain HTML line breaks ('<br />')                                                                                     |           28966 | Replaced with a space                                                                                                                                        | Markup is not language; it would show up as fake terms ('br') in the term counts                                                                                        |
-|   26 | 07_sentiment         | VADER is a generic tool — is it accurate enough on film text?                                                                        |           49582 | Validated on labelled IMDb reviews before use: accuracy 0.700, macro-F1 0.692                                                                                | Using a sentiment score without checking it on labelled data would be guesswork                                                                                         |
-|   27 | 07_sentiment         | Comments written in Indian scripts (Devanagari, Telugu, Tamil, Kannada, Malayalam) — VADER cannot read them                          |           29965 | Kept in the data (they count for velocity) but their VADER score is 0; share reported per film                                                               | Dropping them would bias velocity against regional films; translating 300k comments is out of scope                                                                     |
-|   28 | 07_sentiment         | Latin-script comments that VADER scores exactly 0 (Hinglish, names, hashtags, emojis-only)                                           |           88065 | Kept; reported as VADER's blind-spot share; analysis also uses mean sentiment of non-zero comments                                                           | Treating 'no known words' as 'neutral' would pull every film's mean towards 0                                                                                           |
-|   29 | 10_analysis          | Comments posted BEFORE the trailer's official API publish time (Raid 2: up to 20.7 h early; Kantara, Dhurandhar 2: minutes)          |           16657 | Trailer window now starts at the earlier of the API publish time and the first comment                                                                       | The video was viewable before its 'published' stamp (e.g. a scheduled premiere); starting late would cut off Raid 2's real first day                                    |
-|   30 | 10_analysis          | Views (millions), crores and sentiment (−1..+1) are on very different scales                                                         |              10 | z-scored every feature and the outcome; views and comment counts log10-scaled first                                                                          | Lets one chart and one index combine them; log stops the 130M-view film dominating                                                                                      |
-|   31 | 10_analysis          | Possible paid/bot buzz: the same 5+-word comment posted 5+ times within one hour                                                     |            3663 | Flagged (not deleted); share per film reported in bot_check_by_film.csv                                                                                      | Deleting needs proof; flagging lets us show whether any film's buzz is inflated                                                                                         |
-|   32 | 10_analysis          | A large block of comments posted before the official publish time that is mostly copy-paste text (Raid 2)                            |           16245 | Kept (we cannot prove who wrote them) but flagged; Raid 2's comment-based buzz is reported as likely inflated                                                | 88%-style repetition before a video is officially public is the signature of seeded/paid buzz, not organic fans                                                         |
+|   # | Stage        | Problem found                                                                                                                        |    Rows | Action taken                                                                                                                                                 | Why                                                                                                                                                                     |
+|----:|:-------------|:-------------------------------------------------------------------------------------------------------------------------------------|--------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|   1 | 01 Wikipedia | Wikipedia gives opening figures as free text in inconsistent forms (day vs weekend, worldwide vs India, ranges, USD)                 |      38 | Saved all 38 candidate sentences; one verified phrase per film chosen in data/manual/first_weekend_phrases.csv                                               | No single regex picks the right figure on every page; a human choice that the script verifies word-for-word against the source is transparent and cannot invent numbers |
+|   2 | 01 Wikipedia | Infobox has no Budget field for some films                                                                                           |       1 | Kept films; budget left missing (NULL) for them                                                                                                              | Budget is a confounder we describe, not our outcome — dropping films for it would shrink an already small n                                                             |
+|   3 | 04 Flatten   | YouTube comment JSON contains author names, channel ids and profile URLs                                                             | 354,592 | Dropped 5 identifying columns during flattening: authorDisplayName, authorProfileImageUrl, authorChannelUrl, authorChannelId, channelId                      | Brief's ground rule: protect people. Usernames never leave data/raw/, which is gitignored                                                                               |
+|   4 | 04 Flatten   | Channel search returned promo videos (launch events, speeches, Shorts, 30 s cut-downs) whose titles contain 'trailer'                |      30 | Kept only the main trailer plus videos with 'trailer' in the title, no promo words, and length within 10% of the main trailer                                | Dubbed language versions are the same edit, so same length; counting promos would inflate views for films with busy channels (Peddi had 16 'trailer' videos, 1 real)    |
+|   5 | 04 Flatten   | TMDb genres and cast are lists inside JSON, which do not fit in one table cell                                                       |      10 | Joined genre names into one comma-separated text column; kept only top-3 billed cast                                                                         | One row per film keeps the films table simple; we describe genre/cast, we don't model them                                                                              |
+|   6 | 05 Match     | Same film spelled differently across 5 sources (e.g. TMDb 'Kantara - A Legend: Chapter 1', YouTube 'RAID 2 (TRAILER): Ajay D | ...') |      56 | Normalised titles (lowercase, removed brackets, 'trailer', language tags, text after '|', punctuation) then rapidfuzz-scored against the 10 canonical titles | A shared film_id is what lets us JOIN trailers, box office, comments and trends                                                                                         |
+|   7 | 05 Match     | Fuzzy scores below 95                                                                                                                |       3 | 70–94: sent to a human (M9, data/manual/match_review.csv); below 70: rejected                                                                                | A wrong join silently corrupts every later number, so uncertain matches are checked by a person                                                                         |
+|   8 | 05 Match     | Yearly grossing table row 'Dhurandhar' (the 2025 prequel) looks like 'Dhurandhar: The Revenge'                                       |       1 | Rejected by token_sort_ratio (extra words lower the score), not joined to any film                                                                           | partial_ratio would have scored it 100 and joined the wrong film's ₹1,350 crore gross                                                                                   |
+|   9 | 06 Clean     | Budget given as text ranges (e.g. '₹90–130 crore[a]', 'est. ₹30−40 crore[3][4]') with footnotes and a Unicode minus sign             |       9 | Stripped footnotes/'est.', treated '–' and '−' as range dashes, took the midpoint in ₹ crore                                                                 | A single number per film is needed for SQL and charts; the midpoint is the least biased point in a published range                                                      |
+|  10 | 06 Clean     | Budget missing (Kantara: Chapter 1) or shared with another film (Dhurandhar: The Revenge 'combined with part 1')                     |       2 | Set budget_cr to NULL; films kept                                                                                                                            | Halving a combined budget would invent a number (1 combined); budget is a described confounder, not our outcome                                                         |
+|  11 | 06 Clean     | Running time differs between Wikipedia and TMDb                                                                                      |       7 | Used Wikipedia's runtime (biggest gap 6 min); TMDb kept for comparison only                                                                                  | Wikipedia cites the censor-board certificate for most films; TMDb is user-edited. One rule for all films                                                                |
+|  12 | 06 Clean     | TMDb release date is 1 day earlier than Wikipedia for some films                                                                     |       3 | Used Wikipedia's theatrical release date                                                                                                                     | TMDb often records paid-preview / overseas dates; the screen decision is about the Indian theatrical opening                                                            |
+|  13 | 06 Clean     | Box-office figures published as ranges (e.g. '₹325–335 crore')                                                                       |      12 | Converted to the midpoint; low/high kept in the note column                                                                                                  | Trade sources disagree; the midpoint avoids picking a side                                                                                                              |
+|  14 | 06 Clean     | Dhurandhar: The Revenge first weekend only published in USD ('over $80 million')                                                     |       1 | Converted at the ECB reference rate on its release date (₹93.25/USD, Frankfurter API) and noted it is a lower bound                                          | Excluding it would lose the biggest film in the sample; converting at the release-date rate is reproducible and logged                                                  |
+|  15 | 06 Clean     | First weekends are 3 days (Friday release) for some films and 4 days (Thursday release) for others                                   |       6 | Added first_weekend_per_day = first-weekend gross ÷ number of days                                                                                           | Comparing a 4-day total with a 3-day total would favour Thursday releases by about a third                                                                              |
+|  16 | 06 Clean     | Two weekend figures are not clearly worldwide (Housefull 5 domestic only; Sitaare Zameen Par scope not stated)                       |       2 | Kept, flagged in the note column, and tested with/without them in the analysis                                                                               | Dropping them leaves n = 8; keeping them flagged lets us show whether they change the result                                                                            |
+|  17 | 06 Clean     | Lifetime gross appears in two Wikipedia places (film infobox and the yearly list)                                                    |       7 | Kept both with their source; largest disagreement 0.6%                                                                                                       | Two independent-looking tables that agree within a few % raises confidence in the figures                                                                               |
+|  18 | 06 Clean     | YouTube counts arrive as text and timestamps as ISO-8601 UTC strings                                                                 |      18 | Counts → integers (hidden likes stay NULL, not 0); timestamps → IST datetimes                                                                                | Text sorts '9' after '81728371'; UTC would put late-evening IST trailers on the wrong day                                                                               |
+|  19 | 06 Clean     | Same comment id downloaded twice (pages shift while new comments arrive during paging)                                               |       5 | Dropped repeats, kept first                                                                                                                                  | A comment counted twice would inflate velocity and that film's sentiment weight                                                                                         |
+|  20 | 06 Clean     | Comments contain URLs (links, timestamps to other videos)                                                                            |   5,112 | Removed URLs from text, kept the rest of the comment                                                                                                         | URLs carry no sentiment and distort length and term counts                                                                                                              |
+|  21 | 06 Clean     | Empty comments after cleaning (only a link, or blank)                                                                                |   4,161 | Dropped                                                                                                                                                      | Nothing to score; keeping them would add fake neutral sentiment                                                                                                         |
+|  22 | 06 Clean     | Google Trends writes very low interest as the text '<1'                                                                              |       4 | Replaced with 0.5 (the middle of 0–1) and cast the column to numbers                                                                                         | 0 would claim no searches at all; 1 overstates; 0.5 is the honest midpoint and too small to move any result                                                             |
+|  23 | 06 Clean     | Checked Trends files for missing days                                                                                                |       0 | None missing across all 10 films — no fill needed                                                                                                            | Each export covered every day of its window                                                                                                                             |
+|  24 | 07 Sentiment | IMDb 50K contains exact duplicate review texts                                                                                       |     418 | Dropped repeats, kept first                                                                                                                                  | A duplicated review would be counted twice in accuracy/F1 and in the Spark job                                                                                          |
+|  25 | 07 Sentiment | IMDb reviews contain HTML line breaks ('<br />')                                                                                     |  28,966 | Replaced with a space                                                                                                                                        | Markup is not language; it would show up as fake terms ('br') in the term counts                                                                                        |
+|  26 | 07 Sentiment | VADER is a generic tool — is it accurate enough on film text?                                                                        |  49,582 | Validated on labelled IMDb reviews before use: accuracy 0.700, macro-F1 0.692                                                                                | Using a sentiment score without checking it on labelled data would be guesswork                                                                                         |
+|  27 | 07 Sentiment | Comments written in Indian scripts (Devanagari, Telugu, Tamil, Kannada, Malayalam) — VADER cannot read them                          |  29,965 | Kept in the data (they count for velocity) but their VADER score is 0; share reported per film                                                               | Dropping them would bias velocity against regional films; translating 300k comments is out of scope                                                                     |
+|  28 | 07 Sentiment | Latin-script comments that VADER scores exactly 0 (Hinglish, names, hashtags, emojis-only)                                           |  88,065 | Kept; reported as VADER's blind-spot share; analysis also uses mean sentiment of non-zero comments                                                           | Treating 'no known words' as 'neutral' would pull every film's mean towards 0                                                                                           |
+|  29 | 10 Analysis  | Comments posted BEFORE the trailer's official API publish time (Raid 2: up to 20.7 h early; Kantara, Dhurandhar 2: minutes)          |  16,657 | Trailer window now starts at the earlier of the API publish time and the first comment                                                                       | The video was viewable before its 'published' stamp (e.g. a scheduled premiere); starting late would cut off Raid 2's real first day                                    |
+|  30 | 10 Analysis  | Views (millions), crores and sentiment (−1..+1) are on very different scales                                                         |      10 | z-scored every feature and the outcome; views and comment counts log10-scaled first                                                                          | Lets one chart and one index combine them; log stops the 130M-view film dominating                                                                                      |
+|  31 | 10 Analysis  | Possible paid/bot buzz: the same 5+-word comment posted 5+ times within one hour                                                     |   3,663 | Flagged (not deleted); share per film reported in bot_check_by_film.csv                                                                                      | Deleting needs proof; flagging lets us show whether any film's buzz is inflated                                                                                         |
+|  32 | 10 Analysis  | A large block of comments posted before the official publish time that is mostly copy-paste text (Raid 2)                            |  16,245 | Kept (we cannot prove who wrote them) but flagged; Raid 2's comment-based buzz is reported as likely inflated                                                | 88%-style repetition before a video is officially public is the signature of seeded/paid buzz, not organic fans                                                         |
 
 # Appendix F — Source register
 
-| source                            | url                                                       | access_date   | method                                                                                   | terms_of_use                                                                                                            | note                                                                                                                                      |
-|:----------------------------------|:----------------------------------------------------------|:--------------|:-----------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------|
-| Frankfurter (ECB reference rates) | https://api.frankfurter.dev/v1/2026-03-19?from=USD&to=INR | 2026-11-26    | REST API (JSON)                                                                          | https://frankfurter.dev (open-source API serving European Central Bank reference rates)                                 | One USD→INR rate to convert the only USD box-office figure                                                                                |
-| TMDb                              | https://api.themoviedb.org/3/search/movie                 | 2026-11-26    | REST API /search/movie ; REST API /search/movie + /movie/{id}?append_to_response=credits | https://www.themoviedb.org/api-terms-of-use                                                                             | Genre, runtime, language, cast; free developer key; credited as the data source                                                           |
-| Wikipedia                         | https://en.wikipedia.org/w/api.php                        | 2026-11-26    | MediaWiki API action=parse ; MediaWiki API action=parse + pandas.read_html               | https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use (API etiquette: https://www.mediawiki.org/wiki/API:Etiquette) | Box-office infobox + text via MediaWiki API (HTML inside JSON); descriptive User-Agent; 1 s between calls; revision ids saved             |
-| YouTube Data API v3               | https://www.googleapis.com/youtube/v3/search              | 2026-11-26    | search.list + videos.list ; videos.list + search.list + commentThreads.list              | https://developers.google.com/youtube/terms/api-services-terms-of-service                                               | Trailer stats + all top-level comments of main trailers; quota hard-capped at 10,000 units/day; usernames dropped before leaving data/raw |
-| Google Trends                     | https://trends.google.com/trends/explore (geo=IN, daily)  | 2026-11-26    | Manual CSV export, one search term per film                                              | https://policies.google.com/terms                                                                                       | Daily India search interest, exported by hand (pytrends is unreliable); values are relative 0–100 per export                              |
-| IMDb 50K labelled reviews         | local file data/manual/imdb_50k.csv                       | 2026-10-06    | Local CSV (Homework 1.2)                                                                 | Research dataset, Maas et al. (2011), https://ai.stanford.edu/~amaas/data/sentiment/ (copy from Homework 1.2 / Kaggle)  | Labelled practice corpus: validates VADER and lifts the Spark job above 50,000 rows                                                       |
+| Source                            | Accessed   | Method                                                                                   | URL                                                       | Terms of use                                                                                                            | Note                                                                                                                                      |
+|:----------------------------------|:-----------|:-----------------------------------------------------------------------------------------|:----------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------|
+| Frankfurter (ECB reference rates) | 2026-11-26 | REST API (JSON)                                                                          | https://api.frankfurter.dev/v1/2026-03-19?from=USD&to=INR | https://frankfurter.dev (open-source API serving European Central Bank reference rates)                                 | One USD→INR rate to convert the only USD box-office figure                                                                                |
+| TMDb                              | 2026-11-26 | REST API /search/movie ; REST API /search/movie + /movie/{id}?append_to_response=credits | https://api.themoviedb.org/3/search/movie                 | https://www.themoviedb.org/api-terms-of-use                                                                             | Genre, runtime, language, cast; free developer key; credited as the data source                                                           |
+| Wikipedia                         | 2026-11-26 | MediaWiki API action=parse ; MediaWiki API action=parse + pandas.read_html               | https://en.wikipedia.org/w/api.php                        | https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use (API etiquette: https://www.mediawiki.org/wiki/API:Etiquette) | Box-office infobox + text via MediaWiki API (HTML inside JSON); descriptive User-Agent; 1 s between calls; revision ids saved             |
+| YouTube Data API v3               | 2026-11-26 | search.list + videos.list ; videos.list + search.list + commentThreads.list              | https://www.googleapis.com/youtube/v3/search              | https://developers.google.com/youtube/terms/api-services-terms-of-service                                               | Trailer stats + all top-level comments of main trailers; quota hard-capped at 10,000 units/day; usernames dropped before leaving data/raw |
+| Google Trends                     | 2026-11-26 | Manual CSV export, one search term per film                                              | https://trends.google.com/trends/explore (geo=IN, daily)  | https://policies.google.com/terms                                                                                       | Daily India search interest, exported by hand (pytrends is unreliable); values are relative 0–100 per export                              |
+| IMDb 50K labelled reviews         | 2026-10-06 | Local CSV (Homework 1.2)                                                                 | local file data/manual/imdb_50k.csv                       | Research dataset, Maas et al. (2011), https://ai.stanford.edu/~amaas/data/sentiment/ (copy from Homework 1.2 / Kaggle)  | Labelled practice corpus: validates VADER and lifts the Spark job above 50,000 rows                                                       |
 
 # Appendix G — Sentiment validation and blind spots
 
-| metric                                |      value |
-|:--------------------------------------|-----------:|
-| rows_scored                           | 49582      |
-| accuracy                              |     0.6998 |
-| f1_positive                           |     0.7421 |
-| f1_macro                              |     0.6915 |
-| true_pos (actual pos, predicted pos)  | 21410      |
-| false_neg (actual pos, predicted neg) |  3474      |
-| false_pos (actual neg, predicted pos) | 11411      |
-| true_neg (actual neg, predicted neg)  | 13287      |
+| Metric                     |   Value |
+|:---------------------------|--------:|
+| Reviews scored             |  49,582 |
+| Accuracy                   |   0.700 |
+| F1 (positive class)        |   0.742 |
+| F1 (macro average)         |   0.692 |
+| Positive → called positive |  21,410 |
+| Positive → called negative |   3,474 |
+| Negative → called positive |  11,411 |
+| Negative → called negative |  13,287 |
 
-| film_id                |   comments |   share_indic_script |   share_vader_zero |   mean_compound |
-|:-----------------------|-----------:|---------------------:|-------------------:|----------------:|
-| chhaava                |      87712 |                0.109 |              0.333 |           0.144 |
-| dhurandhar_the_revenge |      53859 |                0.023 |              0.316 |           0.118 |
-| housefull_5            |      31753 |                0.028 |              0.258 |           0.32  |
-| kantara_chapter_1      |      19777 |                0.272 |              0.289 |           0.304 |
-| l2_empuraan            |      35830 |                0.217 |              0.264 |          -0.037 |
-| lokah_chapter_1        |       4888 |                0.158 |              0.324 |           0.147 |
-| peddi                  |      17432 |                0.118 |              0.302 |           0.196 |
-| raid_2                 |      27332 |                0.012 |              0.262 |           0.214 |
-| saiyaara               |      26163 |                0.03  |              0.298 |           0.35  |
-| sitaare_zameen_par     |      45680 |                0.027 |              0.248 |           0.326 |
+| Film                     |   Comments |   In Indian script |   VADER score = 0 |   Mean sentiment |
+|:-------------------------|-----------:|-------------------:|------------------:|-----------------:|
+| Chhaava                  |     87,712 |              10.9% |             33.3% |            0.144 |
+| Dhurandhar: The Revenge  |     53,859 |               2.3% |             31.6% |            0.118 |
+| Housefull 5              |     31,753 |               2.8% |             25.8% |             0.32 |
+| Kantara: Chapter 1       |     19,777 |              27.2% |             28.9% |            0.304 |
+| L2: Empuraan             |     35,830 |              21.7% |             26.4% |           -0.037 |
+| Lokah Chapter 1: Chandra |      4,888 |              15.8% |             32.4% |            0.147 |
+| Peddi                    |     17,432 |              11.8% |             30.2% |            0.196 |
+| Raid 2                   |     27,332 |               1.2% |             26.2% |            0.214 |
+| Saiyaara                 |     26,163 |               3.0% |             29.8% |             0.35 |
+| Sitaare Zameen Par       |     45,680 |               2.7% |             24.8% |            0.326 |
 
 # Appendix H — All correlations, the leave-one-out test and the pre-publish check
 
-| subset                            | feature                                        |   n |   spearman_rho |   p_value |
-|:----------------------------------|:-----------------------------------------------|----:|---------------:|----------:|
-| all films                         | total_views                                    |  10 |          0.648 |     0.043 |
-| all films                         | like_ratio                                     |  10 |          0.285 |     0.425 |
-| all films                         | comments_7d                                    |  10 |          0.37  |     0.293 |
-| all films                         | comments_per_hour                              |  10 |          0.37  |     0.293 |
-| all films                         | sentiment_7d                                   |  10 |         -0.188 |     0.603 |
-| excluding flagged weekend figures | total_views                                    |   8 |          0.738 |     0.037 |
-| excluding flagged weekend figures | like_ratio                                     |   8 |          0.357 |     0.385 |
-| excluding flagged weekend figures | comments_7d                                    |   8 |          0.5   |     0.207 |
-| excluding flagged weekend figures | comments_per_hour                              |   8 |          0.5   |     0.207 |
-| excluding flagged weekend figures | sentiment_7d                                   |   8 |          0     |     1     |
-| all films                         | sentiment_7d | controlling for views (partial) |  10 |         -0.391 |   nan     |
+| Films included                    | Buzz signal                                      |   n |   Spearman ρ |    p |
+|:----------------------------------|:-------------------------------------------------|----:|-------------:|-----:|
+| All films                         | Trailer views (all versions)                     |  10 |         0.65 | 0.04 |
+| All films                         | Like ratio (likes ÷ views)                       |  10 |         0.28 | 0.42 |
+| All films                         | Comments, first 7 days                           |  10 |         0.37 | 0.29 |
+| All films                         | Comments per hour, first 72 h                    |  10 |         0.37 | 0.29 |
+| All films                         | Mean sentiment, first 7 days                     |  10 |        -0.19 | 0.60 |
+| Excluding flagged weekend figures | Trailer views (all versions)                     |   8 |         0.74 | 0.04 |
+| Excluding flagged weekend figures | Like ratio (likes ÷ views)                       |   8 |         0.36 | 0.39 |
+| Excluding flagged weekend figures | Comments, first 7 days                           |   8 |          0.5 | 0.21 |
+| Excluding flagged weekend figures | Comments per hour, first 72 h                    |   8 |          0.5 | 0.21 |
+| Excluding flagged weekend figures | Mean sentiment, first 7 days                     |   8 |            0 | 1.00 |
+| All films                         | Sentiment, after controlling for views (partial) |  10 |        -0.39 |    — |
 
-| held_out_film          |   buzz_index |   predicted_rank_of_10 |   actual_rank_of_10 | call_correct   |
-|:-----------------------|-------------:|-----------------------:|--------------------:|:---------------|
-| chhaava                |        0.821 |                      1 |                   4 | True           |
-| saiyaara               |       -0.33  |                      9 |                   6 | True           |
-| sitaare_zameen_par     |        0.502 |                      4 |                   7 | False          |
-| housefull_5            |       -0.115 |                      7 |                   8 | True           |
-| raid_2                 |        0.017 |                      5 |                   9 | False          |
-| dhurandhar_the_revenge |        0.712 |                      2 |                   1 | True           |
-| kantara_chapter_1      |        0.284 |                      4 |                   2 | True           |
-| lokah_chapter_1        |       -1.573 |                     10 |                  10 | True           |
-| l2_empuraan            |       -0.272 |                      8 |                   5 | False          |
-| peddi                  |       -0.316 |                      8 |                   3 | False          |
+| Held-out film            |   Buzz Index |   Predicted rank |   Actual rank |  Above/below median right?  |
+|:-------------------------|-------------:|-----------------:|--------------:|:---------------------------:|
+| Chhaava                  |         0.82 |                1 |             4 |              ✓              |
+| Saiyaara                 |        -0.33 |                9 |             6 |              ✓              |
+| Sitaare Zameen Par       |          0.5 |                4 |             7 |              ✗              |
+| Housefull 5              |        -0.12 |                7 |             8 |              ✓              |
+| Raid 2                   |         0.02 |                5 |             9 |              ✗              |
+| Dhurandhar: The Revenge  |         0.71 |                2 |             1 |              ✓              |
+| Kantara: Chapter 1       |         0.28 |                4 |             2 |              ✓              |
+| Lokah Chapter 1: Chandra |        -1.57 |               10 |            10 |              ✓              |
+| L2: Empuraan             |        -0.27 |                8 |             5 |              ✗              |
+| Peddi                    |        -0.32 |                8 |             3 |              ✗              |
 
 Comments before and after each trailer's official publish time, and the share that repeat text posted 5+ times:
 
-| film_id                | window                  |   comments |   share_repeated_5plus |
-|:-----------------------|:------------------------|-----------:|-----------------------:|
-| chhaava                | after official publish  |      87712 |                  0.261 |
-| dhurandhar_the_revenge | after official publish  |      53846 |                  0.176 |
-| dhurandhar_the_revenge | before official publish |         13 |                  0.231 |
-| housefull_5            | after official publish  |      31753 |                  0.225 |
-| kantara_chapter_1      | after official publish  |      19378 |                  0.513 |
-| kantara_chapter_1      | before official publish |        399 |                  0.308 |
-| l2_empuraan            | after official publish  |      35830 |                  0.394 |
-| lokah_chapter_1        | after official publish  |       4888 |                  0.204 |
-| peddi                  | after official publish  |      17432 |                  0.241 |
-| raid_2                 | after official publish  |      11087 |                  0.388 |
-| raid_2                 | before official publish |      16245 |                  0.886 |
-| saiyaara               | after official publish  |      26163 |                  0.176 |
-| sitaare_zameen_par     | after official publish  |      45680 |                  0.18  |
+| Film                     | Window                  |   Comments |   Share that is copy-paste (text seen 5+ times) |
+|:-------------------------|:------------------------|-----------:|------------------------------------------------:|
+| Chhaava                  | After official publish  |     87,712 |                                           26.1% |
+| Dhurandhar: The Revenge  | After official publish  |     53,846 |                                           17.6% |
+| Dhurandhar: The Revenge  | Before official publish |         13 |                                           23.1% |
+| Housefull 5              | After official publish  |     31,753 |                                           22.5% |
+| Kantara: Chapter 1       | After official publish  |     19,378 |                                           51.3% |
+| Kantara: Chapter 1       | Before official publish |        399 |                                           30.8% |
+| L2: Empuraan             | After official publish  |     35,830 |                                           39.4% |
+| Lokah Chapter 1: Chandra | After official publish  |      4,888 |                                           20.4% |
+| Peddi                    | After official publish  |     17,432 |                                           24.1% |
+| Raid 2                   | After official publish  |     11,087 |                                           38.8% |
+| Raid 2                   | Before official publish |     16,245 |                                           88.6% |
+| Saiyaara                 | After official publish  |     26,163 |                                           17.6% |
+| Sitaare Zameen Par       | After official publish  |     45,680 |                                           18.0% |
 
 # Appendix I — AI-use disclosure
 

@@ -11,6 +11,12 @@ date: "November 2026"
 
 Across 10 Hindi and regional films released in 2025–26, films whose trailers were watched more had bigger first weekends, but the link is loose and does not prove that one causes the other. How *positive* the trailer comments sounded told us nothing extra: the biggest opener had some of the least positive comments, and a buzz score built from all our online signals called only {{num:loo_hits}} of 10 films correctly. For next Friday, use trailer reach as an early hint when planning shows, but make the add-or-cut screens decision on Friday's actual collections, not on online buzz.
 
+::: glance
+| Films studied | Trailer comments | Views vs weekend (ρ) | Sentiment vs weekend (ρ) | Buzz Index calls right |
+|:---:|:---:|:---:|:---:|:---:|
+| 10 | {{num:comments_clean}} | {{num:rho_views}} | {{num:rho_sent}} | {{num:loo_hits}} / 10 |
+:::
+
 # b. The question and why it matters
 
 **Question.** *Did trailer-week YouTube engagement predict first-weekend collections for 10 Hindi and regional films released in 2025–26, and does audience sentiment add anything beyond raw views?*

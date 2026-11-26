@@ -92,23 +92,64 @@ code span.vs { color: #4070a0; }
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
   <style type="text/css">
-@page { size: A4; margin: 16mm 15mm; }
-body { font-family: -apple-system, "Helvetica Neue", Arial, "Devanagari Sangam MN", "Malayalam Sangam MN", "Kannada Sangam MN", "Telugu Sangam MN", "Tamil Sangam MN", sans-serif;
-font-size: 10.5pt; line-height: 1.45; color: #0b0b0b; max-width: none; margin: 0; }
-header#title-block-header { margin-bottom: 1.2em; border-bottom: 1px solid #d8d7d2; }
-h1.title { font-size: 20pt; margin-bottom: 0.1em; }
-p.subtitle, p.author, p.date { color: #52514e; margin: 0.15em 0; }
-h1 { font-size: 15pt; margin-top: 1.4em; border-bottom: 1px solid #ecebe7; padding-bottom: 0.15em; page-break-after: avoid; }
-h2 { font-size: 12pt; margin-top: 1.1em; page-break-after: avoid; }
-img { max-width: 100%; page-break-inside: avoid; }
-figure { margin: 0.8em 0; page-break-inside: avoid; }
-figcaption { font-size: 9pt; color: #52514e; }
-table { border-collapse: collapse; width: 100%; font-size: 8pt; margin: 0.6em 0 1em; page-break-inside: auto; }
-th, td { border-bottom: 1px solid #ecebe7; padding: 3px 5px; text-align: left; vertical-align: top; word-break: break-word; }
-th { background: #f4f3ef; }
-tr { page-break-inside: avoid; }
-pre, code { font-size: 8pt; white-space: pre-wrap; word-break: break-word; }
-pre { background: #f7f6f3; padding: 6px 8px; border-radius: 3px; }
+:root {
+--ink: #0b0b0b; --ink-2: #52514e; --ink-3: #8a8985;
+--rule: #d8d7d2; --rule-light: #ecebe7; --stripe: #f7f6f3; --head: #efeee9;
+--accent: #2a78d6;
+}
+@page {
+size: A4; margin: 16mm 15mm 18mm;
+@bottom-center { content: counter(page); font-size: 8pt; color: #8a8985; }
+@bottom-left { content: "Release Day Radar"; font-size: 8pt; color: #8a8985; }
+}
+@page :first { @bottom-center { content: none; } @bottom-left { content: none; } }
+body { font-family: -apple-system, "Helvetica Neue", Arial, "Devanagari Sangam MN", "Malayalam Sangam MN",
+"Kannada Sangam MN", "Telugu Sangam MN", "Tamil Sangam MN", sans-serif;
+font-size: 10.5pt; line-height: 1.5; color: var(--ink); max-width: none; margin: 0; }
+
+header#title-block-header { margin-bottom: 1.4em; padding-bottom: 0.8em; border-bottom: 2px solid var(--ink); }
+h1.title { font-size: 21pt; line-height: 1.2; margin: 0 0 0.2em; border: 0; }
+p.subtitle { font-size: 12pt; color: var(--ink-2); margin: 0.1em 0; }
+p.author, p.date { color: var(--ink-3); font-size: 9.5pt; margin: 0.1em 0; }
+
+h1 { font-size: 15pt; margin: 1.5em 0 0.5em; padding-bottom: 0.2em; border-bottom: 1px solid var(--rule);
+page-break-after: avoid; break-after: avoid; }
+h2 { font-size: 12pt; margin: 1.2em 0 0.4em; page-break-after: avoid; break-after: avoid; }
+p, li { orphans: 3; widows: 3; }
+
+img { max-width: 100%; }
+figure { margin: 1em 0 0.6em; page-break-inside: avoid; break-inside: avoid; }
+figcaption { font-size: 8.5pt; color: var(--ink-2); margin-top: 0.3em; }
+
+table { border-collapse: collapse; width: 100%; font-size: 8.3pt; line-height: 1.35;
+margin: 0.7em 0 1.2em; font-variant-numeric: tabular-nums; }
+thead th { background: var(--head); color: var(--ink); font-weight: 600; text-align: left;
+border-top: 1.5px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 5px 6px; vertical-align: bottom; }
+tbody td { padding: 4px 6px; border-bottom: 1px solid var(--rule-light); vertical-align: top; overflow-wrap: break-word; hyphens: manual; }
+
+table { table-layout: auto; }
+col { width: auto !important; }
+
+td[style*="right"], th[style*="right"] { white-space: nowrap; text-align: right; }
+td:first-child { overflow-wrap: normal; }
+tbody tr:nth-child(even) td { background: var(--stripe); }
+tbody tr:last-child td { border-bottom: 1.5px solid var(--ink); }
+tr { page-break-inside: avoid; break-inside: avoid; }
+td code, th code { font-size: 7.8pt; background: none; padding: 0; color: var(--ink-2); }
+
+.glance table { font-size: 9pt; margin: 0.8em 0 1.4em; }
+.glance thead th { background: none; border-top: 0; border-bottom: 0; color: var(--ink-2); font-weight: 500;
+font-size: 8.5pt; letter-spacing: 0.01em; text-align: center; }
+.glance tbody td { font-size: 17pt; font-weight: 700; text-align: center; border: 0; background: none !important;
+padding: 2px 6px 6px; color: var(--ink); }
+.glance tbody tr:last-child td { border-bottom: 0; }
+.glance { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin: 0.6em 0 1.2em; }
+
+pre, code { font-family: "SF Mono", Menlo, monospace; font-size: 7.8pt; white-space: pre-wrap; overflow-wrap: anywhere; }
+pre { background: var(--stripe); padding: 7px 9px; border-left: 2px solid var(--rule); }
+p code, li code { background: var(--stripe); padding: 0 3px; border-radius: 2px; }
+blockquote { margin: 0.8em 0; padding: 0.2em 0.9em; border-left: 3px solid var(--accent); color: var(--ink-2); }
+nav#TOC { display: none; }
 </style>
 </head>
 <body>
@@ -130,6 +171,35 @@ score built from all our online signals called only 6 of 10 films
 correctly. For next Friday, use trailer reach as an early hint when
 planning shows, but make the add-or-cut screens decision on Friday’s
 actual collections, not on online buzz.</p>
+<div class="glance">
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">Films studied</th>
+<th style="text-align: center;">Trailer comments</th>
+<th style="text-align: center;">Views vs weekend (ρ)</th>
+<th style="text-align: center;">Sentiment vs weekend (ρ)</th>
+<th style="text-align: center;">Buzz Index calls right</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">350,426</td>
+<td style="text-align: center;">0.65</td>
+<td style="text-align: center;">-0.19</td>
+<td style="text-align: center;">6 / 10</td>
+</tr>
+</tbody>
+</table>
+</div>
 <h1 id="b.-the-question-and-why-it-matters">b. The question and why it
 matters</h1>
 <p><strong>Question.</strong> <em>Did trailer-week YouTube engagement
@@ -169,8 +239,8 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <p>Every field is classified below.</p>
 <table style="width:100%;">
 <colgroup>
-<col style="width: 14%" />
-<col style="width: 10%" />
+<col style="width: 15%" />
+<col style="width: 9%" />
 <col style="width: 13%" />
 <col style="width: 29%" />
 <col style="width: 14%" />
@@ -178,17 +248,17 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 </colgroup>
 <thead>
 <tr>
-<th style="text-align: left;">field</th>
-<th style="text-align: left;">table</th>
-<th style="text-align: left;">example</th>
-<th style="text-align: left;">measurement_type</th>
-<th style="text-align: left;">shape</th>
-<th style="text-align: left;">source</th>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Table</th>
+<th style="text-align: left;">Example</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Shape</th>
+<th style="text-align: left;">Source</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">film_id</td>
+<td style="text-align: left;"><code>film_id</code></td>
 <td style="text-align: left;">all tables</td>
 <td style="text-align: left;">kantara_chapter_1</td>
 <td style="text-align: left;">nominal</td>
@@ -196,7 +266,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">created in step 05</td>
 </tr>
 <tr>
-<td style="text-align: left;">title_clean</td>
+<td style="text-align: left;"><code>title_clean</code></td>
 <td style="text-align: left;">films</td>
 <td style="text-align: left;">Kantara: Chapter 1</td>
 <td style="text-align: left;">nominal</td>
@@ -204,7 +274,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">film list / Wikipedia</td>
 </tr>
 <tr>
-<td style="text-align: left;">language</td>
+<td style="text-align: left;"><code>language</code></td>
 <td style="text-align: left;">films</td>
 <td style="text-align: left;">Kannada</td>
 <td style="text-align: left;">nominal</td>
@@ -212,7 +282,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">Wikipedia infobox</td>
 </tr>
 <tr>
-<td style="text-align: left;">genre</td>
+<td style="text-align: left;"><code>genre</code></td>
 <td style="text-align: left;">films</td>
 <td style="text-align: left;">Action, Drama, Fantasy</td>
 <td style="text-align: left;">nominal</td>
@@ -220,7 +290,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">TMDb JSON</td>
 </tr>
 <tr>
-<td style="text-align: left;">runtime_min</td>
+<td style="text-align: left;"><code>runtime_min</code></td>
 <td style="text-align: left;">films</td>
 <td style="text-align: left;">169</td>
 <td style="text-align: left;">discrete</td>
@@ -228,7 +298,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">Wikipedia infobox</td>
 </tr>
 <tr>
-<td style="text-align: left;">release_date</td>
+<td style="text-align: left;"><code>release_date</code></td>
 <td style="text-align: left;">films</td>
 <td style="text-align: left;">2025-10-02</td>
 <td style="text-align: left;">interval (date)</td>
@@ -236,7 +306,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">Wikipedia infobox</td>
 </tr>
 <tr>
-<td style="text-align: left;">budget_cr</td>
+<td style="text-align: left;"><code>budget_cr</code></td>
 <td style="text-align: left;">films</td>
 <td style="text-align: left;">110.0</td>
 <td style="text-align: left;">continuous</td>
@@ -244,7 +314,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">Wikipedia infobox</td>
 </tr>
 <tr>
-<td style="text-align: left;">tmdb_id</td>
+<td style="text-align: left;"><code>tmdb_id</code></td>
 <td style="text-align: left;">films</td>
 <td style="text-align: left;">1083637</td>
 <td style="text-align: left;">nominal (an id, not a quantity)</td>
@@ -252,7 +322,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">TMDb JSON</td>
 </tr>
 <tr>
-<td style="text-align: left;">first_weekend_ww</td>
+<td style="text-align: left;"><code>first_weekend_ww</code></td>
 <td style="text-align: left;">box_office</td>
 <td style="text-align: left;">330.0</td>
 <td style="text-align: left;">continuous</td>
@@ -260,7 +330,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">Wikipedia article text</td>
 </tr>
 <tr>
-<td style="text-align: left;">first_weekend_per_day</td>
+<td style="text-align: left;"><code>first_weekend_per_day</code></td>
 <td style="text-align: left;">box_office</td>
 <td style="text-align: left;">82.5</td>
 <td style="text-align: left;">continuous</td>
@@ -268,7 +338,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">step 06</td>
 </tr>
 <tr>
-<td style="text-align: left;">lifetime_gross_ww</td>
+<td style="text-align: left;"><code>lifetime_gross_ww</code></td>
 <td style="text-align: left;">box_office</td>
 <td style="text-align: left;">851.0</td>
 <td style="text-align: left;">continuous</td>
@@ -276,7 +346,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">Wikipedia infobox + yearly table</td>
 </tr>
 <tr>
-<td style="text-align: left;">weekend_days</td>
+<td style="text-align: left;"><code>weekend_days</code></td>
 <td style="text-align: left;">film list</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">discrete</td>
@@ -284,7 +354,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">release weekday</td>
 </tr>
 <tr>
-<td style="text-align: left;">scope_flag</td>
+<td style="text-align: left;"><code>scope_flag</code></td>
 <td style="text-align: left;">box_office.note</td>
 <td style="text-align: left;">domestic_only</td>
 <td style="text-align: left;">nominal</td>
@@ -292,7 +362,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">step 06</td>
 </tr>
 <tr>
-<td style="text-align: left;">youtube_video_id</td>
+<td style="text-align: left;"><code>youtube_video_id</code></td>
 <td style="text-align: left;">trailers</td>
 <td style="text-align: left;">TMQUFhWm8C0</td>
 <td style="text-align: left;">nominal</td>
@@ -300,7 +370,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">YouTube JSON</td>
 </tr>
 <tr>
-<td style="text-align: left;">is_main_trailer</td>
+<td style="text-align: left;"><code>is_main_trailer</code></td>
 <td style="text-align: left;">trailers</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">nominal (binary)</td>
@@ -308,7 +378,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">step 03</td>
 </tr>
 <tr>
-<td style="text-align: left;">publish_ts</td>
+<td style="text-align: left;"><code>publish_ts</code></td>
 <td style="text-align: left;">trailers</td>
 <td style="text-align: left;">2025-09-22 12:44:00 IST</td>
 <td style="text-align: left;">interval (timestamp)</td>
@@ -316,7 +386,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">YouTube JSON</td>
 </tr>
 <tr>
-<td style="text-align: left;">views</td>
+<td style="text-align: left;"><code>views</code></td>
 <td style="text-align: left;">trailers</td>
 <td style="text-align: left;">23925371</td>
 <td style="text-align: left;">discrete (count)</td>
@@ -324,7 +394,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">YouTube JSON</td>
 </tr>
 <tr>
-<td style="text-align: left;">likes</td>
+<td style="text-align: left;"><code>likes</code></td>
 <td style="text-align: left;">trailers</td>
 <td style="text-align: left;">512345</td>
 <td style="text-align: left;">discrete (count)</td>
@@ -332,7 +402,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">YouTube JSON</td>
 </tr>
 <tr>
-<td style="text-align: left;">comment_count</td>
+<td style="text-align: left;"><code>comment_count</code></td>
 <td style="text-align: left;">trailers</td>
 <td style="text-align: left;">20869</td>
 <td style="text-align: left;">discrete (count)</td>
@@ -340,7 +410,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">YouTube JSON</td>
 </tr>
 <tr>
-<td style="text-align: left;">comment text (text_clean)</td>
+<td style="text-align: left;"><code>comment text (text_clean)</code></td>
 <td style="text-align: left;">comments</td>
 <td style="text-align: left;">Goosebumps!! 🔥</td>
 <td style="text-align: left;">unstructured</td>
@@ -348,7 +418,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">YouTube JSON → text</td>
 </tr>
 <tr>
-<td style="text-align: left;">published_ts</td>
+<td style="text-align: left;"><code>published_ts</code></td>
 <td style="text-align: left;">comments</td>
 <td style="text-align: left;">2025-01-22 17:20:11 IST</td>
 <td style="text-align: left;">interval (timestamp)</td>
@@ -356,7 +426,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">YouTube JSON</td>
 </tr>
 <tr>
-<td style="text-align: left;">length</td>
+<td style="text-align: left;"><code>length</code></td>
 <td style="text-align: left;">comments</td>
 <td style="text-align: left;">15</td>
 <td style="text-align: left;">discrete</td>
@@ -364,7 +434,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">step 06</td>
 </tr>
 <tr>
-<td style="text-align: left;">vader_compound</td>
+<td style="text-align: left;"><code>vader_compound</code></td>
 <td style="text-align: left;">comments</td>
 <td style="text-align: left;">0.6369</td>
 <td style="text-align: left;">continuous (−1 to +1)</td>
@@ -372,7 +442,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">step 07</td>
 </tr>
 <tr>
-<td style="text-align: left;">vader label (pos/neg)</td>
+<td style="text-align: left;"><code>vader label (pos/neg)</code></td>
 <td style="text-align: left;">validation</td>
 <td style="text-align: left;">positive</td>
 <td style="text-align: left;">nominal</td>
@@ -380,7 +450,7 @@ plus the labelled IMDb 50K reviews as a practice corpus.</li>
 <td style="text-align: left;">step 07</td>
 </tr>
 <tr>
-<td style="text-align: left;">interest</td>
+<td style="text-align: left;"><code>interest</code></td>
 <td style="text-align: left;">trends_daily</td>
 <td style="text-align: left;">100</td>
 <td style="text-align: left;">ordinal-like relative index (0–100, scaled
@@ -389,7 +459,7 @@ per export)</td>
 <td style="text-align: left;">Google Trends CSV</td>
 </tr>
 <tr>
-<td style="text-align: left;">date</td>
+<td style="text-align: left;"><code>date</code></td>
 <td style="text-align: left;">trends_daily</td>
 <td style="text-align: left;">2025-10-03</td>
 <td style="text-align: left;">interval (date)</td>
@@ -397,7 +467,7 @@ per export)</td>
 <td style="text-align: left;">Google Trends CSV</td>
 </tr>
 <tr>
-<td style="text-align: left;">IMDb review text</td>
+<td style="text-align: left;"><code>IMDb review text</code></td>
 <td style="text-align: left;">imdb_50k</td>
 <td style="text-align: left;">One of the best films…</td>
 <td style="text-align: left;">unstructured</td>
@@ -405,7 +475,7 @@ per export)</td>
 <td style="text-align: left;">IMDb 50K CSV</td>
 </tr>
 <tr>
-<td style="text-align: left;">IMDb sentiment label</td>
+<td style="text-align: left;"><code>IMDb sentiment label</code></td>
 <td style="text-align: left;">imdb_50k</td>
 <td style="text-align: left;">positive</td>
 <td style="text-align: left;">nominal (binary)</td>
@@ -413,7 +483,7 @@ per export)</td>
 <td style="text-align: left;">IMDb 50K CSV</td>
 </tr>
 <tr>
-<td style="text-align: left;">match score</td>
+<td style="text-align: left;"><code>match score</code></td>
 <td style="text-align: left;">film_matches</td>
 <td style="text-align: left;">79.1</td>
 <td style="text-align: left;">continuous (0–100)</td>
@@ -421,7 +491,7 @@ per export)</td>
 <td style="text-align: left;">step 05</td>
 </tr>
 <tr>
-<td style="text-align: left;">box-office trade rank</td>
+<td style="text-align: left;"><code>box-office trade rank</code></td>
 <td style="text-align: left;">wiki yearly table</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">ordinal</td>
@@ -433,144 +503,144 @@ per export)</td>
 <h2 id="v-profile-one-page">V profile (one page)</h2>
 <table>
 <colgroup>
-<col style="width: 5%" />
-<col style="width: 31%" />
 <col style="width: 6%" />
-<col style="width: 56%" />
+<col style="width: 31%" />
+<col style="width: 5%" />
+<col style="width: 55%" />
 </colgroup>
 <thead>
 <tr>
-<th style="text-align: left;">v</th>
-<th style="text-align: left;">measure</th>
-<th style="text-align: left;">value</th>
-<th style="text-align: left;">unit_or_detail</th>
+<th style="text-align: left;">V</th>
+<th style="text-align: left;">Measure</th>
+<th style="text-align: right;">Value</th>
+<th style="text-align: left;">Unit / detail</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">Volume</td>
+<td style="text-align: left;"><strong>Volume</strong></td>
 <td style="text-align: left;">YouTube raw JSON (stats + comment
 pages)</td>
-<td style="text-align: left;">374</td>
+<td style="text-align: right;">373.7</td>
 <td style="text-align: left;">MB</td>
 </tr>
 <tr>
-<td style="text-align: left;">Volume</td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;">YouTube comment pages downloaded</td>
-<td style="text-align: left;">3,552</td>
+<td style="text-align: right;">3,552</td>
 <td style="text-align: left;">files</td>
 </tr>
 <tr>
-<td style="text-align: left;">Volume</td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;">Trailer comments after cleaning</td>
-<td style="text-align: left;">350,426</td>
+<td style="text-align: right;">350,426</td>
 <td style="text-align: left;">rows</td>
 </tr>
 <tr>
-<td style="text-align: left;">Volume</td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;">Wikipedia raw JSON</td>
-<td style="text-align: left;">2.6</td>
+<td style="text-align: right;">2.6</td>
 <td style="text-align: left;">MB</td>
 </tr>
 <tr>
-<td style="text-align: left;">Volume</td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;">TMDb raw JSON</td>
-<td style="text-align: left;">0.4</td>
+<td style="text-align: right;">0.4</td>
 <td style="text-align: left;">MB</td>
 </tr>
 <tr>
-<td style="text-align: left;">Volume</td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;">Google Trends CSVs</td>
-<td style="text-align: left;">0.006</td>
+<td style="text-align: right;">0.006</td>
 <td style="text-align: left;">MB</td>
 </tr>
 <tr>
-<td style="text-align: left;">Volume</td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;">Google Trends daily rows</td>
-<td style="text-align: left;">375</td>
+<td style="text-align: right;">375</td>
 <td style="text-align: left;">rows</td>
 </tr>
 <tr>
-<td style="text-align: left;">Volume</td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;">IMDb 50K corpus</td>
-<td style="text-align: left;">50,000</td>
+<td style="text-align: right;">50,000</td>
 <td style="text-align: left;">rows</td>
 </tr>
 <tr>
-<td style="text-align: left;">Volume</td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;">IMDb 50K corpus size</td>
-<td style="text-align: left;">66.2</td>
+<td style="text-align: right;">66.2</td>
 <td style="text-align: left;">MB</td>
 </tr>
 <tr>
-<td style="text-align: left;">Volume</td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;">Spark job input (comments + IMDb, tagged
 by source)</td>
-<td style="text-align: left;">400,008</td>
+<td style="text-align: right;">400,008</td>
 <td style="text-align: left;">rows (1c union in
 spark_stage_counts.csv)</td>
 </tr>
 <tr>
-<td style="text-align: left;">Volume</td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;">Spark job word rows after explode</td>
-<td style="text-align: left;">14,324,736</td>
+<td style="text-align: right;">14,324,736</td>
 <td style="text-align: left;">rows (4a in spark_stage_counts.csv)</td>
 </tr>
 <tr>
-<td style="text-align: left;">Variety</td>
+<td style="text-align: left;"><strong>Variety</strong></td>
 <td style="text-align: left;">Formats</td>
-<td style="text-align: left;">4</td>
+<td style="text-align: right;">4</td>
 <td style="text-align: left;">HTML-in-JSON (Wikipedia), JSON (YouTube,
 TMDb, Frankfurter), CSV (Trends, IMDb), free text (comments,
 reviews)</td>
 </tr>
 <tr>
-<td style="text-align: left;">Variety</td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;">Sources</td>
-<td style="text-align: left;">6</td>
+<td style="text-align: right;">6</td>
 <td style="text-align: left;">Wikipedia, TMDb, YouTube, Google Trends,
 Frankfurter, IMDb 50K</td>
 </tr>
 <tr>
-<td style="text-align: left;">Variety</td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;">Title strings from 5 sources tied to the
 10 film_ids</td>
-<td style="text-align: left;">56</td>
+<td style="text-align: right;">56</td>
 <td style="text-align: left;">strings (data/clean/film_matches.csv)</td>
 </tr>
 <tr>
-<td style="text-align: left;">Velocity</td>
+<td style="text-align: left;"><strong>Velocity</strong></td>
 <td style="text-align: left;">Median share of a trailer’s comments
 posted in its first 72 h</td>
-<td style="text-align: left;">0.781</td>
-<td style="text-align: left;">share</td>
+<td style="text-align: right;">78%</td>
+<td style="text-align: left;">of comments</td>
 </tr>
 <tr>
-<td style="text-align: left;">Velocity</td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;">Highest comments/hour in any single hour
 (first 72 h)</td>
-<td style="text-align: left;">8,780</td>
+<td style="text-align: right;">8,780</td>
 <td style="text-align: left;">comments/hour</td>
 </tr>
 <tr>
-<td style="text-align: left;">Velocity</td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;">Mean comments/hour over first 72 h (median
 film)</td>
-<td style="text-align: left;">316</td>
+<td style="text-align: right;">316.2</td>
 <td style="text-align: left;">comments/hour</td>
 </tr>
 <tr>
-<td style="text-align: left;">Velocity</td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;">Google Trends peak, days after release
 (median)</td>
-<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: left;">days</td>
 </tr>
 <tr>
-<td style="text-align: left;">Velocity</td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;">Google Trends: days from peak until
 interest halves (median)</td>
-<td style="text-align: left;">5</td>
+<td style="text-align: right;">5</td>
 <td style="text-align: left;">days</td>
 </tr>
 </tbody>
@@ -888,29 +958,29 @@ A — ER diagram, schema and SQL queries with outputs</h1>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">table</th>
-<th style="text-align: right;">rows_loaded</th>
+<th style="text-align: left;">Table</th>
+<th style="text-align: right;">Rows loaded</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">films</td>
+<td style="text-align: left;"><code>films</code></td>
 <td style="text-align: right;">10</td>
 </tr>
 <tr>
-<td style="text-align: left;">trailers</td>
+<td style="text-align: left;"><code>trailers</code></td>
 <td style="text-align: right;">18</td>
 </tr>
 <tr>
-<td style="text-align: left;">box_office</td>
+<td style="text-align: left;"><code>box_office</code></td>
 <td style="text-align: right;">37</td>
 </tr>
 <tr>
-<td style="text-align: left;">comments</td>
-<td style="text-align: right;">350426</td>
+<td style="text-align: left;"><code>comments</code></td>
+<td style="text-align: right;">350,426</td>
 </tr>
 <tr>
-<td style="text-align: left;">trends_daily</td>
+<td style="text-align: left;"><code>trends_daily</code></td>
 <td style="text-align: right;">375</td>
 </tr>
 </tbody>
@@ -1017,7 +1087,7 @@ counts per table”).</h2>
 </tr>
 <tr>
 <td style="text-align: left;">comments</td>
-<td style="text-align: right;">350426</td>
+<td style="text-align: right;">350,426</td>
 </tr>
 <tr>
 <td style="text-align: left;">trends_daily</td>
@@ -1061,70 +1131,70 @@ comparison of our question.</h2>
 <td style="text-align: left;">dhurandhar_the_revenge</td>
 <td style="text-align: left;">Hindi</td>
 <td style="text-align: right;">5</td>
-<td style="text-align: right;">1.30745e+08</td>
+<td style="text-align: right;">130,744,717</td>
 <td style="text-align: right;">186.5</td>
 </tr>
 <tr>
 <td style="text-align: left;">kantara_chapter_1</td>
 <td style="text-align: left;">Kannada</td>
 <td style="text-align: right;">5</td>
-<td style="text-align: right;">1.03992e+08</td>
+<td style="text-align: right;">103,992,420</td>
 <td style="text-align: right;">82.5</td>
 </tr>
 <tr>
 <td style="text-align: left;">sitaare_zameen_par</td>
 <td style="text-align: left;">Hindi</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">8.88989e+07</td>
+<td style="text-align: right;">88,898,889</td>
 <td style="text-align: right;">31.83</td>
 </tr>
 <tr>
 <td style="text-align: left;">chhaava</td>
 <td style="text-align: left;">Hindi</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">8.17284e+07</td>
+<td style="text-align: right;">81,728,371</td>
 <td style="text-align: right;">53.5</td>
 </tr>
 <tr>
 <td style="text-align: left;">saiyaara</td>
 <td style="text-align: left;">Hindi</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">8.13946e+07</td>
+<td style="text-align: right;">81,394,643</td>
 <td style="text-align: right;">39.67</td>
 </tr>
 <tr>
 <td style="text-align: left;">raid_2</td>
 <td style="text-align: left;">Hindi</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">6.59729e+07</td>
+<td style="text-align: right;">65,972,897</td>
 <td style="text-align: right;">25</td>
 </tr>
 <tr>
 <td style="text-align: left;">peddi</td>
 <td style="text-align: left;">Telugu</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">5.93947e+07</td>
+<td style="text-align: right;">59,394,688</td>
 <td style="text-align: right;">58.25</td>
 </tr>
 <tr>
 <td style="text-align: left;">housefull_5</td>
 <td style="text-align: left;">Hindi</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">3.39566e+07</td>
+<td style="text-align: right;">33,956,581</td>
 <td style="text-align: right;">30.61</td>
 </tr>
 <tr>
 <td style="text-align: left;">l2_empuraan</td>
 <td style="text-align: left;">Malayalam</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">1.76834e+07</td>
+<td style="text-align: right;">17,683,415</td>
 <td style="text-align: right;">43.75</td>
 </tr>
 <tr>
 <td style="text-align: left;">lokah_chapter_1</td>
 <td style="text-align: left;">Malayalam</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">1.63116e+07</td>
+<td style="text-align: right;">16,311,601</td>
 <td style="text-align: right;">16.38</td>
 </tr>
 </tbody>
@@ -1164,52 +1234,52 @@ its official publish time).</h2>
 <tbody>
 <tr>
 <td style="text-align: left;">chhaava</td>
-<td style="text-align: right;">65719</td>
+<td style="text-align: right;">65,719</td>
 <td style="text-align: right;">912.8</td>
 </tr>
 <tr>
 <td style="text-align: left;">dhurandhar_the_revenge</td>
-<td style="text-align: right;">41548</td>
+<td style="text-align: right;">41,548</td>
 <td style="text-align: right;">577.1</td>
 </tr>
 <tr>
 <td style="text-align: left;">sitaare_zameen_par</td>
-<td style="text-align: right;">38047</td>
+<td style="text-align: right;">38,047</td>
 <td style="text-align: right;">528.4</td>
 </tr>
 <tr>
 <td style="text-align: left;">l2_empuraan</td>
-<td style="text-align: right;">31536</td>
+<td style="text-align: right;">31,536</td>
 <td style="text-align: right;">438</td>
 </tr>
 <tr>
 <td style="text-align: left;">housefull_5</td>
-<td style="text-align: right;">23897</td>
+<td style="text-align: right;">23,897</td>
 <td style="text-align: right;">331.9</td>
 </tr>
 <tr>
 <td style="text-align: left;">raid_2</td>
-<td style="text-align: right;">21632</td>
+<td style="text-align: right;">21,632</td>
 <td style="text-align: right;">300.4</td>
 </tr>
 <tr>
 <td style="text-align: left;">kantara_chapter_1</td>
-<td style="text-align: right;">18778</td>
+<td style="text-align: right;">18,778</td>
 <td style="text-align: right;">260.8</td>
 </tr>
 <tr>
 <td style="text-align: left;">peddi</td>
-<td style="text-align: right;">16292</td>
+<td style="text-align: right;">16,292</td>
 <td style="text-align: right;">226.3</td>
 </tr>
 <tr>
 <td style="text-align: left;">saiyaara</td>
-<td style="text-align: right;">8302</td>
+<td style="text-align: right;">8,302</td>
 <td style="text-align: right;">115.3</td>
 </tr>
 <tr>
 <td style="text-align: left;">lokah_chapter_1</td>
-<td style="text-align: right;">3052</td>
+<td style="text-align: right;">3,052</td>
 <td style="text-align: right;">42.4</td>
 </tr>
 </tbody>
@@ -1248,14 +1318,14 @@ sentiment? Mean VADER score, ignoring comments VADER could not read
 <tr>
 <td style="text-align: left;">Hindi</td>
 <td style="text-align: right;">6</td>
-<td style="text-align: right;">191783</td>
+<td style="text-align: right;">191,783</td>
 <td style="text-align: right;">0.308</td>
 <td style="text-align: right;">0.696</td>
 </tr>
 <tr>
 <td style="text-align: left;">Regional</td>
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">55897</td>
+<td style="text-align: right;">55,897</td>
 <td style="text-align: right;">0.158</td>
 <td style="text-align: right;">0.58</td>
 </tr>
@@ -1511,62 +1581,62 @@ counts</h1>
 <code>notebooks/spark_text_job.ipynb</code>):</p>
 <table>
 <colgroup>
-<col style="width: 34%" />
-<col style="width: 11%" />
-<col style="width: 54%" />
+<col style="width: 33%" />
+<col style="width: 13%" />
+<col style="width: 52%" />
 </colgroup>
 <thead>
 <tr>
-<th style="text-align: left;">stage</th>
-<th style="text-align: right;">rows</th>
-<th style="text-align: left;">note</th>
+<th style="text-align: left;">Stage</th>
+<th style="text-align: right;">Rows</th>
+<th style="text-align: left;">Note</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align: left;">1a load comments</td>
-<td style="text-align: right;">350426</td>
-<td style="text-align: left;">nan</td>
+<td style="text-align: right;">350,426</td>
+<td style="text-align: left;"></td>
 </tr>
 <tr>
 <td style="text-align: left;">1b load imdb (deduplicated)</td>
-<td style="text-align: right;">49582</td>
-<td style="text-align: left;">nan</td>
+<td style="text-align: right;">49,582</td>
+<td style="text-align: left;"></td>
 </tr>
 <tr>
 <td style="text-align: left;">1c union</td>
-<td style="text-align: right;">400008</td>
+<td style="text-align: right;">400,008</td>
 <td style="text-align: left;">must be ≥ 50,000</td>
 </tr>
 <tr>
 <td style="text-align: left;">2 clean (non-empty)</td>
-<td style="text-align: right;">371616</td>
+<td style="text-align: right;">371,616</td>
 <td style="text-align: left;">emoji-only / number-only texts drop out
 here</td>
 </tr>
 <tr>
 <td style="text-align: left;">3 length measured</td>
-<td style="text-align: right;">371616</td>
-<td style="text-align: left;">nan</td>
+<td style="text-align: right;">371,616</td>
+<td style="text-align: left;"></td>
 </tr>
 <tr>
 <td style="text-align: left;">4a words (exploded)</td>
-<td style="text-align: right;">14324736</td>
+<td style="text-align: right;">14,324,736</td>
 <td style="text-align: left;">one row per word, before stopwords</td>
 </tr>
 <tr>
 <td style="text-align: left;">4b terms (no stopwords)</td>
-<td style="text-align: right;">7752016</td>
-<td style="text-align: left;">nan</td>
+<td style="text-align: right;">7,752,016</td>
+<td style="text-align: left;"></td>
 </tr>
 <tr>
 <td style="text-align: left;">5a summary by film+source</td>
 <td style="text-align: right;">11</td>
-<td style="text-align: left;">nan</td>
+<td style="text-align: left;"></td>
 </tr>
 <tr>
 <td style="text-align: left;">5b term counts</td>
-<td style="text-align: right;">304749</td>
+<td style="text-align: right;">304,749</td>
 <td style="text-align: left;">distinct (film, term) pairs</td>
 </tr>
 <tr>
@@ -1579,68 +1649,68 @@ here</td>
 <p>Top terms per film:</p>
 <table>
 <colgroup>
-<col style="width: 22%" />
-<col style="width: 77%" />
+<col style="width: 24%" />
+<col style="width: 75%" />
 </colgroup>
 <thead>
 <tr>
-<th style="text-align: left;">film_id</th>
-<th style="text-align: left;">top 10 terms (stopwords removed)</th>
+<th style="text-align: left;">Film</th>
+<th style="text-align: left;">Top 10 terms (stopwords removed)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">chhaava</td>
+<td style="text-align: left;">Chhaava</td>
 <td style="text-align: left;">vicky, trailer, har, movie, goosebumps,
 jai, maharaj, जय, sambhaji, हर</td>
 </tr>
 <tr>
-<td style="text-align: left;">dhurandhar_the_revenge</td>
+<td style="text-align: left;">Dhurandhar: The Revenge</td>
 <td style="text-align: left;">trailer, movie, dhurandhar, toxic, dhar,
 aditya, pakistan, ranveer, part, singh</td>
 </tr>
 <tr>
-<td style="text-align: left;">housefull_5</td>
+<td style="text-align: left;">Housefull 5</td>
 <td style="text-align: left;">movie, bro, trailer, comedy, akshay, flop,
 housefull, kumar, bollywood, dekh</td>
 </tr>
 <tr>
-<td style="text-align: left;">imdb_50k</td>
+<td style="text-align: left;">IMDb 50K corpus</td>
 <td style="text-align: left;">movie, film, one, like, good, time, even,
 story, really, see</td>
 </tr>
 <tr>
-<td style="text-align: left;">kantara_chapter_1</td>
+<td style="text-align: left;">Kantara: Chapter 1</td>
 <td style="text-align: left;">trailer, movie, kantara, wow, best, great,
 super, goosebumps, nice, ಬಹಳ</td>
 </tr>
 <tr>
-<td style="text-align: left;">l2_empuraan</td>
+<td style="text-align: left;">L2: Empuraan</td>
 <td style="text-align: left;">trailer, movie, ഇത്, ഒരു, mohanlal,
 goosebumps, tovino, പടം, തീ, waiting</td>
 </tr>
 <tr>
-<td style="text-align: left;">lokah_chapter_1</td>
+<td style="text-align: left;">Lokah Chapter 1: Chandra</td>
 <td style="text-align: left;">movie, hindi, trailer, dq, malayalam,
 lokah, hollywood, cinema, kalyani, like</td>
 </tr>
 <tr>
-<td style="text-align: left;">peddi</td>
+<td style="text-align: left;">Peddi</td>
 <td style="text-align: left;">peddi, charan, trailer, movie, jai, ram,
 super, fans, anna, rc</td>
 </tr>
 <tr>
-<td style="text-align: left;">raid_2</td>
+<td style="text-align: left;">Raid 2</td>
 <td style="text-align: left;">trailer, ajay, riteish, teaser, patnaik,
 yo, movie, series, going, raid</td>
 </tr>
 <tr>
-<td style="text-align: left;">saiyaara</td>
+<td style="text-align: left;">Saiyaara</td>
 <td style="text-align: left;">movie, aashiqui, trailer, rockstar, like,
 love, nice, ashiqui, good, saiyaara</td>
 </tr>
 <tr>
-<td style="text-align: left;">sitaare_zameen_par</td>
+<td style="text-align: left;">Sitaare Zameen Par</td>
 <td style="text-align: left;">movie, khan, boycott, copy, champions,
 amir, remake, aamir, trailer, film</td>
 </tr>
@@ -1788,26 +1858,26 @@ log</h1>
 <table>
 <colgroup>
 <col style="width: 1%" />
-<col style="width: 4%" />
-<col style="width: 26%" />
-<col style="width: 3%" />
-<col style="width: 31%" />
-<col style="width: 33%" />
+<col style="width: 2%" />
+<col style="width: 27%" />
+<col style="width: 1%" />
+<col style="width: 32%" />
+<col style="width: 34%" />
 </colgroup>
 <thead>
 <tr>
-<th style="text-align: right;">id</th>
-<th style="text-align: left;">stage</th>
-<th style="text-align: left;">problem_found</th>
-<th style="text-align: right;">rows_affected</th>
-<th style="text-align: left;">action_taken</th>
-<th style="text-align: left;">why</th>
+<th style="text-align: right;">#</th>
+<th style="text-align: left;">Stage</th>
+<th style="text-align: left;">Problem found</th>
+<th style="text-align: right;">Rows</th>
+<th style="text-align: left;">Action taken</th>
+<th style="text-align: left;">Why</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">01_collect_wikipedia</td>
+<td style="text-align: left;">01 Wikipedia</td>
 <td style="text-align: left;">Wikipedia gives opening figures as free
 text in inconsistent forms (day vs weekend, worldwide vs India, ranges,
 USD)</td>
@@ -1821,7 +1891,7 @@ against the source is transparent and cannot invent numbers</td>
 </tr>
 <tr>
 <td style="text-align: right;">2</td>
-<td style="text-align: left;">01_collect_wikipedia</td>
+<td style="text-align: left;">01 Wikipedia</td>
 <td style="text-align: left;">Infobox has no Budget field for some
 films</td>
 <td style="text-align: right;">1</td>
@@ -1832,10 +1902,10 @@ our outcome — dropping films for it would shrink an already small n</td>
 </tr>
 <tr>
 <td style="text-align: right;">3</td>
-<td style="text-align: left;">04_flatten_json</td>
+<td style="text-align: left;">04 Flatten</td>
 <td style="text-align: left;">YouTube comment JSON contains author
 names, channel ids and profile URLs</td>
-<td style="text-align: right;">354592</td>
+<td style="text-align: right;">354,592</td>
 <td style="text-align: left;">Dropped 5 identifying columns during
 flattening: authorDisplayName, authorProfileImageUrl, authorChannelUrl,
 authorChannelId, channelId</td>
@@ -1844,7 +1914,7 @@ Usernames never leave data/raw/, which is gitignored</td>
 </tr>
 <tr>
 <td style="text-align: right;">4</td>
-<td style="text-align: left;">04_flatten_json</td>
+<td style="text-align: left;">04 Flatten</td>
 <td style="text-align: left;">Channel search returned promo videos
 (launch events, speeches, Shorts, 30 s cut-downs) whose titles contain
 ‘trailer’</td>
@@ -1858,7 +1928,7 @@ busy channels (Peddi had 16 ‘trailer’ videos, 1 real)</td>
 </tr>
 <tr>
 <td style="text-align: right;">5</td>
-<td style="text-align: left;">04_flatten_json</td>
+<td style="text-align: left;">04 Flatten</td>
 <td style="text-align: left;">TMDb genres and cast are lists inside
 JSON, which do not fit in one table cell</td>
 <td style="text-align: right;">10</td>
@@ -1869,7 +1939,7 @@ simple; we describe genre/cast, we don’t model them</td>
 </tr>
 <tr>
 <td style="text-align: right;">6</td>
-<td style="text-align: left;">05_match_films</td>
+<td style="text-align: left;">05 Match</td>
 <td style="text-align: left;">Same film spelled differently across 5
 sources (e.g. TMDb ‘Kantara - A Legend: Chapter 1’, YouTube ’RAID 2
 (TRAILER): Ajay D</td>
@@ -1880,7 +1950,7 @@ brackets, ‘trailer’, language tags, text after ’</td>
 </tr>
 <tr>
 <td style="text-align: right;">7</td>
-<td style="text-align: left;">05_match_films</td>
+<td style="text-align: left;">05 Match</td>
 <td style="text-align: left;">Fuzzy scores below 95</td>
 <td style="text-align: right;">3</td>
 <td style="text-align: left;">70–94: sent to a human (M9,
@@ -1890,7 +1960,7 @@ number, so uncertain matches are checked by a person</td>
 </tr>
 <tr>
 <td style="text-align: right;">8</td>
-<td style="text-align: left;">05_match_films</td>
+<td style="text-align: left;">05 Match</td>
 <td style="text-align: left;">Yearly grossing table row ‘Dhurandhar’
 (the 2025 prequel) looks like ‘Dhurandhar: The Revenge’</td>
 <td style="text-align: right;">1</td>
@@ -1901,7 +1971,7 @@ joined the wrong film’s ₹1,350 crore gross</td>
 </tr>
 <tr>
 <td style="text-align: right;">9</td>
-<td style="text-align: left;">06_clean_typecast</td>
+<td style="text-align: left;">06 Clean</td>
 <td style="text-align: left;">Budget given as text ranges (e.g. ‘₹90–130
 crore[a]’, ‘est. ₹30−40 crore[3][4]’) with footnotes and a Unicode minus
 sign</td>
@@ -1914,7 +1984,7 @@ range</td>
 </tr>
 <tr>
 <td style="text-align: right;">10</td>
-<td style="text-align: left;">06_clean_typecast</td>
+<td style="text-align: left;">06 Clean</td>
 <td style="text-align: left;">Budget missing (Kantara: Chapter 1) or
 shared with another film (Dhurandhar: The Revenge ‘combined with part
 1’)</td>
@@ -1926,7 +1996,7 @@ outcome</td>
 </tr>
 <tr>
 <td style="text-align: right;">11</td>
-<td style="text-align: left;">06_clean_typecast</td>
+<td style="text-align: left;">06 Clean</td>
 <td style="text-align: left;">Running time differs between Wikipedia and
 TMDb</td>
 <td style="text-align: right;">7</td>
@@ -1938,7 +2008,7 @@ films</td>
 </tr>
 <tr>
 <td style="text-align: right;">12</td>
-<td style="text-align: left;">06_clean_typecast</td>
+<td style="text-align: left;">06 Clean</td>
 <td style="text-align: left;">TMDb release date is 1 day earlier than
 Wikipedia for some films</td>
 <td style="text-align: right;">3</td>
@@ -1949,7 +2019,7 @@ dates; the screen decision is about the Indian theatrical opening</td>
 </tr>
 <tr>
 <td style="text-align: right;">13</td>
-<td style="text-align: left;">06_clean_typecast</td>
+<td style="text-align: left;">06 Clean</td>
 <td style="text-align: left;">Box-office figures published as ranges
 (e.g. ‘₹325–335 crore’)</td>
 <td style="text-align: right;">12</td>
@@ -1960,7 +2030,7 @@ avoids picking a side</td>
 </tr>
 <tr>
 <td style="text-align: right;">14</td>
-<td style="text-align: left;">06_clean_typecast</td>
+<td style="text-align: left;">06 Clean</td>
 <td style="text-align: left;">Dhurandhar: The Revenge first weekend only
 published in USD (‘over $80 million’)</td>
 <td style="text-align: right;">1</td>
@@ -1973,7 +2043,7 @@ logged</td>
 </tr>
 <tr>
 <td style="text-align: right;">15</td>
-<td style="text-align: left;">06_clean_typecast</td>
+<td style="text-align: left;">06 Clean</td>
 <td style="text-align: left;">First weekends are 3 days (Friday release)
 for some films and 4 days (Thursday release) for others</td>
 <td style="text-align: right;">6</td>
@@ -1984,7 +2054,7 @@ would favour Thursday releases by about a third</td>
 </tr>
 <tr>
 <td style="text-align: right;">16</td>
-<td style="text-align: left;">06_clean_typecast</td>
+<td style="text-align: left;">06 Clean</td>
 <td style="text-align: left;">Two weekend figures are not clearly
 worldwide (Housefull 5 domestic only; Sitaare Zameen Par scope not
 stated)</td>
@@ -1996,7 +2066,7 @@ flagged lets us show whether they change the result</td>
 </tr>
 <tr>
 <td style="text-align: right;">17</td>
-<td style="text-align: left;">06_clean_typecast</td>
+<td style="text-align: left;">06 Clean</td>
 <td style="text-align: left;">Lifetime gross appears in two Wikipedia
 places (film infobox and the yearly list)</td>
 <td style="text-align: right;">7</td>
@@ -2007,7 +2077,7 @@ within a few % raises confidence in the figures</td>
 </tr>
 <tr>
 <td style="text-align: right;">18</td>
-<td style="text-align: left;">06_clean_typecast</td>
+<td style="text-align: left;">06 Clean</td>
 <td style="text-align: left;">YouTube counts arrive as text and
 timestamps as ISO-8601 UTC strings</td>
 <td style="text-align: right;">18</td>
@@ -2018,7 +2088,7 @@ put late-evening IST trailers on the wrong day</td>
 </tr>
 <tr>
 <td style="text-align: right;">19</td>
-<td style="text-align: left;">06_clean_typecast</td>
+<td style="text-align: left;">06 Clean</td>
 <td style="text-align: left;">Same comment id downloaded twice (pages
 shift while new comments arrive during paging)</td>
 <td style="text-align: right;">5</td>
@@ -2028,10 +2098,10 @@ velocity and that film’s sentiment weight</td>
 </tr>
 <tr>
 <td style="text-align: right;">20</td>
-<td style="text-align: left;">06_clean_typecast</td>
+<td style="text-align: left;">06 Clean</td>
 <td style="text-align: left;">Comments contain URLs (links, timestamps
 to other videos)</td>
-<td style="text-align: right;">5112</td>
+<td style="text-align: right;">5,112</td>
 <td style="text-align: left;">Removed URLs from text, kept the rest of
 the comment</td>
 <td style="text-align: left;">URLs carry no sentiment and distort length
@@ -2039,17 +2109,17 @@ and term counts</td>
 </tr>
 <tr>
 <td style="text-align: right;">21</td>
-<td style="text-align: left;">06_clean_typecast</td>
+<td style="text-align: left;">06 Clean</td>
 <td style="text-align: left;">Empty comments after cleaning (only a
 link, or blank)</td>
-<td style="text-align: right;">4161</td>
+<td style="text-align: right;">4,161</td>
 <td style="text-align: left;">Dropped</td>
 <td style="text-align: left;">Nothing to score; keeping them would add
 fake neutral sentiment</td>
 </tr>
 <tr>
 <td style="text-align: right;">22</td>
-<td style="text-align: left;">06_clean_typecast</td>
+<td style="text-align: left;">06 Clean</td>
 <td style="text-align: left;">Google Trends writes very low interest as
 the text ‘&lt;1’</td>
 <td style="text-align: right;">4</td>
@@ -2061,7 +2131,7 @@ result</td>
 </tr>
 <tr>
 <td style="text-align: right;">23</td>
-<td style="text-align: left;">06_clean_typecast</td>
+<td style="text-align: left;">06 Clean</td>
 <td style="text-align: left;">Checked Trends files for missing days</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">None missing across all 10 films — no fill
@@ -2071,7 +2141,7 @@ window</td>
 </tr>
 <tr>
 <td style="text-align: right;">24</td>
-<td style="text-align: left;">07_sentiment</td>
+<td style="text-align: left;">07 Sentiment</td>
 <td style="text-align: left;">IMDb 50K contains exact duplicate review
 texts</td>
 <td style="text-align: right;">418</td>
@@ -2081,20 +2151,20 @@ in accuracy/F1 and in the Spark job</td>
 </tr>
 <tr>
 <td style="text-align: right;">25</td>
-<td style="text-align: left;">07_sentiment</td>
+<td style="text-align: left;">07 Sentiment</td>
 <td style="text-align: left;">IMDb reviews contain HTML line breaks
 (‘<br />’)</td>
-<td style="text-align: right;">28966</td>
+<td style="text-align: right;">28,966</td>
 <td style="text-align: left;">Replaced with a space</td>
 <td style="text-align: left;">Markup is not language; it would show up
 as fake terms (‘br’) in the term counts</td>
 </tr>
 <tr>
 <td style="text-align: right;">26</td>
-<td style="text-align: left;">07_sentiment</td>
+<td style="text-align: left;">07 Sentiment</td>
 <td style="text-align: left;">VADER is a generic tool — is it accurate
 enough on film text?</td>
-<td style="text-align: right;">49582</td>
+<td style="text-align: right;">49,582</td>
 <td style="text-align: left;">Validated on labelled IMDb reviews before
 use: accuracy 0.700, macro-F1 0.692</td>
 <td style="text-align: left;">Using a sentiment score without checking
@@ -2102,11 +2172,11 @@ it on labelled data would be guesswork</td>
 </tr>
 <tr>
 <td style="text-align: right;">27</td>
-<td style="text-align: left;">07_sentiment</td>
+<td style="text-align: left;">07 Sentiment</td>
 <td style="text-align: left;">Comments written in Indian scripts
 (Devanagari, Telugu, Tamil, Kannada, Malayalam) — VADER cannot read
 them</td>
-<td style="text-align: right;">29965</td>
+<td style="text-align: right;">29,965</td>
 <td style="text-align: left;">Kept in the data (they count for velocity)
 but their VADER score is 0; share reported per film</td>
 <td style="text-align: left;">Dropping them would bias velocity against
@@ -2114,10 +2184,10 @@ regional films; translating 300k comments is out of scope</td>
 </tr>
 <tr>
 <td style="text-align: right;">28</td>
-<td style="text-align: left;">07_sentiment</td>
+<td style="text-align: left;">07 Sentiment</td>
 <td style="text-align: left;">Latin-script comments that VADER scores
 exactly 0 (Hinglish, names, hashtags, emojis-only)</td>
-<td style="text-align: right;">88065</td>
+<td style="text-align: right;">88,065</td>
 <td style="text-align: left;">Kept; reported as VADER’s blind-spot
 share; analysis also uses mean sentiment of non-zero comments</td>
 <td style="text-align: left;">Treating ‘no known words’ as ‘neutral’
@@ -2125,11 +2195,11 @@ would pull every film’s mean towards 0</td>
 </tr>
 <tr>
 <td style="text-align: right;">29</td>
-<td style="text-align: left;">10_analysis</td>
+<td style="text-align: left;">10 Analysis</td>
 <td style="text-align: left;">Comments posted BEFORE the trailer’s
 official API publish time (Raid 2: up to 20.7 h early; Kantara,
 Dhurandhar 2: minutes)</td>
-<td style="text-align: right;">16657</td>
+<td style="text-align: right;">16,657</td>
 <td style="text-align: left;">Trailer window now starts at the earlier
 of the API publish time and the first comment</td>
 <td style="text-align: left;">The video was viewable before its
@@ -2138,7 +2208,7 @@ off Raid 2’s real first day</td>
 </tr>
 <tr>
 <td style="text-align: right;">30</td>
-<td style="text-align: left;">10_analysis</td>
+<td style="text-align: left;">10 Analysis</td>
 <td style="text-align: left;">Views (millions), crores and sentiment
 (−1..+1) are on very different scales</td>
 <td style="text-align: right;">10</td>
@@ -2149,10 +2219,10 @@ log stops the 130M-view film dominating</td>
 </tr>
 <tr>
 <td style="text-align: right;">31</td>
-<td style="text-align: left;">10_analysis</td>
+<td style="text-align: left;">10 Analysis</td>
 <td style="text-align: left;">Possible paid/bot buzz: the same 5+-word
 comment posted 5+ times within one hour</td>
-<td style="text-align: right;">3663</td>
+<td style="text-align: right;">3,663</td>
 <td style="text-align: left;">Flagged (not deleted); share per film
 reported in bot_check_by_film.csv</td>
 <td style="text-align: left;">Deleting needs proof; flagging lets us
@@ -2160,10 +2230,10 @@ show whether any film’s buzz is inflated</td>
 </tr>
 <tr>
 <td style="text-align: right;">32</td>
-<td style="text-align: left;">10_analysis</td>
+<td style="text-align: left;">10 Analysis</td>
 <td style="text-align: left;">A large block of comments posted before
 the official publish time that is mostly copy-paste text (Raid 2)</td>
-<td style="text-align: right;">16245</td>
+<td style="text-align: right;">16,245</td>
 <td style="text-align: left;">Kept (we cannot prove who wrote them) but
 flagged; Raid 2’s comment-based buzz is reported as likely inflated</td>
 <td style="text-align: left;">88%-style repetition before a video is
@@ -2176,28 +2246,28 @@ fans</td>
 <table>
 <colgroup>
 <col style="width: 7%" />
-<col style="width: 12%" />
-<col style="width: 3%" />
+<col style="width: 2%" />
 <col style="width: 19%" />
+<col style="width: 12%" />
 <col style="width: 26%" />
 <col style="width: 30%" />
 </colgroup>
 <thead>
 <tr>
-<th style="text-align: left;">source</th>
-<th style="text-align: left;">url</th>
-<th style="text-align: left;">access_date</th>
-<th style="text-align: left;">method</th>
-<th style="text-align: left;">terms_of_use</th>
-<th style="text-align: left;">note</th>
+<th style="text-align: left;">Source</th>
+<th style="text-align: left;">Accessed</th>
+<th style="text-align: left;">Method</th>
+<th style="text-align: left;">URL</th>
+<th style="text-align: left;">Terms of use</th>
+<th style="text-align: left;">Note</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align: left;">Frankfurter (ECB reference rates)</td>
-<td style="text-align: left;">https://api.frankfurter.dev/v1/2026-03-19?from=USD&amp;to=INR</td>
 <td style="text-align: left;">2026-11-26</td>
 <td style="text-align: left;">REST API (JSON)</td>
+<td style="text-align: left;">https://api.frankfurter.dev/v1/2026-03-19?from=USD&amp;to=INR</td>
 <td style="text-align: left;">https://frankfurter.dev (open-source API
 serving European Central Bank reference rates)</td>
 <td style="text-align: left;">One USD→INR rate to convert the only USD
@@ -2205,20 +2275,20 @@ box-office figure</td>
 </tr>
 <tr>
 <td style="text-align: left;">TMDb</td>
-<td style="text-align: left;">https://api.themoviedb.org/3/search/movie</td>
 <td style="text-align: left;">2026-11-26</td>
 <td style="text-align: left;">REST API /search/movie ; REST API
 /search/movie + /movie/{id}?append_to_response=credits</td>
+<td style="text-align: left;">https://api.themoviedb.org/3/search/movie</td>
 <td style="text-align: left;">https://www.themoviedb.org/api-terms-of-use</td>
 <td style="text-align: left;">Genre, runtime, language, cast; free
 developer key; credited as the data source</td>
 </tr>
 <tr>
 <td style="text-align: left;">Wikipedia</td>
-<td style="text-align: left;">https://en.wikipedia.org/w/api.php</td>
 <td style="text-align: left;">2026-11-26</td>
 <td style="text-align: left;">MediaWiki API action=parse ; MediaWiki API
 action=parse + pandas.read_html</td>
+<td style="text-align: left;">https://en.wikipedia.org/w/api.php</td>
 <td style="text-align: left;">https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use
 (API etiquette: https://www.mediawiki.org/wiki/API:Etiquette)</td>
 <td style="text-align: left;">Box-office infobox + text via MediaWiki
@@ -2227,10 +2297,10 @@ revision ids saved</td>
 </tr>
 <tr>
 <td style="text-align: left;">YouTube Data API v3</td>
-<td style="text-align: left;">https://www.googleapis.com/youtube/v3/search</td>
 <td style="text-align: left;">2026-11-26</td>
 <td style="text-align: left;">search.list + videos.list ; videos.list +
 search.list + commentThreads.list</td>
+<td style="text-align: left;">https://www.googleapis.com/youtube/v3/search</td>
 <td style="text-align: left;">https://developers.google.com/youtube/terms/api-services-terms-of-service</td>
 <td style="text-align: left;">Trailer stats + all top-level comments of
 main trailers; quota hard-capped at 10,000 units/day; usernames dropped
@@ -2238,20 +2308,20 @@ before leaving data/raw</td>
 </tr>
 <tr>
 <td style="text-align: left;">Google Trends</td>
-<td style="text-align: left;">https://trends.google.com/trends/explore
-(geo=IN, daily)</td>
 <td style="text-align: left;">2026-11-26</td>
 <td style="text-align: left;">Manual CSV export, one search term per
 film</td>
+<td style="text-align: left;">https://trends.google.com/trends/explore
+(geo=IN, daily)</td>
 <td style="text-align: left;">https://policies.google.com/terms</td>
 <td style="text-align: left;">Daily India search interest, exported by
 hand (pytrends is unreliable); values are relative 0–100 per export</td>
 </tr>
 <tr>
 <td style="text-align: left;">IMDb 50K labelled reviews</td>
-<td style="text-align: left;">local file data/manual/imdb_50k.csv</td>
 <td style="text-align: left;">2026-10-06</td>
 <td style="text-align: left;">Local CSV (Homework 1.2)</td>
+<td style="text-align: left;">local file data/manual/imdb_50k.csv</td>
 <td style="text-align: left;">Research dataset, Maas et al. (2011),
 https://ai.stanford.edu/~amaas/data/sentiment/ (copy from Homework 1.2 /
 Kaggle)</td>
@@ -2265,131 +2335,131 @@ Sentiment validation and blind spots</h1>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">metric</th>
-<th style="text-align: right;">value</th>
+<th style="text-align: left;">Metric</th>
+<th style="text-align: right;">Value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">rows_scored</td>
-<td style="text-align: right;">49582</td>
+<td style="text-align: left;">Reviews scored</td>
+<td style="text-align: right;">49,582</td>
 </tr>
 <tr>
-<td style="text-align: left;">accuracy</td>
-<td style="text-align: right;">0.6998</td>
+<td style="text-align: left;">Accuracy</td>
+<td style="text-align: right;">0.700</td>
 </tr>
 <tr>
-<td style="text-align: left;">f1_positive</td>
-<td style="text-align: right;">0.7421</td>
+<td style="text-align: left;">F1 (positive class)</td>
+<td style="text-align: right;">0.742</td>
 </tr>
 <tr>
-<td style="text-align: left;">f1_macro</td>
-<td style="text-align: right;">0.6915</td>
+<td style="text-align: left;">F1 (macro average)</td>
+<td style="text-align: right;">0.692</td>
 </tr>
 <tr>
-<td style="text-align: left;">true_pos (actual pos, predicted pos)</td>
-<td style="text-align: right;">21410</td>
+<td style="text-align: left;">Positive → called positive</td>
+<td style="text-align: right;">21,410</td>
 </tr>
 <tr>
-<td style="text-align: left;">false_neg (actual pos, predicted neg)</td>
-<td style="text-align: right;">3474</td>
+<td style="text-align: left;">Positive → called negative</td>
+<td style="text-align: right;">3,474</td>
 </tr>
 <tr>
-<td style="text-align: left;">false_pos (actual neg, predicted pos)</td>
-<td style="text-align: right;">11411</td>
+<td style="text-align: left;">Negative → called positive</td>
+<td style="text-align: right;">11,411</td>
 </tr>
 <tr>
-<td style="text-align: left;">true_neg (actual neg, predicted neg)</td>
-<td style="text-align: right;">13287</td>
+<td style="text-align: left;">Negative → called negative</td>
+<td style="text-align: right;">13,287</td>
 </tr>
 </tbody>
 </table>
 <table>
 <colgroup>
-<col style="width: 25%" />
+<col style="width: 27%" />
 <col style="width: 12%" />
-<col style="width: 23%" />
 <col style="width: 21%" />
-<col style="width: 17%" />
+<col style="width: 20%" />
+<col style="width: 18%" />
 </colgroup>
 <thead>
 <tr>
-<th style="text-align: left;">film_id</th>
-<th style="text-align: right;">comments</th>
-<th style="text-align: right;">share_indic_script</th>
-<th style="text-align: right;">share_vader_zero</th>
-<th style="text-align: right;">mean_compound</th>
+<th style="text-align: left;">Film</th>
+<th style="text-align: right;">Comments</th>
+<th style="text-align: right;">In Indian script</th>
+<th style="text-align: right;">VADER score = 0</th>
+<th style="text-align: right;">Mean sentiment</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">chhaava</td>
-<td style="text-align: right;">87712</td>
-<td style="text-align: right;">0.109</td>
-<td style="text-align: right;">0.333</td>
+<td style="text-align: left;">Chhaava</td>
+<td style="text-align: right;">87,712</td>
+<td style="text-align: right;">10.9%</td>
+<td style="text-align: right;">33.3%</td>
 <td style="text-align: right;">0.144</td>
 </tr>
 <tr>
-<td style="text-align: left;">dhurandhar_the_revenge</td>
-<td style="text-align: right;">53859</td>
-<td style="text-align: right;">0.023</td>
-<td style="text-align: right;">0.316</td>
+<td style="text-align: left;">Dhurandhar: The Revenge</td>
+<td style="text-align: right;">53,859</td>
+<td style="text-align: right;">2.3%</td>
+<td style="text-align: right;">31.6%</td>
 <td style="text-align: right;">0.118</td>
 </tr>
 <tr>
-<td style="text-align: left;">housefull_5</td>
-<td style="text-align: right;">31753</td>
-<td style="text-align: right;">0.028</td>
-<td style="text-align: right;">0.258</td>
+<td style="text-align: left;">Housefull 5</td>
+<td style="text-align: right;">31,753</td>
+<td style="text-align: right;">2.8%</td>
+<td style="text-align: right;">25.8%</td>
 <td style="text-align: right;">0.32</td>
 </tr>
 <tr>
-<td style="text-align: left;">kantara_chapter_1</td>
-<td style="text-align: right;">19777</td>
-<td style="text-align: right;">0.272</td>
-<td style="text-align: right;">0.289</td>
+<td style="text-align: left;">Kantara: Chapter 1</td>
+<td style="text-align: right;">19,777</td>
+<td style="text-align: right;">27.2%</td>
+<td style="text-align: right;">28.9%</td>
 <td style="text-align: right;">0.304</td>
 </tr>
 <tr>
-<td style="text-align: left;">l2_empuraan</td>
-<td style="text-align: right;">35830</td>
-<td style="text-align: right;">0.217</td>
-<td style="text-align: right;">0.264</td>
+<td style="text-align: left;">L2: Empuraan</td>
+<td style="text-align: right;">35,830</td>
+<td style="text-align: right;">21.7%</td>
+<td style="text-align: right;">26.4%</td>
 <td style="text-align: right;">-0.037</td>
 </tr>
 <tr>
-<td style="text-align: left;">lokah_chapter_1</td>
-<td style="text-align: right;">4888</td>
-<td style="text-align: right;">0.158</td>
-<td style="text-align: right;">0.324</td>
+<td style="text-align: left;">Lokah Chapter 1: Chandra</td>
+<td style="text-align: right;">4,888</td>
+<td style="text-align: right;">15.8%</td>
+<td style="text-align: right;">32.4%</td>
 <td style="text-align: right;">0.147</td>
 </tr>
 <tr>
-<td style="text-align: left;">peddi</td>
-<td style="text-align: right;">17432</td>
-<td style="text-align: right;">0.118</td>
-<td style="text-align: right;">0.302</td>
+<td style="text-align: left;">Peddi</td>
+<td style="text-align: right;">17,432</td>
+<td style="text-align: right;">11.8%</td>
+<td style="text-align: right;">30.2%</td>
 <td style="text-align: right;">0.196</td>
 </tr>
 <tr>
-<td style="text-align: left;">raid_2</td>
-<td style="text-align: right;">27332</td>
-<td style="text-align: right;">0.012</td>
-<td style="text-align: right;">0.262</td>
+<td style="text-align: left;">Raid 2</td>
+<td style="text-align: right;">27,332</td>
+<td style="text-align: right;">1.2%</td>
+<td style="text-align: right;">26.2%</td>
 <td style="text-align: right;">0.214</td>
 </tr>
 <tr>
-<td style="text-align: left;">saiyaara</td>
-<td style="text-align: right;">26163</td>
-<td style="text-align: right;">0.03</td>
-<td style="text-align: right;">0.298</td>
+<td style="text-align: left;">Saiyaara</td>
+<td style="text-align: right;">26,163</td>
+<td style="text-align: right;">3.0%</td>
+<td style="text-align: right;">29.8%</td>
 <td style="text-align: right;">0.35</td>
 </tr>
 <tr>
-<td style="text-align: left;">sitaare_zameen_par</td>
-<td style="text-align: right;">45680</td>
-<td style="text-align: right;">0.027</td>
-<td style="text-align: right;">0.248</td>
+<td style="text-align: left;">Sitaare Zameen Par</td>
+<td style="text-align: right;">45,680</td>
+<td style="text-align: right;">2.7%</td>
+<td style="text-align: right;">24.8%</td>
 <td style="text-align: right;">0.326</td>
 </tr>
 </tbody>
@@ -2397,288 +2467,290 @@ Sentiment validation and blind spots</h1>
 <h1 id="appendix-h-all-correlations-the-leave-one-out-test-and-the-pre-publish-check">Appendix
 H — All correlations, the leave-one-out test and the pre-publish
 check</h1>
-<table>
+<table style="width:100%;">
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 41%" />
+<col style="width: 31%" />
+<col style="width: 45%" />
 <col style="width: 4%" />
-<col style="width: 13%" />
-<col style="width: 9%" />
+<col style="width: 12%" />
+<col style="width: 5%" />
 </colgroup>
 <thead>
 <tr>
-<th style="text-align: left;">subset</th>
-<th style="text-align: left;">feature</th>
+<th style="text-align: left;">Films included</th>
+<th style="text-align: left;">Buzz signal</th>
 <th style="text-align: right;">n</th>
-<th style="text-align: right;">spearman_rho</th>
-<th style="text-align: right;">p_value</th>
+<th style="text-align: right;">Spearman ρ</th>
+<th style="text-align: right;">p</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">all films</td>
-<td style="text-align: left;">total_views</td>
+<td style="text-align: left;">All films</td>
+<td style="text-align: left;">Trailer views (all versions)</td>
 <td style="text-align: right;">10</td>
-<td style="text-align: right;">0.648</td>
-<td style="text-align: right;">0.043</td>
+<td style="text-align: right;">0.65</td>
+<td style="text-align: right;">0.04</td>
 </tr>
 <tr>
-<td style="text-align: left;">all films</td>
-<td style="text-align: left;">like_ratio</td>
+<td style="text-align: left;">All films</td>
+<td style="text-align: left;">Like ratio (likes ÷ views)</td>
 <td style="text-align: right;">10</td>
-<td style="text-align: right;">0.285</td>
-<td style="text-align: right;">0.425</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">0.42</td>
 </tr>
 <tr>
-<td style="text-align: left;">all films</td>
-<td style="text-align: left;">comments_7d</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: right;">0.37</td>
-<td style="text-align: right;">0.293</td>
-</tr>
-<tr>
-<td style="text-align: left;">all films</td>
-<td style="text-align: left;">comments_per_hour</td>
+<td style="text-align: left;">All films</td>
+<td style="text-align: left;">Comments, first 7 days</td>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0.37</td>
-<td style="text-align: right;">0.293</td>
+<td style="text-align: right;">0.29</td>
 </tr>
 <tr>
-<td style="text-align: left;">all films</td>
-<td style="text-align: left;">sentiment_7d</td>
+<td style="text-align: left;">All films</td>
+<td style="text-align: left;">Comments per hour, first 72 h</td>
 <td style="text-align: right;">10</td>
-<td style="text-align: right;">-0.188</td>
-<td style="text-align: right;">0.603</td>
+<td style="text-align: right;">0.37</td>
+<td style="text-align: right;">0.29</td>
 </tr>
 <tr>
-<td style="text-align: left;">excluding flagged weekend figures</td>
-<td style="text-align: left;">total_views</td>
+<td style="text-align: left;">All films</td>
+<td style="text-align: left;">Mean sentiment, first 7 days</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">-0.19</td>
+<td style="text-align: right;">0.60</td>
+</tr>
+<tr>
+<td style="text-align: left;">Excluding flagged weekend figures</td>
+<td style="text-align: left;">Trailer views (all versions)</td>
 <td style="text-align: right;">8</td>
-<td style="text-align: right;">0.738</td>
-<td style="text-align: right;">0.037</td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;">0.04</td>
 </tr>
 <tr>
-<td style="text-align: left;">excluding flagged weekend figures</td>
-<td style="text-align: left;">like_ratio</td>
+<td style="text-align: left;">Excluding flagged weekend figures</td>
+<td style="text-align: left;">Like ratio (likes ÷ views)</td>
 <td style="text-align: right;">8</td>
-<td style="text-align: right;">0.357</td>
-<td style="text-align: right;">0.385</td>
+<td style="text-align: right;">0.36</td>
+<td style="text-align: right;">0.39</td>
 </tr>
 <tr>
-<td style="text-align: left;">excluding flagged weekend figures</td>
-<td style="text-align: left;">comments_7d</td>
+<td style="text-align: left;">Excluding flagged weekend figures</td>
+<td style="text-align: left;">Comments, first 7 days</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">0.5</td>
-<td style="text-align: right;">0.207</td>
+<td style="text-align: right;">0.21</td>
 </tr>
 <tr>
-<td style="text-align: left;">excluding flagged weekend figures</td>
-<td style="text-align: left;">comments_per_hour</td>
+<td style="text-align: left;">Excluding flagged weekend figures</td>
+<td style="text-align: left;">Comments per hour, first 72 h</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">0.5</td>
-<td style="text-align: right;">0.207</td>
+<td style="text-align: right;">0.21</td>
 </tr>
 <tr>
-<td style="text-align: left;">excluding flagged weekend figures</td>
-<td style="text-align: left;">sentiment_7d</td>
+<td style="text-align: left;">Excluding flagged weekend figures</td>
+<td style="text-align: left;">Mean sentiment, first 7 days</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.00</td>
 </tr>
 <tr>
-<td style="text-align: left;">all films</td>
-<td style="text-align: left;">sentiment_7d</td>
-<td style="text-align: right;">controlling for views (partial)</td>
+<td style="text-align: left;">All films</td>
+<td style="text-align: left;">Sentiment, after controlling for views
+(partial)</td>
 <td style="text-align: right;">10</td>
-<td style="text-align: right;">-0.391</td>
+<td style="text-align: right;">-0.39</td>
+<td style="text-align: right;">—</td>
 </tr>
 </tbody>
 </table>
 <table>
 <colgroup>
-<col style="width: 24%" />
+<col style="width: 25%" />
+<col style="width: 13%" />
+<col style="width: 17%" />
 <col style="width: 14%" />
-<col style="width: 24%" />
-<col style="width: 21%" />
-<col style="width: 16%" />
+<col style="width: 28%" />
 </colgroup>
 <thead>
 <tr>
-<th style="text-align: left;">held_out_film</th>
-<th style="text-align: right;">buzz_index</th>
-<th style="text-align: right;">predicted_rank_of_10</th>
-<th style="text-align: right;">actual_rank_of_10</th>
-<th style="text-align: left;">call_correct</th>
+<th style="text-align: left;">Held-out film</th>
+<th style="text-align: right;">Buzz Index</th>
+<th style="text-align: right;">Predicted rank</th>
+<th style="text-align: right;">Actual rank</th>
+<th style="text-align: center;">Above/below median right?</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">chhaava</td>
-<td style="text-align: right;">0.821</td>
+<td style="text-align: left;">Chhaava</td>
+<td style="text-align: right;">0.82</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">4</td>
-<td style="text-align: left;">True</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr>
-<td style="text-align: left;">saiyaara</td>
+<td style="text-align: left;">Saiyaara</td>
 <td style="text-align: right;">-0.33</td>
 <td style="text-align: right;">9</td>
 <td style="text-align: right;">6</td>
-<td style="text-align: left;">True</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr>
-<td style="text-align: left;">sitaare_zameen_par</td>
-<td style="text-align: right;">0.502</td>
+<td style="text-align: left;">Sitaare Zameen Par</td>
+<td style="text-align: right;">0.5</td>
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">7</td>
-<td style="text-align: left;">False</td>
+<td style="text-align: center;">✗</td>
 </tr>
 <tr>
-<td style="text-align: left;">housefull_5</td>
-<td style="text-align: right;">-0.115</td>
+<td style="text-align: left;">Housefull 5</td>
+<td style="text-align: right;">-0.12</td>
 <td style="text-align: right;">7</td>
 <td style="text-align: right;">8</td>
-<td style="text-align: left;">True</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr>
-<td style="text-align: left;">raid_2</td>
-<td style="text-align: right;">0.017</td>
+<td style="text-align: left;">Raid 2</td>
+<td style="text-align: right;">0.02</td>
 <td style="text-align: right;">5</td>
 <td style="text-align: right;">9</td>
-<td style="text-align: left;">False</td>
+<td style="text-align: center;">✗</td>
 </tr>
 <tr>
-<td style="text-align: left;">dhurandhar_the_revenge</td>
-<td style="text-align: right;">0.712</td>
+<td style="text-align: left;">Dhurandhar: The Revenge</td>
+<td style="text-align: right;">0.71</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">True</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr>
-<td style="text-align: left;">kantara_chapter_1</td>
-<td style="text-align: right;">0.284</td>
+<td style="text-align: left;">Kantara: Chapter 1</td>
+<td style="text-align: right;">0.28</td>
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: left;">True</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr>
-<td style="text-align: left;">lokah_chapter_1</td>
-<td style="text-align: right;">-1.573</td>
+<td style="text-align: left;">Lokah Chapter 1: Chandra</td>
+<td style="text-align: right;">-1.57</td>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">10</td>
-<td style="text-align: left;">True</td>
+<td style="text-align: center;">✓</td>
 </tr>
 <tr>
-<td style="text-align: left;">l2_empuraan</td>
-<td style="text-align: right;">-0.272</td>
+<td style="text-align: left;">L2: Empuraan</td>
+<td style="text-align: right;">-0.27</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">5</td>
-<td style="text-align: left;">False</td>
+<td style="text-align: center;">✗</td>
 </tr>
 <tr>
-<td style="text-align: left;">peddi</td>
-<td style="text-align: right;">-0.316</td>
+<td style="text-align: left;">Peddi</td>
+<td style="text-align: right;">-0.32</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: left;">False</td>
+<td style="text-align: center;">✗</td>
 </tr>
 </tbody>
 </table>
 <p>Comments before and after each trailer’s official publish time, and
 the share that repeat text posted 5+ times:</p>
-<table style="width:100%;">
+<table>
 <colgroup>
-<col style="width: 28%" />
-<col style="width: 29%" />
-<col style="width: 14%" />
-<col style="width: 28%" />
+<col style="width: 23%" />
+<col style="width: 22%" />
+<col style="width: 10%" />
+<col style="width: 43%" />
 </colgroup>
 <thead>
 <tr>
-<th style="text-align: left;">film_id</th>
-<th style="text-align: left;">window</th>
-<th style="text-align: right;">comments</th>
-<th style="text-align: right;">share_repeated_5plus</th>
+<th style="text-align: left;">Film</th>
+<th style="text-align: left;">Window</th>
+<th style="text-align: right;">Comments</th>
+<th style="text-align: right;">Share that is copy-paste (text seen 5+
+times)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">chhaava</td>
-<td style="text-align: left;">after official publish</td>
-<td style="text-align: right;">87712</td>
-<td style="text-align: right;">0.261</td>
+<td style="text-align: left;">Chhaava</td>
+<td style="text-align: left;">After official publish</td>
+<td style="text-align: right;">87,712</td>
+<td style="text-align: right;">26.1%</td>
 </tr>
 <tr>
-<td style="text-align: left;">dhurandhar_the_revenge</td>
-<td style="text-align: left;">after official publish</td>
-<td style="text-align: right;">53846</td>
-<td style="text-align: right;">0.176</td>
+<td style="text-align: left;">Dhurandhar: The Revenge</td>
+<td style="text-align: left;">After official publish</td>
+<td style="text-align: right;">53,846</td>
+<td style="text-align: right;">17.6%</td>
 </tr>
 <tr>
-<td style="text-align: left;">dhurandhar_the_revenge</td>
-<td style="text-align: left;">before official publish</td>
+<td style="text-align: left;">Dhurandhar: The Revenge</td>
+<td style="text-align: left;">Before official publish</td>
 <td style="text-align: right;">13</td>
-<td style="text-align: right;">0.231</td>
+<td style="text-align: right;">23.1%</td>
 </tr>
 <tr>
-<td style="text-align: left;">housefull_5</td>
-<td style="text-align: left;">after official publish</td>
-<td style="text-align: right;">31753</td>
-<td style="text-align: right;">0.225</td>
+<td style="text-align: left;">Housefull 5</td>
+<td style="text-align: left;">After official publish</td>
+<td style="text-align: right;">31,753</td>
+<td style="text-align: right;">22.5%</td>
 </tr>
 <tr>
-<td style="text-align: left;">kantara_chapter_1</td>
-<td style="text-align: left;">after official publish</td>
-<td style="text-align: right;">19378</td>
-<td style="text-align: right;">0.513</td>
+<td style="text-align: left;">Kantara: Chapter 1</td>
+<td style="text-align: left;">After official publish</td>
+<td style="text-align: right;">19,378</td>
+<td style="text-align: right;">51.3%</td>
 </tr>
 <tr>
-<td style="text-align: left;">kantara_chapter_1</td>
-<td style="text-align: left;">before official publish</td>
+<td style="text-align: left;">Kantara: Chapter 1</td>
+<td style="text-align: left;">Before official publish</td>
 <td style="text-align: right;">399</td>
-<td style="text-align: right;">0.308</td>
+<td style="text-align: right;">30.8%</td>
 </tr>
 <tr>
-<td style="text-align: left;">l2_empuraan</td>
-<td style="text-align: left;">after official publish</td>
-<td style="text-align: right;">35830</td>
-<td style="text-align: right;">0.394</td>
+<td style="text-align: left;">L2: Empuraan</td>
+<td style="text-align: left;">After official publish</td>
+<td style="text-align: right;">35,830</td>
+<td style="text-align: right;">39.4%</td>
 </tr>
 <tr>
-<td style="text-align: left;">lokah_chapter_1</td>
-<td style="text-align: left;">after official publish</td>
-<td style="text-align: right;">4888</td>
-<td style="text-align: right;">0.204</td>
+<td style="text-align: left;">Lokah Chapter 1: Chandra</td>
+<td style="text-align: left;">After official publish</td>
+<td style="text-align: right;">4,888</td>
+<td style="text-align: right;">20.4%</td>
 </tr>
 <tr>
-<td style="text-align: left;">peddi</td>
-<td style="text-align: left;">after official publish</td>
-<td style="text-align: right;">17432</td>
-<td style="text-align: right;">0.241</td>
+<td style="text-align: left;">Peddi</td>
+<td style="text-align: left;">After official publish</td>
+<td style="text-align: right;">17,432</td>
+<td style="text-align: right;">24.1%</td>
 </tr>
 <tr>
-<td style="text-align: left;">raid_2</td>
-<td style="text-align: left;">after official publish</td>
-<td style="text-align: right;">11087</td>
-<td style="text-align: right;">0.388</td>
+<td style="text-align: left;">Raid 2</td>
+<td style="text-align: left;">After official publish</td>
+<td style="text-align: right;">11,087</td>
+<td style="text-align: right;">38.8%</td>
 </tr>
 <tr>
-<td style="text-align: left;">raid_2</td>
-<td style="text-align: left;">before official publish</td>
-<td style="text-align: right;">16245</td>
-<td style="text-align: right;">0.886</td>
+<td style="text-align: left;">Raid 2</td>
+<td style="text-align: left;">Before official publish</td>
+<td style="text-align: right;">16,245</td>
+<td style="text-align: right;">88.6%</td>
 </tr>
 <tr>
-<td style="text-align: left;">saiyaara</td>
-<td style="text-align: left;">after official publish</td>
-<td style="text-align: right;">26163</td>
-<td style="text-align: right;">0.176</td>
+<td style="text-align: left;">Saiyaara</td>
+<td style="text-align: left;">After official publish</td>
+<td style="text-align: right;">26,163</td>
+<td style="text-align: right;">17.6%</td>
 </tr>
 <tr>
-<td style="text-align: left;">sitaare_zameen_par</td>
-<td style="text-align: left;">after official publish</td>
-<td style="text-align: right;">45680</td>
-<td style="text-align: right;">0.18</td>
+<td style="text-align: left;">Sitaare Zameen Par</td>
+<td style="text-align: left;">After official publish</td>
+<td style="text-align: right;">45,680</td>
+<td style="text-align: right;">18.0%</td>
 </tr>
 </tbody>
 </table>

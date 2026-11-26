@@ -17,7 +17,7 @@ UNION ALL SELECT 'trends_daily', COUNT(*) FROM trends_daily
 | films        |          10 |
 | trailers     |          18 |
 | box_office   |          37 |
-| comments     |      350426 |
+| comments     |     350,426 |
 | trends_daily |         375 |
 
 ## Q2. (JOIN + GROUP BY) For each film: total trailer views across all language versions, next to its first-weekend collection per day. This is the core comparison of our question.
@@ -37,16 +37,16 @@ ORDER BY total_trailer_views DESC
 
 | film_id                | language   |   trailer_versions |   total_trailer_views |   first_weekend_per_day_cr |
 |:-----------------------|:-----------|-------------------:|----------------------:|---------------------------:|
-| dhurandhar_the_revenge | Hindi      |                  5 |           1.30745e+08 |                     186.5  |
-| kantara_chapter_1      | Kannada    |                  5 |           1.03992e+08 |                      82.5  |
-| sitaare_zameen_par     | Hindi      |                  1 |           8.88989e+07 |                      31.83 |
-| chhaava                | Hindi      |                  1 |           8.17284e+07 |                      53.5  |
-| saiyaara               | Hindi      |                  1 |           8.13946e+07 |                      39.67 |
-| raid_2                 | Hindi      |                  1 |           6.59729e+07 |                      25    |
-| peddi                  | Telugu     |                  1 |           5.93947e+07 |                      58.25 |
-| housefull_5            | Hindi      |                  1 |           3.39566e+07 |                      30.61 |
-| l2_empuraan            | Malayalam  |                  1 |           1.76834e+07 |                      43.75 |
-| lokah_chapter_1        | Malayalam  |                  1 |           1.63116e+07 |                      16.38 |
+| dhurandhar_the_revenge | Hindi      |                  5 |           130,744,717 |                      186.5 |
+| kantara_chapter_1      | Kannada    |                  5 |           103,992,420 |                       82.5 |
+| sitaare_zameen_par     | Hindi      |                  1 |            88,898,889 |                      31.83 |
+| chhaava                | Hindi      |                  1 |            81,728,371 |                       53.5 |
+| saiyaara               | Hindi      |                  1 |            81,394,643 |                      39.67 |
+| raid_2                 | Hindi      |                  1 |            65,972,897 |                         25 |
+| peddi                  | Telugu     |                  1 |            59,394,688 |                      58.25 |
+| housefull_5            | Hindi      |                  1 |            33,956,581 |                      30.61 |
+| l2_empuraan            | Malayalam  |                  1 |            17,683,415 |                      43.75 |
+| lokah_chapter_1        | Malayalam  |                  1 |            16,311,601 |                      16.38 |
 
 ## Q3. (JOIN + GROUP BY) Velocity: how many comments arrived in the first 72 hours after the main trailer went live, and the average comments per hour in that window. "Went live" = the earlier of the API publish time and the first comment (Raid 2's trailer was commented on 20.7 h before its official publish time).
 
@@ -68,16 +68,16 @@ ORDER BY comments_first_72h DESC
 
 | film_id                |   comments_first_72h |   comments_per_hour_72h |
 |:-----------------------|---------------------:|------------------------:|
-| chhaava                |                65719 |                   912.8 |
-| dhurandhar_the_revenge |                41548 |                   577.1 |
-| sitaare_zameen_par     |                38047 |                   528.4 |
-| l2_empuraan            |                31536 |                   438   |
-| housefull_5            |                23897 |                   331.9 |
-| raid_2                 |                21632 |                   300.4 |
-| kantara_chapter_1      |                18778 |                   260.8 |
-| peddi                  |                16292 |                   226.3 |
-| saiyaara               |                 8302 |                   115.3 |
-| lokah_chapter_1        |                 3052 |                    42.4 |
+| chhaava                |               65,719 |                   912.8 |
+| dhurandhar_the_revenge |               41,548 |                   577.1 |
+| sitaare_zameen_par     |               38,047 |                   528.4 |
+| l2_empuraan            |               31,536 |                     438 |
+| housefull_5            |               23,897 |                   331.9 |
+| raid_2                 |               21,632 |                   300.4 |
+| kantara_chapter_1      |               18,778 |                   260.8 |
+| peddi                  |               16,292 |                   226.3 |
+| saiyaara               |                8,302 |                   115.3 |
+| lokah_chapter_1        |                3,052 |                    42.4 |
 
 ## Q4. (JOIN + GROUP BY) Do Hindi and regional films get different trailer sentiment? Mean VADER score, ignoring comments VADER could not read (score exactly 0).
 
@@ -95,8 +95,8 @@ GROUP BY film_group
 
 | film_group   |   films |   scored_comments |   mean_vader_nonzero |   share_positive |
 |:-------------|--------:|------------------:|---------------------:|-----------------:|
-| Hindi        |       6 |            191783 |                0.308 |            0.696 |
-| Regional     |       4 |             55897 |                0.158 |            0.58  |
+| Hindi        |       6 |           191,783 |                0.308 |            0.696 |
+| Regional     |       4 |            55,897 |                0.158 |             0.58 |
 
 ## Q5. (JOIN + window function) When did Google search interest peak, relative to release day? A peak on release day means search follows the release, not the trailer.
 
