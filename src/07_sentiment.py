@@ -12,6 +12,7 @@ Part B — score every cleaned trailer comment and add vader_compound to data/cl
 Part C — measure where VADER is blind on OUR data (Indian scripts, Hinglish → compound exactly 0).
 """
 
+import hashlib
 import os
 import re
 import sys
@@ -98,7 +99,17 @@ def score_comments(analyzer):
                  "Treating 'no known words' as 'neutral' would pull every film's mean towards 0")
 
     comments.to_csv(DATA_CLEAN / "comments.csv", index=False)
+    write_sample(comments)
     return comments
+
+
+def write_sample(comments):
+    """The full table (~45 MB) is gitignored. Commit a 200-per-film sample instead, with the YouTube
+    comment id replaced by a one-way hash, so a row cannot be looked up back to its author."""
+    sample = comments.groupby("film_id", group_keys=False).apply(lambda g: g.sample(min(len(g), 200), random_state=42))
+    sample["comment_id"] = sample["comment_id"].map(lambda c: hashlib.sha256(str(c).encode()).hexdigest()[:16])
+    sample.to_csv(DATA_CLEAN / "comments_sample.csv", index=False)
+    print(f"sample: {len(sample):,} rows → data/clean/comments_sample.csv")
 
 
 def main():
