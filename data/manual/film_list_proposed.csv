@@ -1,0 +1,19 @@
+film_id,title,language,release_date,status,first_weekend_as_reported_on_wikipedia,weekend_days,scope_flag,main_trailer_video_id,trailer_note,reason
+chhaava,Chhaava,Hindi,2025-02-14,KEEP,"₹157–164 crore worldwide (opening weekend)",3,ok,,official trailer Maddock Films 2025-01-22,clean worldwide weekend figure
+saiyaara,Saiyaara,Hindi,2025-07-18,KEEP,"₹119 crore worldwide / ₹83 crore India net (opening weekend)",3,ok,,official trailer YRF 2025-07-08,clean; debutant leads = low star-power contrast case
+sitaare_zameen_par,Sitaare Zameen Par,Hindi,2025-06-20,KEEP,"₹95–96 crore gross (opening weekend; worldwide not stated explicitly)",3,check_scope,YH6k5weqwy8,first search picked a 2026 OTT trailer; corrected to Aamir Khan Talkies 2025-05-13,usable; scope to confirm in Phase 2
+housefull_5,Housefull 5,Hindi,2025-06-06,KEEP,"₹91.83 crore domestic (opening weekend)",3,domestic_only,,official trailer NadiadwalaGrandson 2025-05-27,only domestic figure given — flag and keep
+raid_2,Raid 2,Hindi,2025-05-01,KEEP,"over ₹100 crore incl. ₹14 crore overseas (opening weekend)",4,ok,,official trailer T-Series 2025-04-08,released Thursday → 4-day weekend
+dhurandhar_the_revenge,Dhurandhar: The Revenge,Hindi,2026-03-19,KEEP,"over $80 million worldwide (global opening weekend)",4,usd_figure,,official Hindi trailer JioStudios 2026-03-07; separate Telugu/other versions exist,only USD figure — convert at release-date rate and log
+kantara_chapter_1,Kantara: Chapter 1,Kannada,2025-10-02,KEEP,"₹325–335 crore worldwide (extended 4-day first weekend)",4,ok,TMQUFhWm8C0,Hombale Films released Kannada/Hindi/Telugu (+more) versions on 2025-09-22,regional; trailer views split across languages
+lokah_chapter_1,Lokah Chapter 1: Chandra,Malayalam,2025-08-28,KEEP,"₹65.50 crore worldwide (first four-day weekend)",4,ok,,official trailer Wayfarer Films 2025-08-24,regional; small-budget surprise hit
+l2_empuraan,L2: Empuraan,Malayalam,2025-03-27,KEEP,"₹175 crore worldwide (4 days)",4,ok,,Malayalam trailer Aashirvad Cinemas 2025-03-19,regional
+peddi,Peddi,Telugu,2026-06-04,KEEP,"over ₹233 crore worldwide (extended opening weekend)",4,ok,,Telugu trailer Vriddhi Cinemas 2026-05-18,regional; 2026 release
+war_2,War 2,Hindi,2025-08-14,DROP,"none — only opening DAY ₹82 crore worldwide",,,,,no opening-weekend figure on Wikipedia
+coolie,Coolie,Tamil,2025-08-14,DROP,"none — only opening DAY ₹150 crore worldwide",,,,,no opening-weekend figure (loses our only Tamil film)
+they_call_him_og,They Call Him OG,Telugu,2025-09-25,DROP,"none — only opening DAY ₹155 crore worldwide",,,,,no opening-weekend figure
+dhurandhar,Dhurandhar,Hindi,2025-12-05,DROP,"none — opening ₹86.5 crore worldwide (day, not weekend)",,,,,no weekend figure in ₹
+thamma,Thamma,Hindi,2025-10-21,DROP,none,,,,,Box office section has no opening figure
+jolly_llb_3,Jolly LLB 3,Hindi,2025-09-19,DROP,none,,,,,Box office section has no opening figure
+border_2,Border 2,Hindi,2026-01-23,DROP,none,,,,,Box office section has no opening figure
+jailer_2,Jailer 2,Tamil,2026-10-15,DROP,none,,,,,released 6 weeks ago; no Box office section yet

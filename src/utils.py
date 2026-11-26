@@ -125,9 +125,33 @@ def http_get_json(url, params=None, headers=None, max_tries=4, pause_s=1.0):
             # Show the API's own error message — it usually says exactly what is wrong.
             raise RuntimeError(f"GET {url} failed {response.status_code}: {response.text[:300]}")
 
-        print(f"  HTTP {response.status_code}, retry {attempt}/{max_tries} in {wait:.0f}s")
-        time.sleep(wait)
-        wait = wait * 2
+        # If the server says how long to wait (Retry-After header), obey it; otherwise
+        # back off at least 5 s, doubling each time.
+        server_wait = response.headers.get("Retry-After", "")
+        sleep_for = float(server_wait) if server_wait.isdigit() else max(wait, 5)
+        print(f"  HTTP {response.status_code}, retry {attempt}/{max_tries} in {sleep_for:.0f}s")
+        time.sleep(sleep_for)
+        wait = sleep_for * 2
+
+
+# --- Wikipedia ------------------------------------------------------------
+# Wikimedia blocks (HTTP 429/403) requests without a descriptive User-Agent
+# that includes a way to contact the author. We use the project's repo URL,
+# plus WIKI_CONTACT from .env if a teammate sets one.
+WIKI_API = "https://en.wikipedia.org/w/api.php"
+REPO_URL = "https://github.com/Shubhaditya14/Case-Study-A-Release-Day-Radar"
+
+
+def wiki_headers():
+    contact = os.getenv("WIKI_CONTACT", "").strip()
+    extra = f"; {contact}" if contact and "example.com" not in contact else ""
+    return {"User-Agent": f"ReleaseDayRadar/0.1 (student course project; {REPO_URL}{extra}) python-requests"}
+
+
+def wiki_get(params):
+    """Call the MediaWiki API with the right User-Agent and a polite 1 s pause between calls."""
+    params = dict(params, format="json", formatversion=2)
+    return http_get_json(WIKI_API, params=params, headers=wiki_headers(), pause_s=1.0)
 
 
 # --- YouTube quota guard --------------------------------------------------
