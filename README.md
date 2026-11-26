@@ -4,7 +4,7 @@ Case Study A for Data and Storytelling, Module 1. Team: Sata and Dory Letting.
 
 This project checks whether trailer buzz on YouTube predicted first-weekend box office for 10 Hindi and regional films released in 2025–26.
 
-The report is in `report/report.pdf` (and `report/report.docx`).
+The report is in `report/report.pdf` (and `report/report.docx`). The slides are in `report/slides.pptx`.
 
 ## Requirements
 
@@ -69,7 +69,7 @@ make zip       # build the submission zip
 - `outputs/charts/`: the charts
 - `outputs/tables/`: result tables
 - `outputs/cleaning_log.csv`: every cleaning decision
-- `report/`: the final report
+- `report/`: the final report and slides
 
 ## Notes
 
