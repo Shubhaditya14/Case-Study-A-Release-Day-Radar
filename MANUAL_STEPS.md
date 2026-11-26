@@ -65,7 +65,7 @@ Reply `done` in the Claude session after each one; Claude runs the check and tic
   - HOW I'LL CHECK: pandas loads it, 50,000 rows, columns `review` + `sentiment`, labels only `positive`/`negative`.
   - TIME: ~3 min
 
-- [ ] **M5 — GitHub repo: add teammates and push**
+- [x] **M5 — GitHub repo: add teammates and push** (push verified 2026-11-26; adding teammates still deferred)
   - WHY: rubric "Analysis, PySpark and reproducibility" — repo with commits from every member.
   - DO THIS:
     1. The repo already exists: https://github.com/Shubhaditya14/Case-Study-A-Release-Day-Radar
