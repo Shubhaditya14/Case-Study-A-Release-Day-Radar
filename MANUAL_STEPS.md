@@ -30,14 +30,14 @@ Reply `done` in the Claude session after each one; Claude runs the check and tic
   - HOW I'LL CHECK: `src/00_smoke_test.py` must print `PASS  TMDb API` with Chhaava as the top result.
   - TIME: ~5 min
 
-- [ ] **M3 — Install MySQL 8 and create the database + user**
+- [x] **M3 — Install MySQL 8 and create the database + user** (verified 2026-11-26: Docker container `radar-mysql`, MySQL 8.0.46 on host port 3307 — 3306 was taken by a pre-existing local MySQL)
   - WHY: rubric "Representation and SQL" — relational schema with keys, 5+ queries.
   - DO THIS — pick ONE option:
     - **Option A: Docker (easiest, nothing installed on your Mac)**
       1. Open Docker Desktop and wait until it says "running".
       2. Pick a password, then run (replace `CHOOSE_A_PASSWORD` both times):
          ```bash
-         docker run -d --name radar-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=CHOOSE_A_PASSWORD -e MYSQL_DATABASE=release_day_radar -e MYSQL_USER=radar -e MYSQL_PASSWORD=CHOOSE_A_PASSWORD mysql:8.0
+         docker run -d --name radar-mysql -p 3307:3306 -e MYSQL_ROOT_PASSWORD=CHOOSE_A_PASSWORD -e MYSQL_DATABASE=release_day_radar -e MYSQL_USER=radar -e MYSQL_PASSWORD=CHOOSE_A_PASSWORD mysql:8.0
          ```
       3. Wait ~30 s, then check: `docker exec radar-mysql mysql -uradar -pCHOOSE_A_PASSWORD -e "SELECT VERSION();"` should print `8.0.x`.
       4. Later sessions: `docker start radar-mysql`.
@@ -50,7 +50,7 @@ Reply `done` in the Claude session after each one; Claude runs the check and tic
          GRANT ALL PRIVILEGES ON release_day_radar.* TO 'radar'@'localhost';
          FLUSH PRIVILEGES;
          ```
-  - Then fill in `.env`: `MYSQL_HOST=127.0.0.1`, `MYSQL_PORT=3306`, `MYSQL_USER=radar`, `MYSQL_PASSWORD=<your password>`, `MYSQL_DB=release_day_radar`.
+  - Then fill in `.env`: `MYSQL_HOST=127.0.0.1`, `MYSQL_PORT=3307` (Docker) or `3306` (Homebrew), `MYSQL_USER=radar`, `MYSQL_PASSWORD=<your password>`, `MYSQL_DB=release_day_radar`.
   - PUT RESULT HERE: `.env` → `MYSQL_*`
   - HOW I'LL CHECK: a Python/SQLAlchemy connection that runs `SELECT VERSION()` and prints 8.x.
   - TIME: ~10 min
