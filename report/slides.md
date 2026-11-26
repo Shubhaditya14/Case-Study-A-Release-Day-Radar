@@ -1,9 +1,3 @@
----
-title: "Trailer reach is a loose hint, and trailer mood is noise"
-subtitle: "Release Day Radar · Case Study A"
-author: "[[TODO-HUMAN: team name]]"
----
-
 <!-- GENERATED FILE: edit report/slides_template.md, then `make report` → slides.pptx. 10 slides, 7 minutes. -->
 
 # Answer: plan on Friday's numbers; use trailer reach only as a hint
@@ -11,6 +5,8 @@ author: "[[TODO-HUMAN: team name]]"
 - Bigger trailer reach went with bigger first weekends, **loosely** (ρ = 0.65, 10 films)
 - Whether comments sounded **positive added nothing** (ρ = -0.19)
 - Our best buzz score called **6 of 10** openings, not enough to move screens on its own
+
+*Release Day Radar · Case Study A · [[TODO-HUMAN: team name]]*
 
 ::: notes
 [0:00–0:40] Open with the answer. "If you remember one thing: trailer reach is a loose hint, trailer mood is noise, and the screens decision should still be made on Friday's collections." Say the three numbers slowly.
