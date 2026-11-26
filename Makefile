@@ -50,6 +50,7 @@ report:
 	cd report && pandoc report.md -o report.html --standalone --embed-resources --css=report.css --resource-path=.:..
 	"$(CHROME)" --headless --disable-gpu --no-pdf-header-footer --print-to-pdf=report/report.pdf report/report.html
 	cd report && pandoc slides.md -o slides.pptx --resource-path=.:..
+	rm -f report/report.html report/report.md report/slides.md   # build leftovers; templates are the source
 
 # Build the submission zip for team "Sata and Dory Letting"
 zip:
