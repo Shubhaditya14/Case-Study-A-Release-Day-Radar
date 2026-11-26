@@ -110,7 +110,7 @@ Reply `done` in the Claude session after each one; Claude runs the check and tic
 
 ## Phase 3 — Clean and analyse
 
-- [ ] **M9 — Confirm uncertain film-name matches (score 70–94)**
+- [x] **M9 — Confirm uncertain film-name matches (score 70–94)** (confirmed 2026-11-26: both yes → data/manual/match_confirmations.csv; re-run shows 2 applied, 0 pending)
   - WHY: rubric "Cleaning and preprocessing" — film-name matching must be justified; a wrong join corrupts every number after it.
   - DO THIS:
     1. Open `data/manual/match_review.csv` (2 rows). For each row, read `source_title` and `best_film_id`.

@@ -22,7 +22,7 @@ google_trends_term,Peddi,peddi,partial_ratio,peddi,peddi,100.0,accept
 tmdb,Chhaava,chhaava,token_sort_ratio,chhaava,chhaava,100.0,accept
 tmdb,Dhurandhar: The Revenge,dhurandhar_the_revenge,token_sort_ratio,dhurandhar the revenge,dhurandhar_the_revenge,100.0,accept
 tmdb,Housefull 5,housefull_5,token_sort_ratio,housefull 5,housefull_5,100.0,accept
-tmdb,Kantara - A Legend: Chapter 1,kantara_chapter_1,token_sort_ratio,kantara a legend chapter 1,kantara_chapter_1,79.1,needs_review
+tmdb,Kantara - A Legend: Chapter 1,kantara_chapter_1,token_sort_ratio,kantara a legend chapter 1,kantara_chapter_1,79.1,accept (human confirmed)
 tmdb,L2: Empuraan,l2_empuraan,token_sort_ratio,l2 empuraan,l2_empuraan,100.0,accept
 tmdb,Lokah Chapter 1: Chandra,lokah_chapter_1,token_sort_ratio,lokah chapter 1 chandra,lokah_chapter_1,100.0,accept
 tmdb,Peddi,peddi,token_sort_ratio,peddi,peddi,100.0,accept
@@ -41,7 +41,7 @@ youtube_trailer,Kantara Chapter 1 Trailer - Kannada | Rishab Shetty | Rukmini | 
 youtube_trailer,Kantara Chapter 1 Trailer - Malayalam | Rishab Shetty | Rukmini | Vijay Kiragandur | Hombale Films,kantara_chapter_1,partial_ratio,kantara chapter 1,kantara_chapter_1,100.0,accept
 youtube_trailer,Kantara Chapter 1 Trailer - Telugu | Rishab Shetty | Rukmini | Vijay Kiragandur | Hombale Films,kantara_chapter_1,partial_ratio,kantara chapter 1,kantara_chapter_1,100.0,accept
 youtube_trailer,Kantara Chapter 1 Trailer - Tamil | Rishab Shetty | Rukmini | Vijay Kiragandur | Hombale Films,kantara_chapter_1,partial_ratio,kantara chapter 1,kantara_chapter_1,100.0,accept
-youtube_trailer,L2E Empuraan Trailer (Malayalam) | Mohanlal | Prithviraj Sukumaran | Murali Gopy | March 27 Release,l2_empuraan,partial_ratio,l2e empuraan,l2_empuraan,90.9,needs_review
+youtube_trailer,L2E Empuraan Trailer (Malayalam) | Mohanlal | Prithviraj Sukumaran | Murali Gopy | March 27 Release,l2_empuraan,partial_ratio,l2e empuraan,l2_empuraan,90.9,accept (human confirmed)
 youtube_trailer,Lokah Chapter 1: Chandra | Official Trailer | Kalyani | Naslen | Dominic Arun | Nimish Ravi,lokah_chapter_1,partial_ratio,lokah chapter 1 chandra,lokah_chapter_1,100.0,accept
 youtube_trailer,Peddi Official Trailer (Telugu) | Ram Charan | Janhvi Kapoor | A R Rahman | Buchi Babu Sana,peddi,partial_ratio,peddi,peddi,100.0,accept
 youtube_trailer,"RAID 2 (TRAILER): Ajay D | Riteish D | Vaani K | Raj K | Abhishek P | Kumar M | Bhushan K, Krishan K",raid_2,partial_ratio,raid 2 ajay d,raid_2,100.0,accept
