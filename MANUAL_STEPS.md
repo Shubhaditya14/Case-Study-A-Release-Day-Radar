@@ -69,11 +69,10 @@ Reply `done` in the Claude session after each one; Claude runs the check and tic
   - WHY: rubric "Analysis, PySpark and reproducibility" — repo with commits from every member.
   - DO THIS:
     1. The repo already exists: https://github.com/Shubhaditya14/Case-Study-A-Release-Day-Radar
-    2. On GitHub: **Settings → Collaborators → Add people** → add each teammate's GitHub username. Each teammate accepts the email invite.
-    3. In this folder run `git push origin main`.
-    4. Write each member's name + GitHub username in `report/team.md` (one line each: `Name — @username`).
-  - PUT RESULT HERE: `report/team.md`
-  - HOW I'LL CHECK: `git status -sb` shows nothing ahead of origin; `report/team.md` lists every member.
+    2. In this folder run `git push origin main`.
+    3. *(Deferred by user on 2026-11-26)* Add teammates as collaborators (**Settings → Collaborators → Add people**) and list them in `report/team.md`. Needed before M8 and the final submission (rubric wants commits from every member).
+  - PUT RESULT HERE: pushed `main`
+  - HOW I'LL CHECK: `git status -sb` shows nothing ahead of origin.
   - TIME: ~5 min
 
 - [ ] **M6 — Approve the film list** — Claude will propose 10–12 films (checked on Wikipedia, TMDb, YouTube) in `data/manual/film_list_proposed.csv`. You approve or edit it.
@@ -81,7 +80,7 @@ Reply `done` in the Claude session after each one; Claude runs the check and tic
 ## Phase 2 — Collect and model
 
 - [ ] **M7 — Export Google Trends CSVs** — exact settings per film will be written here when we reach it.
-- [ ] **M8 — Each teammate makes one meaningful commit** — a specific task per person will be written here.
+- [ ] **M8 — Each teammate makes one meaningful commit** — *deferred by user*; needs the collaborator part of M5 first.
 
 ## Phase 3 — Clean and analyse
 
