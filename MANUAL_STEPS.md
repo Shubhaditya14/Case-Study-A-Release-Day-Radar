@@ -75,11 +75,37 @@ Reply `done` in the Claude session after each one; Claude runs the check and tic
   - HOW I'LL CHECK: `git status -sb` shows nothing ahead of origin.
   - TIME: ~5 min
 
-- [ ] **M6 — Approve the film list** — Claude will propose 10–12 films (checked on Wikipedia, TMDb, YouTube) in `data/manual/film_list_proposed.csv`. You approve or edit it.
+- [x] **M6 — Approve the film list** (approved 2026-11-26: 10 recommended films; outcome = first-weekend worldwide gross ÷ weekend days; trailers summed across official language versions) → `data/manual/film_list.csv`
 
 ## Phase 2 — Collect and model
 
-- [ ] **M7 — Export Google Trends CSVs** — exact settings per film will be written here when we reach it.
+- [ ] **M7 — Export Google Trends CSVs (one per film)**
+  - WHY: rubric "Data sourcing and variety" — Trends is our CSV source and our Velocity evidence (rise and decay of interest).
+  - DO THIS (repeat for each of the 10 rows below):
+    1. Click the film's **open** link. It already sets Region = **India**, the date range, and the search term.
+       Check the top bar shows: India · the right dates · All categories · Web Search. If Google suggests a "Topic" (e.g. "Chhaava — 2025 film"), **stay on the plain search term** so every film is measured the same way.
+    2. Make sure the chart is daily (it is, because each range is under 9 months).
+    3. On the **Interest over time** box, click the **download ↓** icon (top right of the box). It saves `multiTimeline.csv`.
+    4. Rename it to the file name in the last column and move it into `data/manual/`.
+    5. If Trends shows "Hmm, your search doesn't have enough data", tell me the film — don't make up a file.
+  - Notes: one film per export (don't compare two terms in one chart). Trends scales each export 0–100 on its own, so we only use the *shape* (rise and decay), not the size, across films. "Saiyaara" is also a popular song name and "Peddi"/"Lokah" are common words — I'll flag that as a limitation.
+
+    | film_id | search term | dates | link | save as |
+    |---|---|---|---|---|
+    | `chhaava` | Chhaava | 2025-01-15 → 2025-02-28 | [open](https://trends.google.com/trends/explore?date=2025-01-15%202025-02-28&geo=IN&q=Chhaava) | `data/manual/trends_chhaava.csv` |
+    | `saiyaara` | Saiyaara | 2025-07-01 → 2025-08-01 | [open](https://trends.google.com/trends/explore?date=2025-07-01%202025-08-01&geo=IN&q=Saiyaara) | `data/manual/trends_saiyaara.csv` |
+    | `sitaare_zameen_par` | Sitaare Zameen Par | 2025-05-06 → 2025-07-04 | [open](https://trends.google.com/trends/explore?date=2025-05-06%202025-07-04&geo=IN&q=Sitaare%20Zameen%20Par) | `data/manual/trends_sitaare_zameen_par.csv` |
+    | `housefull_5` | Housefull 5 | 2025-05-20 → 2025-06-20 | [open](https://trends.google.com/trends/explore?date=2025-05-20%202025-06-20&geo=IN&q=Housefull%205) | `data/manual/trends_housefull_5.csv` |
+    | `raid_2` | Raid 2 | 2025-04-01 → 2025-05-15 | [open](https://trends.google.com/trends/explore?date=2025-04-01%202025-05-15&geo=IN&q=Raid%202) | `data/manual/trends_raid_2.csv` |
+    | `dhurandhar_the_revenge` | Dhurandhar 2 | 2026-02-28 → 2026-04-02 | [open](https://trends.google.com/trends/explore?date=2026-02-28%202026-04-02&geo=IN&q=Dhurandhar%202) | `data/manual/trends_dhurandhar_the_revenge.csv` |
+    | `kantara_chapter_1` | Kantara Chapter 1 | 2025-09-15 → 2025-10-16 | [open](https://trends.google.com/trends/explore?date=2025-09-15%202025-10-16&geo=IN&q=Kantara%20Chapter%201) | `data/manual/trends_kantara_chapter_1.csv` |
+    | `lokah_chapter_1` | Lokah | 2025-08-17 → 2025-09-11 | [open](https://trends.google.com/trends/explore?date=2025-08-17%202025-09-11&geo=IN&q=Lokah) | `data/manual/trends_lokah_chapter_1.csv` |
+    | `l2_empuraan` | Empuraan | 2025-03-12 → 2025-04-10 | [open](https://trends.google.com/trends/explore?date=2025-03-12%202025-04-10&geo=IN&q=Empuraan) | `data/manual/trends_l2_empuraan.csv` |
+    | `peddi` | Peddi | 2026-05-11 → 2026-06-18 | [open](https://trends.google.com/trends/explore?date=2026-05-11%202026-06-18&geo=IN&q=Peddi) | `data/manual/trends_peddi.csv` |
+
+  - PUT RESULT HERE: `data/manual/trends_<film_id>.csv` (10 files)
+  - HOW I'LL CHECK: all 10 files exist, each parses to one row per day covering its full date range, interest values 0–100.
+  - TIME: ~15 min
 - [ ] **M8 — Each teammate makes one meaningful commit** — *deferred by user*; needs the collaborator part of M5 first.
 
 ## Phase 3 — Clean and analyse
