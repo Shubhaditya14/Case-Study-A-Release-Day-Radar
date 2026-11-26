@@ -5,7 +5,7 @@ Reply `done` in the Claude session after each one; Claude runs the check and tic
 
 ## Phase 1 — Frame
 
-- [ ] **M1 — Get a YouTube Data API v3 key**
+- [x] **M1 — Get a YouTube Data API v3 key** (verified 2026-11-26: smoke test PASS)
   - WHY: rubric "Data sourcing and variety" — YouTube is our JSON API for trailer stats and our unstructured comment text.
   - DO THIS:
     1. Go to https://console.cloud.google.com/ and sign in with a Google account.
