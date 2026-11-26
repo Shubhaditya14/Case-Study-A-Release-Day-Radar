@@ -142,6 +142,6 @@ Reply `done` in the Claude session after each one; Claude runs the check and tic
 
 ## Phase 4 — Story and submit
 
-- [ ] **M11 — Fill in the team contribution split** → edit `report/team_contribution.md` (names, roles, %, totals 100). Also fill the team name in `report/report_template.md` and `report/slides_template.md`, then `make report`.
-- [ ] **M12 — Everyone reads `QA_PREP.md`; rehearse the 7-minute talk** with `report/speaker_script.md` (replace Speaker A–D with names). Slides: `report/slides.pptx` (10 slides, notes included).
+- [x] **M11 — Team contribution split** → `report/contributions.md` (equal 20% split, roles and slides agreed by the team).
+- [ ] **M12 — Rehearse the 7-minute talk** with `report/speaker_script.md` (speakers follow `report/contributions.md`). Slides: `report/slides.pptx` (10 slides, notes included).
 - [ ] **M13 — Submit** → run `make report zip` and submit `Sata_and_Dory_Letting_FinalSubmission.zip` (team: Sata and Dory Letting).

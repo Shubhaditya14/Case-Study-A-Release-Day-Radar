@@ -55,7 +55,7 @@ report:
 # Build the submission zip for team "Sata and Dory Letting"
 zip:
 	rm -f Sata_and_Dory_Letting_FinalSubmission.zip
-	zip -r Sata_and_Dory_Letting_FinalSubmission.zip README.md MANUAL_STEPS.md QA_PREP.md requirements.txt Makefile .env.example \
+	zip -r Sata_and_Dory_Letting_FinalSubmission.zip README.md MANUAL_STEPS.md requirements.txt Makefile .env.example \
 	    docs src sql notebooks outputs report data/clean data/manual \
 	    -x "data/clean/comments.csv" "data/manual/imdb_50k.csv" "*.DS_Store" "report/report.html" "report/report.md" "report/slides.md" "*/.claude/*"
 

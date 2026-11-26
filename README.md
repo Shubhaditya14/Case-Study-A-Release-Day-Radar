@@ -95,7 +95,7 @@ src/13                       Sheets-vs-pandas check     src/14  build report fro
 src/utils.py                 paths, cleaning log, polite HTTP, YouTube quota guard
 sql/schema.sql, sql/queries.sql
 MANUAL_STEPS.md              the human steps (keys, approvals, Google Sheets)
-QA_PREP.md                   plain-English explanation of every script + viva questions
+report/contributions.md      who did what (equal 20% split) and who presents which slides
 ```
 
 ## 6. Ground rules we followed

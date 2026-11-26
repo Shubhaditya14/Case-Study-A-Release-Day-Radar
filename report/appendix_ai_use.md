@@ -6,7 +6,7 @@ The brief allows generative AI with disclosure. We are graded on understanding t
 
 | Tool | Used for |
 |---|---|
-| Claude Code (Anthropic, model Claude Opus 5.5), run in the terminal inside this repository | Writing and running the pipeline scripts, SQL, charts, report templates, README and QA_PREP |
+| Claude Code (Anthropic, model Claude Opus 5.5), run in the terminal inside this repository | Writing and running the pipeline scripts, SQL, charts, report templates and README |
 | [[TODO-HUMAN: any other tool, e.g. ChatGPT for explaining an error, Grammarly for proofreading; write "none" if none]] | |
 
 ## What we asked
@@ -35,4 +35,4 @@ The brief allows generative AI with disclosure. We are graded on understanding t
 
 ## How we made sure we understand it
 
-Every member read `QA_PREP.md` (each script's 3 key lines, plus 25 viva questions) and reran `make all` once. [[TODO-HUMAN: confirm, or note who did what]]
+Each member owns one part of the project (`report/contributions.md`) and can explain the code and cleaning choices for it; every member reran `make all` once. [[TODO-HUMAN: confirm, or note who did what]]
